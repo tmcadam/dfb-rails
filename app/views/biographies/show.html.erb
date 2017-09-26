@@ -1,19 +1,12 @@
+<h3>
+  <strong><%= @biography.title %></strong>
+</h3>
 <p>
-  <strong>Title:</strong>
-  <%= @biography.title %>
+    <h4><%= @biography.lifespan %></h4>
 </p>
 
-<p>
-  <strong>Lifespan:</strong>
-  <%= @biography.lifespan %>
-</p>
+<%= @biography.body.html_safe %>
 
 <p>
-  <strong>Body:</strong>
-  <%= @biography.body %>
-</p>
-
-<p>
-  <strong>Authors:</strong>
-  <%= @biography.authors %>
+  <strong>Authors:</strong><%= @biography.authors %>
 </p>
