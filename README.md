@@ -1,4 +1,4 @@
-# README
+# The Dictionary of Falklands Biographies ![Build Status](https://travis-ci.org/tmcadam/dfb-rails.svg?branch=master "Build Status")
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
