@@ -28,4 +28,9 @@ class BiographyTest < ActiveSupport::TestCase
         assert_not @b.valid?
     end
 
+    test "biographies returned by ascending title" do
+        assert_equal(Biography.first.title, "TITLE1")
+        assert_equal(Biography.last.title,  "TITLE2")
+    end
+
 end
