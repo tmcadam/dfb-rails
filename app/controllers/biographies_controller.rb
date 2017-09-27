@@ -5,7 +5,11 @@ class BiographiesController < ApplicationController
     end
 
     def index
-        @biographies = Biography.all
+        @biographies = if params[:search]
+            Biography.where('title LIKE ?', "%#{params[:search]}%")
+        else
+            Biography.all
+        end
     end
 
 end

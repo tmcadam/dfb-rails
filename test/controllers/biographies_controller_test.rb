@@ -26,9 +26,31 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
     test "index route returns all biographies" do
         get biographies_path
         biographies = @controller.index
-        assert_equal(biographies.length, 2)
+        assert_equal(2, biographies.length)
         assert_select 'table#index' do
             assert_select 'tr', 2
         end
     end
+
+    test "search returns correct biograhies" do
+        get biographies_path(:search=>"TITLE1")
+        biographies = @controller.index
+        assert_equal(1, biographies.length)
+        assert_select 'table#index' do
+            assert_select 'tr', 1
+        end
+        assert_equal(biographies[0].title, "TITLE1")
+    end
+
+    test "search is case insensitive" do
+        get biographies_path(:search=>"title1")
+        biographies = @controller.index
+        assert_equal(1, biographies.length)
+        assert_select 'table#index' do
+            assert_select 'tr', 1
+        end
+        assert_equal(biographies[0].title, "TITLE1")
+    end
+
+
 end
