@@ -6,6 +6,7 @@ one:
   lifespan: MyString
   body: MyText
   authors: MyString
+  slug: slug_name1
 
 two:
   id: 2
@@ -13,3 +14,4 @@ two:
   lifespan: MyString
   body: MyText
   authors: MyString
+  slug: slug_name2

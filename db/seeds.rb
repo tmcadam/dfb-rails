@@ -17,6 +17,7 @@ bios.each do |bio|
                         title: bio["title"],
                         lifespan: bio["lifespan"],
                         body: bio["body"],
-                        authors: bio["author"] )
+                        authors: bio["author"],
+                        slug: bio["slug"] )
     puts bio["title"]
 end
