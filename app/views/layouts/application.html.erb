@@ -1,14 +1,30 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>DfbRails</title>
+    <title>DFB</title>
     <%= csrf_meta_tags %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
   <body>
-    <%= yield %>
+
+      <div class="container-fluid">
+        <div class="row content">
+          <div class="col-sm-3 sidenav">
+            <%= render 'biographies/search' %>
+          </div>
+
+          <div class="col-sm-9">
+                  <h1>Dictionary of Falklands Biographies</h1>
+                  <h3>including South Georgia</h3>
+                   <%= yield %>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer navbar-fixed-bottom"">
+        <p>&copy; 2012 David Tatham</p>
+     </div>
+
   </body>
-</html>
+  </html>

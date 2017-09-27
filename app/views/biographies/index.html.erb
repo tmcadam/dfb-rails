@@ -1,0 +1,11 @@
+
+<table id="index" class="table">
+    <% @biographies.each do |biography| %>
+    <tr>
+        <td>
+            <%= link_to biography.title, biography_path(biography.slug) %> <%= biography.lifespan %>
+            <%= truncate(biography.body, :length => 200, :separator => ' ', :escape => false) %>
+        </td>
+    </tr>
+  <% end %>
+</table>

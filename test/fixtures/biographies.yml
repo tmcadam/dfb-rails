@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 1
+  title: TITLE1
+  lifespan: MyString
+  body: MyText
+  authors: MyString
+  slug: slug_name1
+
+two:
+  id: 2
+  title: TITLE2
+  lifespan: MyString
+  body: MyText
+  authors: MyString
+  slug: slug_name2
