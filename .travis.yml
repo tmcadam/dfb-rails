@@ -15,12 +15,12 @@ script:
 - bin/rails test
 deploy:
   #deploy to production
-  provider: script
-  script: bash $TRAVIS_BUILD_DIR/travis-webfaction-deploy.sh production
-  on:
-    branch: master
+  - provider: script
+    script: bash $TRAVIS_BUILD_DIR/travis-webfaction-deploy.sh production
+    on:
+     branch: master
   #deploy to staging
-  provider: script
-  script: bash $TRAVIS_BUILD_DIR/travis-webfaction-deploy.sh staging
-  on:
-    branch: staging
+  - provider: script
+    script: bash $TRAVIS_BUILD_DIR/travis-webfaction-deploy.sh staging
+    on:
+      branch: staging
