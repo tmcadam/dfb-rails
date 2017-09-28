@@ -52,5 +52,16 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
         assert_equal(biographies[0].title, "TITLE1")
     end
 
+    test "search displays message if no results" do
+        get biographies_path(:search=>"nothing mathches this")
+        biographies = @controller.index
+        assert_equal(0, biographies.length)
+        assert_select 'table#index' do
+            assert_select 'tr', 1 do
+                assert_select 'td', "No results"
+            end
+        end
+    end
+
 
 end
