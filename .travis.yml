@@ -16,7 +16,6 @@ script:
 deploy:
   #deploy to staging
   provider: script
-  script: travis-webfaction-deploy.sh staging
+  script: bash $TRAVIS_BUILD_DIR/travis-webfaction-deploy.sh staging
   on:
     branch: staging
-    
