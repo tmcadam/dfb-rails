@@ -37,6 +37,7 @@ gem 'autoprefixer-rails'
 gem 'jquery-rails'
 # Use json for loading existing data
 gem 'json'
+gem 'truncate_html'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
