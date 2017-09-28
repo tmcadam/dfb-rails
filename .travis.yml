@@ -13,8 +13,10 @@ install:
 - bundle install --jobs=3 --retry=3
 script:
 - bin/rails test
-after_success:
-- export SSHPASS=$DEPLOY_PASS
-- sshpass -e ssh -o stricthostkeychecking=no ${DEPLOY_USER}@${DEPLOY_HOST} bash "${DEPLOY_HOME}/git_deploy.sh"
-  "${DEPLOY_PATH}" ${DEPLOY_REPO} ${DEPLOY_BRANCH}
-- sshpass -e ssh -o stricthostkeychecking=no $DEPLOY_USER@$DEPLOY_HOST bash "${DEPLOY_PATH}/deploy.sh"
+deploy:
+  #deploy to staging
+  provider: script
+  script: travis-webfaction-deploy.sh staging
+  on:
+    branch: staging
+    
