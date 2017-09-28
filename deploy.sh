@@ -7,6 +7,13 @@ export PATH=$WEBAPP_DIR/bin:$PATH
 export GEM_HOME=$WEBAPP_DIR/gems
 export RUBYLIB=$WEBAPP_DIR/lib
 
-cd $APP_DIR/app
+cd $WEBAPP_DIR
+# Checks if this is the first run
+if [ ! -d "hello_world" ]; then
+    rm -rf "hello_world"
+    sed -i 's/hello_world/app/g' nginx/conf/nginx.conf
+fi
+
+cd $APP_DIR
 bundle install
 restart
