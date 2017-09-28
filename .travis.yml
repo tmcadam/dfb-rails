@@ -4,7 +4,7 @@ rvm:
 branches:
   only:
    - master
-   - stable
+   - staging
 addons:
   apt:
     packages:
