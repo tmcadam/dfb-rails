@@ -10,6 +10,7 @@ export RUBYLIB=$WEBAPP_DIR/lib
 cd $APP_DIR
 bundle install
 rake db:migrate
+rake db:seed
 
 cd $WEBAPP_DIR
 # Checks if this is the first run
