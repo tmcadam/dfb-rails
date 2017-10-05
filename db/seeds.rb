@@ -21,3 +21,7 @@ bios.each do |bio|
                         slug: bio["slug"] )
     puts bio["title"]
 end
+
+StaticContent.create(   title: "Home",
+                        slug: "home",
+                        body: "<p>Some content here</p>")

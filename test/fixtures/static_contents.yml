@@ -1,9 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
-  text: MyText
+  title: Home
+  body: <p>Some body text</p>
+  slug: home
 
 two:
-  title: MyString
-  text: MyText
+  title: About
+  body: <p>Some other body text</p>
+  slug: about
