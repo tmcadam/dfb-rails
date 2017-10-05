@@ -11,9 +11,15 @@ class StaticContentControllerTest < ActionDispatch::IntegrationTest
         assert_raises(ActiveRecord::RecordNotFound) {get static_content_path("slug_typo")}
     end
 
-    test "can show static content at root urls" do
-        get "/home"
+    test "can show static content at root urls not static_content urls" do
+        get static_content_path("home")
         assert_response :success
+    end
+
+    test "root url redirects to static_content home" do
+        get "/"
+        assert_response :redirect
+        assert_redirected_to static_content_path("home")
     end
 
 end
