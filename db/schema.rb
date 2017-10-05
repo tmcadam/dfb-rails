@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170927001522) do
+ActiveRecord::Schema.define(version: 20171005111102) do
 
   create_table "biographies", force: :cascade do |t|
     t.string "title"
@@ -21,6 +21,13 @@ ActiveRecord::Schema.define(version: 20170927001522) do
     t.datetime "updated_at", null: false
     t.string "slug"
     t.index ["slug"], name: "index_biographies_on_slug"
+  end
+
+  create_table "static_contents", force: :cascade do |t|
+    t.string "title"
+    t.text "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
