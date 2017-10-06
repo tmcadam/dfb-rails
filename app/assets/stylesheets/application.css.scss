@@ -20,30 +20,51 @@ $blockquote-font-size: 15px;
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-/* Set height of the grid so .sidenav can be 100% (adjust if needed) */
-.row.content {height: 1500px}
-
-/* Set gray background color and 100% height */
-.sidenav {
-  background-color: #f1f1f1;
-  height: 100%;
-  padding-top: 125px;
+html {
+  position: relative;
+  min-height: 100%;
 }
-
-/* Set black background color, white text and some padding */
+body {
+  /* Padding top to avoid the navbar */
+  padding-top: 50px;
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.navbar-brand {
+    display: none;
+}
+.page-header {
+    margin-top: 0px;
+}
 .footer {
-  background-color: #555;
-  color: white;
-  padding: 15px;
+  overflow: hidden;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: #f5f5f5;
   text-align: center;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  line-height: 60px;
 }
 
 /* On small screens, set height to 'auto' for sidenav and grid */
 @media screen and (max-width: 767px) {
-  .sidenav {
-    height: auto;
-    padding: 15px;
-  }
-  .row.content {height: auto;}
-  .footer {padding: 5px;}
+    .body {
+        margin-bottom: 30px;
+    }
+    .page-header {
+        display: none;
+    }
+    .navbar-brand {
+        display: inline;
+    }
+    .navbar-form {
+        border-bottom: none;
+        margin-bottom: 0px;
+    }
+    .footer {
+         height: 30px;
+         line-height: 30px;
+    }
 }
