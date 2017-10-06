@@ -11,6 +11,7 @@ cd $APP_DIR
 bundle install
 rake db:migrate
 rake db:seed
+bundle exec rake assets:precompile
 
 cd $WEBAPP_DIR
 # Checks if this is the first run

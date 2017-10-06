@@ -35,6 +35,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'autoprefixer-rails'
 gem 'jquery-rails'
+gem 'yui-compressor'
 # Use json for loading existing data
 gem 'json'
 gem 'truncate_html'
