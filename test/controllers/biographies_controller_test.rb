@@ -63,5 +63,24 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
         end
     end
 
+    test "pagination returns subset of biographies for index" do
+        for x in 1..100 do
+            Biography.create(title: x, slug: x, body: x)
+        end
+        get biographies_path(:index)
+        biographies = @controller.index
+        assert_operator( Biography.all.length, :>, 25)
+        assert_equal(25, biographies.length)
+    end
+
+    test "pagination returns subset of biographies for search" do
+        for x in 1..100 do
+            Biography.create(title: "John", slug: x, body: x)
+        end
+        get biographies_path(:search=>"John")
+        biographies = @controller.index
+        assert_operator( Biography.all.length, :>, 25)
+        assert_equal(25, biographies.length)
+    end
 
 end

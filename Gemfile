@@ -39,6 +39,7 @@ gem 'yui-compressor'
 # Use json for loading existing data
 gem 'json'
 gem 'truncate_html'
+gem 'kaminari', :git => 'https://github.com/kaminari/kaminari'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
