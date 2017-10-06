@@ -22,6 +22,13 @@ bios.each do |bio|
     puts bio["title"]
 end
 
+StaticContent.destroy_all
 StaticContent.create(   title: "Home",
                         slug: "home",
-                        body: "<p>Some content here</p>")
+                        body: "<p>Some indroduction content here.</p>")
+StaticContent.create(   title: "Contacts",
+                        slug: "contacts",
+                        body: "<p>Some contact details here.</p>")
+StaticContent.create(   title: "About",
+                        slug: "about",
+                        body: "<p>Some information .</p>")
