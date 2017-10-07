@@ -40,6 +40,7 @@ gem 'json'
 gem 'truncate_html'
 gem 'kaminari', :git => 'https://github.com/kaminari/kaminari'
 gem "paperclip", "~> 5.0.0"
+gem 'simple_form'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

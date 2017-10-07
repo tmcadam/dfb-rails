@@ -1,0 +1,24 @@
+<h4>
+  <strong>Images</strong> <%= link_to "New", new_image_path, class: "btn btn-default btn-xs pull-right", role:"button" %>
+</h4>
+<table id="index" class="table">
+    <% if @images.each do |image| %>
+    <tr>
+        <td>
+            <%= link_to image.title, image_path(image) %>
+        </td>
+        <td>
+            <%= image.biography.title %>
+        </td>
+        <td class="align-right">
+            <%= image_tag image.image.url(:thumb) %>
+            <%= link_to "Edit", edit_image_path(image), class: "btn btn-default btn-xs pull-right", role:"button" %>
+            <%= link_to "Delete", image_path(image), class: "btn btn-default btn-xs pull-right", role:"button", method: :delete %>
+        </td>
+    </tr>
+    <% end.empty? %>
+    <tr>
+        <td>No images</td>
+    </tr>
+  <% end %>
+</table>

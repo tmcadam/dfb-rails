@@ -50,6 +50,9 @@ body {
 .show-mobile {
     display: none !important;
 }
+.table th, .table td {
+     border-top: none !important; 
+ }
 
 /* On small screens, set height to 'auto' for sidenav and grid */
 @media screen and (max-width: 767px) {

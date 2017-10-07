@@ -1,0 +1,20 @@
+<table class="table">
+    <tr>
+        <td>Title: </td><td><strong><%= @image.title %></td>
+    </tr>
+    <tr>
+        <td>Biography: </td><td><%= @image.biography.title %></td>
+    </tr>
+    <tr>
+        <td>Caption: </td><td><%= @image.caption %></td>
+    </tr>
+    <tr>
+        <td>Attribution: </td><td><%= @image.attribution %></td>
+    </tr>
+    <tr>
+        <td>Image: </td><td><%= image_tag @image.image.url(:medium) %></td>
+    </tr>
+</table>
+
+<%= link_to "Back", images_path, class: "btn btn-default", role:"button" %>
+<%= link_to "Edit", edit_image_path, class: "btn btn-default", role:"button" %>
