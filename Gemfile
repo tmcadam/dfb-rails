@@ -36,10 +36,10 @@ gem 'bootstrap-sass', '~> 3.3.6'
 gem 'autoprefixer-rails'
 gem 'jquery-rails'
 gem 'yui-compressor'
-# Use json for loading existing data
 gem 'json'
 gem 'truncate_html'
 gem 'kaminari', :git => 'https://github.com/kaminari/kaminari'
+gem "paperclip", "~> 5.0.0"
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
