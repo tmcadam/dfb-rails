@@ -47,6 +47,9 @@ body {
   height: 60px;
   line-height: 60px;
 }
+.show-mobile {
+    display: none !important;
+}
 
 /* On small screens, set height to 'auto' for sidenav and grid */
 @media screen and (max-width: 767px) {
@@ -55,6 +58,12 @@ body {
     }
     .page-header {
         display: none;
+    }
+    .hide-mobile {
+        display: none !important;
+    }
+    .show-mobile {
+        display: inline !important;
     }
     .navbar-brand {
         display: inline;
@@ -68,5 +77,11 @@ body {
     .footer {
          height: 30px;
          line-height: 30px;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .hide-small-mobile {
+        display: none !important;
     }
 }
