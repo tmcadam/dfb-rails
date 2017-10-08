@@ -41,7 +41,7 @@ body {
   position: absolute;
   bottom: 0;
   width: 100%;
-  background-color: #f5f5f5;
+  background-color: #ededed;
   text-align: center;
   /* Set the fixed height of the footer here */
   height: 60px;
@@ -51,10 +51,20 @@ body {
     display: none !important;
 }
 .table th, .table td {
-     border-top: none !important; 
+     border-top: none !important;
  }
+ .biography-img-right {
+     float: right;
+     margin: 5px 0px 10px 10px;
+ }
+ .biography-img-left {
+     float: left;
+     margin: 5px 10px 10px 0px;
+ }
+ .container{
+      max-width: 850px;
+  }
 
-/* On small screens, set height to 'auto' for sidenav and grid */
 @media screen and (max-width: 767px) {
     .body {
         margin-bottom: 30px;
@@ -80,6 +90,14 @@ body {
     .footer {
          height: 30px;
          line-height: 30px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .biography-img-left, .biography-img-right {
+        float: none;
+        display: block;
+        margin:10px auto;
     }
 }
 
