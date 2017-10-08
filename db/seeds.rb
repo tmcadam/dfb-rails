@@ -7,21 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'json'
 
-Biography.destroy_all
-
-file = File.read('db/data-cleanup/bios.json')
-bios = JSON.parse(file)
-
-bios.each do |bio|
-    Biography.create(   id: bio["id"],
-                        title: bio["title"],
-                        lifespan: bio["lifespan"],
-                        body: bio["body"],
-                        authors: bio["author"],
-                        slug: bio["slug"] )
-    puts bio["title"]
-end
-
+## Load static content
 StaticContent.destroy_all
 StaticContent.create(   title: "Home",
                         slug: "home",
@@ -32,3 +18,30 @@ StaticContent.create(   title: "Contacts",
 StaticContent.create(   title: "About",
                         slug: "about",
                         body: "<p>Some information .</p>")
+
+## Load bios
+file = File.read('db/data-cleanup/bios.json')
+bios = JSON.parse(file)
+Biography.destroy_all
+bios.each do |bio|
+    Biography.create(   id: bio["id"],
+                        title: bio["title"],
+                        lifespan: bio["lifespan"],
+                        body: bio["body"],
+                        authors: bio["author"],
+                        slug: bio["slug"] )
+    puts bio["title"]
+end
+
+## Load images
+file = File.read('db/data-cleanup/images.json')
+imgs = JSON.parse(file)
+Image.destroy_all
+imgs.each do |img|
+    Image.create(   id: img["id"],
+                    biography_id: img["biography_id"],
+                    title: img["title"],
+                    attribution: img["attribution"],
+                    image: File.new("#{Rails.root}/db/data-cleanup/images/test-jpgs/#{img["id"]}.jpg") )
+    puts img["title"]
+end
