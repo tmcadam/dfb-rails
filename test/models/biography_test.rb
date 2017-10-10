@@ -15,9 +15,11 @@ class BiographyTest < ActiveSupport::TestCase
                                     '<p>Nulla viverra, ipsum ac pretium dignissim, ligula neque egestas orci, vel cursus ante nibh eu odio. Nullam nec consectetur erat. Nullam finibus tincidunt dui eu tristique. Donec varius ac sapien sit amet posuere. Proin luctus interdum est, eu vestibulum augue maximus eget. In pellentesque orci amet.</p>',
                             authors: "Joe Blow",
                             slug: "some_slug")
-        @b.images << Image.new( biography: @b)
-        @b.images << Image.new( biography: @b)
-        @b.images << Image.new( biography: @b)
+
+        image = fixture_file_upload 'files/test_image_3.png', 'image/png'
+        @b.images << Image.new( biography: @b, title: "1", caption: "1", image: image )
+        @b.images << Image.new( biography: @b, title: "2", caption: "2", image: image )
+        @b.images << Image.new( biography: @b, title: "3", caption: "3", image: image )
     end
 
     test "valid biography with all attributes present and correct" do
@@ -91,6 +93,12 @@ class BiographyTest < ActiveSupport::TestCase
     test "body_with_images makes no changes to body if no images present" do
         @b.images = []
         assert_equal @b.body, @b.body_with_images
+    end
+
+    teardown do
+        @b.images.each do |img|
+            img.destroy
+        end
     end
 
 end
