@@ -52,6 +52,35 @@ class ImageTest < ActiveSupport::TestCase
         assert_not @i1.valid?
     end
 
+    test "large images are downsized to correct sizes" do
+        @i1.save
+        geometry = Paperclip::Geometry.from_file(@i1.image.path("original"))
+        assert_includes [geometry.width, geometry.height], 800
+        assert_operator geometry.width, :<=, 800
+        assert_operator geometry.height, :<=, 800
+        geometry = Paperclip::Geometry.from_file(@i1.image.path("medium"))
+        assert_includes [geometry.width, geometry.height], 300
+        assert_operator geometry.width, :<=, 300
+        assert_operator geometry.height, :<=, 300
+        geometry = Paperclip::Geometry.from_file(@i1.image.path("thumb"))
+        assert_includes [geometry.width, geometry.height], 100
+        assert_operator geometry.width, :<=, 100
+        assert_operator geometry.height, :<=, 100
+    end
+
+    test "small images don't get resized" do
+        @i3.save
+        geometry = Paperclip::Geometry.from_file(@i3.image.path("original"))
+        assert_equal 100, geometry.width
+        assert_equal 86, geometry.height
+        geometry = Paperclip::Geometry.from_file(@i3.image.path("medium"))
+        assert_equal 100, geometry.width
+        assert_equal 86, geometry.height
+        geometry = Paperclip::Geometry.from_file(@i3.image.path("thumb"))
+        assert_equal 100, geometry.width
+        assert_equal 86, geometry.height
+    end
+
     teardown do
         @i1.destroy
         @i2.destroy
