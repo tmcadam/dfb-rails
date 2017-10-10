@@ -69,11 +69,11 @@ class BiographyTest < ActiveSupport::TestCase
     test "insert_image returns an image tag at correct paragraphs" do
         images = @b.instance_eval{ generate_image_tags }
         tag = @b.instance_eval{ insert_image(1, images) }
-        assert tag.include? "biography-img-right"
+        assert tag.include? "biography-img"
         tag = @b.instance_eval{ insert_image(3, images) }
-        assert tag.include? "biography-img-left"
+        assert tag.include? "biography-img"
         tag = @b.instance_eval{ insert_image(5, images) }
-        assert tag.include? "biography-img-right"
+        assert tag.include? "biography-img"
         tag = @b.instance_eval{ insert_image(2, images) }
         assert_equal "", tag
         tag = @b.instance_eval{ insert_image(4, images) }
@@ -81,7 +81,7 @@ class BiographyTest < ActiveSupport::TestCase
     end
 
     test "body_with_images inserts images if images present" do
-        tags = Nokogiri::HTML::fragment(@b.body_with_images).children
+        tags = Nokogiri::HTML.fragment(@b.body_with_images).element_children
         assert_not_equal @b.body, @b.body_with_images
         assert_equal 11, tags.length
         assert_equal "p", tags[0].name

@@ -37,9 +37,7 @@ private
         after_para = 1
         self.images.each do |image|
             pos_class = ApplicationController.helpers.cycle("biography-img-right", "biography-img-left", name: "pos_class" )
-            img_tag = ApplicationController.helpers.image_tag image.image.url(:medium), class: pos_class
-            tag = ApplicationController.helpers.link_to img_tag, image.image.url(:original), data: {toggle:'lightbox',
-                                                                                                    gallery:'lightbox-gallery'}
+            tag = ApplicationController.render(partial: 'images/tag', assigns: {img: image, class: pos_class})
             tags.push({"tag"=>tag, "after_para"=>after_para})
             after_para += 2
         end
