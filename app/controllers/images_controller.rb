@@ -36,8 +36,6 @@ class ImagesController < ApplicationController
 
     def destroy
         @image = Image.find( params[:id] )
-        @image.image = nil
-        @image.save
         @image.destroy
         redirect_to images_path
     end
