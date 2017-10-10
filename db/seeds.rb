@@ -33,7 +33,7 @@ bios.each do |bio|
                         body: bio["body"],
                         authors: bio["author"],
                         slug: bio["slug"] )
-    puts bio["title"]
+    puts "Bio: #{bio["title"]}"
 end
 
 ## Load images
@@ -41,9 +41,10 @@ file = File.read('db/data-cleanup/images.json')
 imgs = JSON.parse(file)
 imgs.each do |img|
     Image.create(   id: img["id"],
-    biography_id: img["biography_id"],
-    title: img["title"],
-    attribution: img["attribution"],
-    image: File.new("#{Rails.root}/db/data-cleanup/images/test-jpgs/#{img["id"]}.jpg") )
-    puts img["title"]
+                    biography_id: img["biography_id"],
+                    title: img["title"],
+                    caption: "todo",
+                    attribution: img["attribution"],
+                    image: File.new("#{Rails.root}/db/data-cleanup/images/test-jpgs/#{img["id"]}.jpg") )
+    puts "Image: #{img["title"]}"
 end
