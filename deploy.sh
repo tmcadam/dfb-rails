@@ -10,7 +10,6 @@ export RUBYLIB=$WEBAPP_DIR/lib
 cd $APP_DIR
 bundle install
 rake db:migrate
-rake db:seed
 bundle exec rake assets:precompile
 
 cd $WEBAPP_DIR
