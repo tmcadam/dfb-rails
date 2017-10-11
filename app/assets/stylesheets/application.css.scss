@@ -68,6 +68,9 @@ body {
 .btn-group {
     display: flex;
 }
+.authors {
+    clear: both;
+}
 
 @media screen and (max-width: 767px) {
     .body {
