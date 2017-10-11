@@ -6,7 +6,7 @@ class BiographiesController < ApplicationController
 
     def index
         @biographies = if params[:search]
-            Biography.where('title LIKE ?', "%#{params[:search]}%").page params[:page]
+            Biography.where('title ILIKE ?', "%#{params[:search]}%").page params[:page]
         else
             Biography.all.page params[:page]
         end
