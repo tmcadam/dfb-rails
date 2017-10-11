@@ -3,8 +3,7 @@
         image_tag( @img.image.url("medium"),
                    class: @class),
         @img.image.url("original"),
-        data:{  title:'title1',
-                footer:'footer1',
+        data:{  footer:@img.caption,
                 toggle:'lightbox',
                 gallery:'multiimages'
             })

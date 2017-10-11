@@ -29,3 +29,5 @@ bios-check.log
 public/assets/
 public/system/
 db/data-cleanup/images/
+db/data-cleanup/images-captions.json
+db/data-cleanup/print.xml
