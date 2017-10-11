@@ -1,0 +1,10 @@
+<%=
+    link_to(
+        image_tag( @img.image.url("medium"),
+                   class: @class),
+        @img.image.url("original"),
+        data:{  footer:@img.caption,
+                toggle:'lightbox',
+                gallery:'multiimages'
+            })
+%>

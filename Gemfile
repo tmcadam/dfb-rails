@@ -8,8 +8,6 @@ end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.4'
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 # Use SCSS for stylesheets
@@ -36,10 +34,13 @@ gem 'bootstrap-sass', '~> 3.3.6'
 gem 'autoprefixer-rails'
 gem 'jquery-rails'
 gem 'yui-compressor'
-# Use json for loading existing data
 gem 'json'
 gem 'truncate_html'
 gem 'kaminari', :git => 'https://github.com/kaminari/kaminari'
+gem "paperclip", "~> 5.0.0"
+gem 'simple_form'
+gem 'lightbox-bootstrap-rails', '5.1.0.1'
+gem 'pg'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -50,6 +51,7 @@ group :development, :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
+  gem 'rails-controller-testing'
 end
 
 group :development do

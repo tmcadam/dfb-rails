@@ -16,7 +16,7 @@
           <li><%= link_to "About", static_content_path("about") %></li>
           <li><%= link_to "Contacts", static_content_path("contacts") %></li>
       </ul>
-      <%= form_tag biographies_path, :method => 'get', class: "navbar-form navbar-left" do %>
+      <%= form_tag biographies_path, :method => 'get', class: "navbar-form navbar-right" do %>
       <div class="input-group">
           <%= text_field_tag 'search', params[:search], placeholder: "Search biographies", class: "form-control" %>
           <span class="input-group-btn">
