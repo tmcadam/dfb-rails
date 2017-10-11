@@ -18,14 +18,14 @@ before_script:
   - psql -c 'create database dfb_test;' -U postgres
 script:
 - bin/rails test
-# deploy:
-#   #deploy to production
-#   - provider: script
-#     script: bash $TRAVIS_BUILD_DIR/travis-webfaction-deploy.sh production
-#     on:
-#      branch: master
-#   #deploy to staging
-#   - provider: script
-#     script: bash $TRAVIS_BUILD_DIR/travis-webfaction-deploy.sh staging
-#     on:
-#       branch: staging
+deploy:
+  #deploy to production
+  - provider: script
+    script: bash $TRAVIS_BUILD_DIR/travis-webfaction-deploy.sh production
+    on:
+     branch: master
+  #deploy to staging
+  - provider: script
+    script: bash $TRAVIS_BUILD_DIR/travis-webfaction-deploy.sh staging
+    on:
+      branch: staging
