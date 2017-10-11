@@ -40,12 +40,21 @@ end
 file = File.read('db/data-cleanup/images-captions.json')
 imgs = JSON.parse(file)
 imgs.each do |img|
+
+    base_file_name = "#{img['id']}".rjust(4, padstr='0')
+    path = "#{Rails.root}/db/data-cleanup/images/"
+
+    if Pathname(path + base_file_name + ".jpg" ).exist?
+        f = File.new(path + base_file_name + ".jpg")
+    elsif Pathname(path + base_file_name + ".png" ).exist?
+        f = File.new(path + base_file_name + ".png")
+    end
     Image.create(   id: img["id"],
                     biography_id: img["biography_id"],
                     title: img["title"],
                     caption: img["caption"],
                     attribution: img["attribution"],
-                    image: File.new("#{Rails.root}/db/data-cleanup/images/test-jpgs/#{img["id"]}.jpg") )
+                    image: f )
     puts "Image: #{img["title"]}"
 end
 
