@@ -17,12 +17,12 @@ test:
 
 staging:
     <<: *default
-    database: <%= ENV['DFB_DB_STAGING'] =>
-    username: <%= ENV['DFB_DB_USER_STAGING'] =>
-    password: <%= ENV['DFB_DB_PASS_STAGING'] =>
+    database: <%= ENV['DFB_DB_STAGING'] %>
+    username: <%= ENV['DFB_DB_USER_STAGING'] %>
+    password: <%= ENV['DFB_DB_PASS_STAGING'] %>
 
 production:
     <<: *default
-    database: <%= ENV['DFB_DB_PRODUCTION'] =>
-    username: <%= ENV['DFB_DB_USER_PRODUCTION'] =>
-    password: <%= ENV['DFB_DB_PASS_PRODUCTION'] =>
+    database: <%= ENV['DFB_DB_PRODUCTION'] %>
+    username: <%= ENV['DFB_DB_USER_PRODUCTION'] %>
+    password: <%= ENV['DFB_DB_PASS_PRODUCTION'] %>
