@@ -71,8 +71,11 @@ body {
 .authors {
     clear: both;
 }
-.caption {
+.img-footer-caption, .img-footer-id {
     float:left;
+}
+.caption {
+    word-wrap: break-word;
 }
 
 @media screen and (max-width: 767px) {
@@ -106,8 +109,10 @@ body {
 @media screen and (max-width: 600px) {
     .biography-img-left, .biography-img-right {
         float: none;
-        display: block;
-        margin:10px auto;
+        display: inline-block;
+    }
+    .img-container {
+        text-align: center;
     }
 }
 

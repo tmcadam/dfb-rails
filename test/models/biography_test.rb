@@ -73,9 +73,9 @@ class BiographyTest < ActiveSupport::TestCase
         assert_not_equal @b.body, @b.body_with_images
         assert_equal 11, tags.length
         assert_equal "p", tags[0].name
-        assert_equal "img", tags[1].children.first.name
-        assert_equal "img", tags[6].children.first.name
-        assert_equal "img", tags[9].children.first.name
+        assert tags[1].at_css('img')
+        assert tags[6].at_css('img')
+        assert tags[9].at_css('img')
     end
 
     test "body_with_images makes no changes to body if no images present" do
