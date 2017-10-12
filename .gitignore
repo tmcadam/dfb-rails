@@ -24,4 +24,12 @@
 
 .ruby-gemset
 .ruby-version
-dfbrails-vars.txt
+dfbrails-vars.sh
+bios-check.log
+public/assets/
+public/system/
+db/data-cleanup/.idea/
+db/data-cleanup/images/
+db/data-cleanup/*.json
+db/data-cleanup/*.csv
+db/data-cleanup/*.xml

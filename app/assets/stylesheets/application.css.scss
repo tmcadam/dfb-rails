@@ -19,31 +19,105 @@ $blockquote-font-size: 15px;
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "lightbox-bootstrap";
 
-/* Set height of the grid so .sidenav can be 100% (adjust if needed) */
-.row.content {height: 1500px}
-
-/* Set gray background color and 100% height */
-.sidenav {
-  background-color: #f1f1f1;
-  height: 100%;
-  padding-top: 125px;
+html {
+  position: relative;
+  min-height: 100%;
 }
-
-/* Set black background color, white text and some padding */
+body {
+  /* Padding top to avoid the navbar */
+  padding-top: 50px;
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.navbar-brand {
+    display: none;
+}
+.page-header {
+    margin-top: 0px;
+}
 .footer {
-  background-color: #555;
-  color: white;
-  padding: 15px;
+  overflow: hidden;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: #ededed;
   text-align: center;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  line-height: 60px;
+}
+.show-mobile {
+    display: none !important;
+}
+.table th, .table td {
+     border-top: none !important;
+ }
+ .biography-img-right {
+     float: right;
+     margin: 5px 0px 10px 10px;
+ }
+ .biography-img-left {
+     float: left;
+     margin: 5px 10px 10px 0px;
+ }
+ .container{
+      max-width: 850px;
+ }
+.btn-group {
+    display: flex;
+}
+.authors {
+    clear: both;
+}
+.img-footer-caption, .img-footer-id {
+    float:left;
+}
+.caption {
+    word-wrap: break-word;
 }
 
-/* On small screens, set height to 'auto' for sidenav and grid */
 @media screen and (max-width: 767px) {
-  .sidenav {
-    height: auto;
-    padding: 15px;
-  }
-  .row.content {height: auto;}
-  .footer {padding: 5px;}
+    .body {
+        margin-bottom: 30px;
+    }
+    .page-header {
+        display: none;
+    }
+    .hide-mobile {
+        display: none !important;
+    }
+    .show-mobile {
+        display: inline !important;
+    }
+    .navbar-brand {
+        display: inline;
+        font-size: 15px;
+        font-weight: bold;
+    }
+    .navbar-form {
+        border-bottom: none;
+        margin-bottom: 0px;
+    }
+    .footer {
+         height: 30px;
+         line-height: 30px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .biography-img-left, .biography-img-right {
+        float: none;
+        display: inline-block;
+    }
+    .img-container {
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .hide-small-mobile {
+        display: none !important;
+    }
 }

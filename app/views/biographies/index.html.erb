@@ -1,11 +1,19 @@
-
+<h3>
+  <strong>Biographies</strong>
+</h3>
 <table id="index" class="table">
-    <% @biographies.each do |biography| %>
+    <% if @biographies.each do |biography| %>
     <tr>
         <td>
             <%= link_to biography.title, biography_path(biography.slug) %> <%= biography.lifespan %>
-            <%= truncate(biography.body, :length => 200, :separator => ' ', :escape => false) %>
+            <%= truncate_html(biography.body, :length => 200 ) %>
         </td>
+    </tr>
+    <% end.empty? %>
+    <tr>
+        <td>No results</td>
     </tr>
   <% end %>
 </table>
+
+<%= paginate @biographies %>

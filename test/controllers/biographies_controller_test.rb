@@ -26,9 +26,9 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
     test "index route returns all biographies" do
         get biographies_path
         biographies = @controller.index
-        assert_equal(2, biographies.length)
+        assert_equal(Biography.count, biographies.length)
         assert_select 'table#index' do
-            assert_select 'tr', 2
+            assert_select 'tr', Biography.count
         end
     end
 
@@ -52,5 +52,37 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
         assert_equal(biographies[0].title, "TITLE1")
     end
 
+    test "search displays message if no results" do
+        get biographies_path(:search=>"nothing mathches this")
+        biographies = @controller.index
+        assert_equal(0, biographies.length)
+        assert_select 'table#index' do
+            assert_select 'tr', 1 do
+                assert_select 'td', "No results"
+            end
+        end
+    end
+
+    test "pagination returns subset of biographies for index" do
+        for x in 1..100 do
+            Biography.create(title: x, slug: x, body: x)
+        end
+        get biographies_path(:index)
+        biographies = @controller.index
+        assert_operator( Biography.all.length, :>, 25)
+        assert_equal(25, biographies.length)
+        DatabaseCleaner.clean
+    end
+
+    test "pagination returns subset of biographies for search" do
+        for x in 1..100 do
+            Biography.create(title: "John", slug: x, body: x)
+        end
+        get biographies_path(:search=>"John")
+        biographies = @controller.index
+        assert_operator( Biography.all.length, :>, 25)
+        assert_equal(25, biographies.length)
+        DatabaseCleaner.clean
+    end
 
 end

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+home:
+  title: Home
+  body: <p>Some body text</p>
+  slug: home
+
+about:
+  title: About
+  body: <p>Some other body text</p>
+  slug: about
