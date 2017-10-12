@@ -26,9 +26,9 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
     test "index route returns all biographies" do
         get biographies_path
         biographies = @controller.index
-        assert_equal(2, biographies.length)
+        assert_equal(Biography.count, biographies.length)
         assert_select 'table#index' do
-            assert_select 'tr', 2
+            assert_select 'tr', Biography.count
         end
     end
 
@@ -71,6 +71,7 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
         biographies = @controller.index
         assert_operator( Biography.all.length, :>, 25)
         assert_equal(25, biographies.length)
+        DatabaseCleaner.clean
     end
 
     test "pagination returns subset of biographies for search" do
@@ -81,6 +82,7 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
         biographies = @controller.index
         assert_operator( Biography.all.length, :>, 25)
         assert_equal(25, biographies.length)
+        DatabaseCleaner.clean
     end
 
 end

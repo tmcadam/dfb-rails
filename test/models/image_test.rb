@@ -3,6 +3,7 @@ require 'test_helper'
 class ImageTest < ActiveSupport::TestCase
 
     setup do
+        DatabaseCleaner.clean
         @b = Biography.create(title: "Brian Black", slug: "brian_black")
         image1 = fixture_file_upload 'files/test_image_1.jpg', 'image/jpg'
         @i1 = Image.new(biography: @b, title:"Image1", caption:"Brian at work", image: image1)

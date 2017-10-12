@@ -7,6 +7,7 @@ class ImageControllerTest < ActionDispatch::IntegrationTest
         @image = fixture_file_upload 'files/test_image_3.png', 'image/png'
         @img1 = Image.create( id: 1, biography: @b, title: "Bob Bobber", caption: "Bob at work", image: @image)
         @img2 = Image.create( id: 2, biography: @b, title: "Mike Michaels", caption: "Mike at work", image: @image)
+        ActiveRecord::Base.connection.reset_pk_sequence!('images')
     end
 
     test "can show image page using id" do
@@ -78,9 +79,9 @@ class ImageControllerTest < ActionDispatch::IntegrationTest
     test "creates image with correct params and redirects to show" do
         assert_difference('Image.count') do
             post images_path, params: {     image: { biography_id: 1,
-                                            image: @image,
-                                            title: 'Image title',
-                                            caption: 'Image caption' }}
+                                                     image: @image,
+                                                     title: 'Image title',
+                                                     caption: 'Image caption' }}
         end
         assert_redirected_to image_path(Image.last)
     end
@@ -119,8 +120,7 @@ class ImageControllerTest < ActionDispatch::IntegrationTest
     end
 
     teardown do
-        @img1.destroy
-        @img2.destroy
+        DatabaseCleaner.clean
     end
 
 end

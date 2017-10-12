@@ -4,6 +4,6 @@ Rails.application.routes.draw do
   if Rails.env.development? or Rails.env.test?
       resources :images
   end
-  resources :static_content, only: [:show], path: "/"
+  resources :static_content, only: [:show], path: "/", param: :slug
   root :to => redirect('/home')
 end
