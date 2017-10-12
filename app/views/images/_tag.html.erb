@@ -3,7 +3,7 @@
         image_tag( @img.image.url("medium"),
                    class: @class),
         @img.image.url("original"),
-        data:{  footer:@img.caption,
+        data:{  footer: tag.span(@img.caption, class:"caption") + tag.br + tag.span(@img.attribution, class: "small"),
                 toggle:'lightbox',
                 gallery:'multiimages'
             })
