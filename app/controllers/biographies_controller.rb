@@ -12,4 +12,8 @@ class BiographiesController < ApplicationController
         end
     end
 
+    def new
+        @biography = Biography.new
+    end
+
 end

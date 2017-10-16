@@ -85,4 +85,14 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
         DatabaseCleaner.clean
     end
 
+    test "new renders empty biography form" do
+        get new_biography_path
+        assert_response :success
+        assert_nil assigns(:biography).title
+        assert_nil assigns(:biography).lifespan
+        assert_nil assigns(:biography).body
+        assert_nil assigns(:biography).authors
+        assert_nil assigns(:biography).slug
+    end
+
 end
