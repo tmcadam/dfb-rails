@@ -1,6 +1,8 @@
 class Biography < ApplicationRecord
     has_many :images
     validates :slug, presence: true, uniqueness: true
+    validates :title, presence: true
+    validates :body, presence: true
     default_scope { order(title: :asc) }
 
     def body_with_images
