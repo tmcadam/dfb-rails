@@ -121,4 +121,35 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
         assert_not_nil assigns(:biography)
     end
 
+    test "edit returns populated form" do
+        DatabaseCleaner.clean
+        @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body")
+        get edit_biography_path(@b)
+        assert_response :success
+        assert_select "input#biography_title" do
+            assert_select "[value=?]", "Original title"
+        end
+        assert_equal assigns(:biography).title, @b.title
+        assert_equal assigns(:biography).slug, @b.slug
+        assert_equal assigns(:biography).body, @b.body
+    end
+
+    test "updates biography with correct params and redirects to show" do
+        DatabaseCleaner.clean
+        @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body")
+        patch biography_url(@b), params: { biography: { title: "Updated title" } }
+        assert_redirected_to biography_path(@b)
+        @b.reload
+        assert_equal "Updated title", @b.title
+    end
+
+    test "re-renders new form if validation fails on update" do
+        DatabaseCleaner.clean
+        @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body")
+        patch biography_path(@b), params: { biography: { title: nil }}
+        assert_template :edit
+        assert_not_nil assigns(:biography)
+    end
+
+
 end

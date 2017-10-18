@@ -25,6 +25,19 @@ class BiographiesController < ApplicationController
         end
     end
 
+    def edit
+        @biography = Biography.find_by(slug: params[:id]) || Biography.find(params[:id])
+    end
+
+    def update
+        @biography = Biography.find(params[:id])
+        if @biography.update( biography_params )
+            redirect_to @biography
+        else
+            render 'edit'
+        end
+    end
+
     private
 
         def biography_params
