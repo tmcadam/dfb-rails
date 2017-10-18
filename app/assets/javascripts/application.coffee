@@ -14,7 +14,7 @@
 #= require rails-ujs
 #= require turbolinks
 #= require bootstrap-sprockets
-#= require_tree .
 #= require lightbox-bootstrap
 #= require bootstrap
 #= require summernote
+#= require_tree .

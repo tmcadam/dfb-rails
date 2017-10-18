@@ -1,12 +1,12 @@
 $j = jQuery
-
-$j ->
+$j(document).on "turbolinks:load", ->
     $j('[data-provider="summernote"]').each ->
         $j(this).summernote
              callbacks: { onApplyCustomStyle: ($target, context, onFormatBlock)  ->
                  tagName = $target.prop('tagName')
                  onFormatBlock(tagName)
              }
+             linkTargetBlank: false
              height: 500
              toolbar:   [
                         ['para', ['style']],
