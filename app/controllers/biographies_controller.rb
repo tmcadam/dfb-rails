@@ -38,6 +38,12 @@ class BiographiesController < ApplicationController
         end
     end
 
+    def destroy
+        @biography = Biography.find_by(slug: params[:id]) || Biography.find(params[:id])
+        @biography.destroy
+        redirect_to biographies_path
+    end
+
     private
 
         def biography_params

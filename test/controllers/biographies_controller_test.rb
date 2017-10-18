@@ -151,5 +151,13 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
         assert_not_nil assigns(:biography)
     end
 
+    test "delete will delete biography" do
+        DatabaseCleaner.clean
+        @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body")
+        assert_difference('Biography.count', -1) do
+            delete biography_path(@b)
+        end
+        assert_redirected_to biographies_path
+    end
 
 end
