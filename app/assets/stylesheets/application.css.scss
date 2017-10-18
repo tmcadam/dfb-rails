@@ -78,6 +78,9 @@ body {
 div.biography_body h5 {
     font-weight: bold;
 }
+#index div.btn-group {
+display: flex;
+}
 
 @media screen and (max-width: 767px) {
     .body {

@@ -97,6 +97,10 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
     test "Summernote elements are present" do
         get new_biography_path
         assert_select "textarea#biography_body[data-provider='summernote']"
+        DatabaseCleaner.clean
+        @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body")
+        get edit_biography_path(@b)
+        assert_select "textarea#biography_body[data-provider='summernote']"
     end
 
     test "creates biography with correct params and redirects to show" do
@@ -159,5 +163,56 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
         end
         assert_redirected_to biographies_path
     end
+
+    test "delete, edit, back buttons present in detail views for dev and test" do
+        DatabaseCleaner.clean
+        @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body")
+        get biography_path(@b)
+        assert_select "a.btn[href=?]", biographies_path, {:text => "Back"}
+        assert_select "a.btn[href=?]", edit_biography_path(@b), {:text => "Edit"}
+        assert_select "a.btn[href=?]", biography_path, {:text => "Delete"}
+    end
+
+    test "delete, edit, back buttons present not in detail views for production and staging" do
+        DatabaseCleaner.clean
+        @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body")
+        Rails.stub(:env, ActiveSupport::StringInquirer.new('production')) do
+            assert Rails.env.production?
+            get biography_path(@b)
+            assert_select "a.btn", false, {:text => "Delete"}
+            assert_select "a.btn", false, {:text => "Edit"}
+        end
+        Rails.stub(:env, ActiveSupport::StringInquirer.new('staging')) do
+            assert Rails.env.staging?
+            get biography_path(@b)
+            assert_select "a.btn", false, {:text => "Delete"}
+            assert_select "a.btn", false, {:text => "Edit"}
+        end
+    end
+
+    test "new, delete, edit, back buttons present in list view for dev and test" do
+        get biographies_path
+        assert_select "a.btn", {:text => "New", :count => 1}
+        assert_select "a.btn", {:text => "Edit", :count => Biography.count}
+        assert_select "a.btn", {:text => "Delete", :count=> Biography.count}
+    end
+
+    test "new, delete, edit, back buttons not present in list view in prod and staging" do
+        Rails.stub(:env, ActiveSupport::StringInquirer.new('production')) do
+            get biographies_path
+            assert Rails.env.production?
+            assert_select "a.btn", false, {:text => "New"}
+            assert_select "a.btn", false, {:text => "Edit"}
+            assert_select "a.btn", false, {:text => "Delete"}
+        end
+        Rails.stub(:env, ActiveSupport::StringInquirer.new('staging')) do
+            get biographies_path
+            assert Rails.env.staging?
+            assert_select "a.btn", false, {:text => "New"}
+            assert_select "a.btn", false, {:text => "Edit"}
+            assert_select "a.btn", false, {:text => "Delete"}
+        end
+    end
+
 
 end
