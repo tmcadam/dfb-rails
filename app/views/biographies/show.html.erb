@@ -5,7 +5,7 @@
     <h4><%= @biography.lifespan %></h4>
 </p>
 
-<%= @biography.body_with_images.html_safe %>
+<%= tag.div @biography.body_with_images.html_safe, class:"biography_body" %>
 
 <% if @biography.authors.present? %>
     <p class="authors">

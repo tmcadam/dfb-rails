@@ -95,4 +95,9 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
         assert_nil assigns(:biography).slug
     end
 
+    test "Summernote elements are present" do
+        get new_biography_path
+        assert_select "textarea#biography_body[data-provider='summernote']"
+    end
+
 end

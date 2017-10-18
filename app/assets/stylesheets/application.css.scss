@@ -20,6 +20,7 @@ $blockquote-font-size: 15px;
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "lightbox-bootstrap";
+@import "summernote";
 
 html {
   position: relative;
@@ -65,9 +66,6 @@ body {
  .container{
       max-width: 850px;
  }
-.btn-group {
-    display: flex;
-}
 .authors {
     clear: both;
 }
@@ -76,6 +74,9 @@ body {
 }
 .caption {
     word-wrap: break-word;
+}
+div.biography_body h5 {
+    font-weight: bold;
 }
 
 @media screen and (max-width: 767px) {

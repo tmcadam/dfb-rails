@@ -15,6 +15,13 @@ GIT
       kaminari-core (= 1.0.1)
     kaminari-core (1.0.1)
 
+GIT
+  remote: https://github.com/summernote/summernote-rails.git
+  revision: 57b2c48e916e14e1a515ced14a4ab11609f02037
+  specs:
+    summernote-rails (0.8.3.0)
+      railties (>= 3.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -94,6 +101,12 @@ GEM
     globalid (0.4.0)
       activesupport (>= 4.2.0)
     i18n (0.8.6)
+    jasmine-core (2.8.0)
+    jasmine-rails (0.14.3)
+      jasmine-core (>= 1.3, < 3.0)
+      phantomjs (>= 1.9)
+      railties (>= 3.2.0)
+      sprockets-rails
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
@@ -131,6 +144,7 @@ GEM
       mime-types
       mimemagic (~> 0.3.0)
     pg (0.21.0)
+    phantomjs (2.1.1.0)
     public_suffix (3.0.0)
     puma (3.10.0)
     rack (2.0.3)
@@ -231,6 +245,7 @@ DEPENDENCIES
   capybara (~> 2.13)
   coffee-rails (~> 4.2)
   database_cleaner
+  jasmine-rails
   jbuilder (~> 2.5)
   jquery-rails
   json
@@ -247,6 +262,7 @@ DEPENDENCIES
   simple_form
   spring
   spring-watcher-listen (~> 2.0.0)
+  summernote-rails!
   truncate_html
   turbolinks (~> 5)
   tzinfo-data
