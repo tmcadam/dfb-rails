@@ -10,7 +10,6 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
     test "can show biography using slug" do
         get biography_path("slug_name1") #uses one of the fixtures
         assert_response :success
-
     end
 
     test "404 if biography id or slug not found" do
@@ -98,6 +97,28 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
     test "Summernote elements are present" do
         get new_biography_path
         assert_select "textarea#biography_body[data-provider='summernote']"
+    end
+
+    test "creates biography with correct params and redirects to show" do
+        DatabaseCleaner.clean
+        assert_difference('Biography.count') do
+            post biographies_path, params: { biography: { title: 'Biography Title',
+                                                            slug: 'biography_title',
+                                                            body: 'Biography body',
+                                                            authors: 'Authors',
+                                                            lifespan: '1921-1987'}}
+        end
+        assert_redirected_to biography_path(Biography.last)
+    end
+
+    test "re-renders new form if validation fails on create" do
+        assert_no_difference('Biography.count') do
+            post biographies_path, params: { biography: { title: 'Biography Title',
+                                                            slug: '',
+                                                            body: 'Biography body' }}
+        end
+        assert_template :new
+        assert_not_nil assigns(:biography)
     end
 
 end

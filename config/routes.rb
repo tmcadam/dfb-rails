@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  resources :biographies, only: [:show, :index, :new]
+  resources :biographies, only: [:show, :index, :new, :create]
   if Rails.env.development? or Rails.env.test?
       resources :images
   end
