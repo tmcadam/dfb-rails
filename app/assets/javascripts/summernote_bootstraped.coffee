@@ -17,5 +17,6 @@ $j(document).on "turbolinks:load", ->
              styleTags: ['p',
                         {tag: 'blockquote', title: 'Quotation'},
                         {tag: 'h5', title: 'Section heading'}]
+             onCreateLink: (url) -> url
 
     do $j('.dropdown-toggle').dropdown
