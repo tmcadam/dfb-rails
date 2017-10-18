@@ -12,7 +12,7 @@ $j(document).on "turbolinks:load", ->
                         ['para', ['style']],
                         ['font', ['bold', 'italic', 'underline', 'clear']],
                         ['link', ['link']],
-                        ['misc', ['codeview']]
+                        ['misc', ['codeview', 'undo', 'redo']]
                     ]
              styleTags: ['p',
                         {tag: 'blockquote', title: 'Quotation'},
