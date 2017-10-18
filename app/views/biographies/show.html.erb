@@ -13,6 +13,12 @@
     </p>
 <% end %>
 
+<% if @biography.revisions.present? %>
+    <p class="revisions">
+        <%= @biography.revisions %>
+    </p>
+<% end %>
+
 <% if Rails.env.development? or Rails.env.test? %>
      <p>
         <%= link_to "Back", biographies_path, class: "btn btn-default", role:"button" %>

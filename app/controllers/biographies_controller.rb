@@ -47,7 +47,7 @@ class BiographiesController < ApplicationController
     private
 
         def biography_params
-            params.require(:biography).permit(:title, :body, :slug, :authors, :lifespan)
+            params.require(:biography).permit(:title, :body, :slug, :authors, :lifespan, :revisions)
         end
 
 end

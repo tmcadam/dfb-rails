@@ -110,7 +110,8 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
                                                             slug: 'biography_title',
                                                             body: 'Biography body',
                                                             authors: 'Authors',
-                                                            lifespan: '1921-1987'}}
+                                                            lifespan: '1921-1987',
+                                                            revisions: '2017 - Joe Blow'}}
         end
         assert_redirected_to biography_path(Biography.last)
     end
