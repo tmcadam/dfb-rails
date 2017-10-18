@@ -14,9 +14,7 @@
 <% end %>
 
 <% if @biography.revisions.present? %>
-    <p class="revisions">
-        <%= @biography.revisions %>
-    </p>
+<%= simple_format @biography.revisions, class: "small" %>
 <% end %>
 
 <% if Rails.env.development? or Rails.env.test? %>
