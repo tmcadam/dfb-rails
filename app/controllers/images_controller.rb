@@ -1,4 +1,5 @@
 class ImagesController < ApplicationController
+    before_action :restrict_to_development
 
     def index
         @images = Image.all

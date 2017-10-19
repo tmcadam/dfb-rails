@@ -41,6 +41,7 @@ gem "paperclip", "~> 5.0.0"
 gem 'simple_form'
 gem 'lightbox-bootstrap-rails', '5.1.0.1'
 gem 'pg'
+gem 'summernote-rails', :git => 'https://github.com/summernote/summernote-rails.git'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -50,6 +51,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
+  gem 'minitest-rails'
   gem 'selenium-webdriver'
   gem 'rails-controller-testing'
   gem 'database_cleaner'
@@ -62,7 +64,6 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'database_cleaner'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

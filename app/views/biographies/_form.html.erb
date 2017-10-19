@@ -1,0 +1,11 @@
+<%= simple_form_for @biography, url: url, method: method do |f| %>
+  <%= f.input :title %>
+  <%= f.input :slug %>
+  <%= f.input :lifespan %>
+  <%= f.input :body, as: :summernote %>
+  <%= f.input :authors %>
+  <%= f.input :revisions %>
+
+  <%= link_to "Back", biographies_path, class: "btn btn-default", role:"button" %>
+  <%= f.button :submit %>
+<% end %>

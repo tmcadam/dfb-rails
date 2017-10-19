@@ -60,3 +60,6 @@ end
 
 puts "Bios: #{Biography.count}"
 puts "Imgs: #{Image.count}"
+ActiveRecord::Base.connection.reset_pk_sequence!(Biography.table_name)
+ActiveRecord::Base.connection.reset_pk_sequence!(Image.table_name)
+ActiveRecord::Base.connection.reset_pk_sequence!(StaticContent.table_name)

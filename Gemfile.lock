@@ -15,6 +15,13 @@ GIT
       kaminari-core (= 1.0.1)
     kaminari-core (1.0.1)
 
+GIT
+  remote: https://github.com/summernote/summernote-rails.git
+  revision: 57b2c48e916e14e1a515ced14a4ab11609f02037
+  specs:
+    summernote-rails (0.8.3.0)
+      railties (>= 3.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -120,6 +127,9 @@ GEM
     mini_mime (0.1.4)
     mini_portile2 (2.3.0)
     minitest (5.10.3)
+    minitest-rails (3.0.0)
+      minitest (~> 5.8)
+      railties (~> 5.0)
     multi_json (1.12.2)
     nio4r (2.1.0)
     nokogiri (1.8.1)
@@ -237,6 +247,7 @@ DEPENDENCIES
   kaminari!
   lightbox-bootstrap-rails (= 5.1.0.1)
   listen (>= 3.0.5, < 3.2)
+  minitest-rails
   paperclip (~> 5.0.0)
   pg
   puma (~> 3.7)
@@ -247,6 +258,7 @@ DEPENDENCIES
   simple_form
   spring
   spring-watcher-listen (~> 2.0.0)
+  summernote-rails!
   truncate_html
   turbolinks (~> 5)
   tzinfo-data

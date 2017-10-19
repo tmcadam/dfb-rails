@@ -5,10 +5,22 @@
     <h4><%= @biography.lifespan %></h4>
 </p>
 
-<%= @biography.body_with_images.html_safe %>
+<%= tag.div @biography.body_with_images.html_safe, class:"biography_body" %>
 
 <% if @biography.authors.present? %>
     <p class="authors">
         <strong>Authors:</strong> <%= @biography.authors %>
+    </p>
+<% end %>
+
+<% if @biography.revisions.present? %>
+<%= simple_format @biography.revisions, class: "small" %>
+<% end %>
+
+<% if Rails.env.development? or Rails.env.test? %>
+     <p>
+        <%= link_to "Back", biographies_path, class: "btn btn-default", role:"button" %>
+        <%= link_to "Edit", edit_biography_path, class: "btn btn-default", role:"button" %>
+        <%= link_to "Delete", biography_path, class: "btn btn-default", role:"button" , data: {:confirm => 'Are you sure?'}, method: :DELETE %>
     </p>
 <% end %>
