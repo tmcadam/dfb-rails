@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
     protected
         def restrict_to_development
-            head(:bad_request) unless Rails.env.development? or Rails.env.test?
+            raise ActionController::RoutingError.new('Not Found') unless Rails.env.development? or Rails.env.test?
         end
 
 end
