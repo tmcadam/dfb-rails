@@ -6,60 +6,75 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'json'
+require 'csv'
 
 ## Cleanup First
-StaticContent.destroy_all
-Image.destroy_all
-Biography.destroy_all
+# StaticContent.destroy_all
+# Image.destroy_all
+# Biography.destroy_all
+Author.destroy_all
 
 ## Load static content
-StaticContent.create(   title: "Home",
-                        slug: "home",
-                        body: "<p>Some indroduction content here.</p>")
-StaticContent.create(   title: "Contacts",
-                        slug: "contacts",
-                        body: "<p>Some contact details here.</p>")
-StaticContent.create(   title: "About",
-                        slug: "about",
-                        body: "<p>Some information .</p>")
+# StaticContent.create(   title: "Home",
+#                         slug: "home",
+#                         body: "<p>Some indroduction content here.</p>")
+# StaticContent.create(   title: "Contacts",
+#                         slug: "contacts",
+#                         body: "<p>Some contact details here.</p>")
+# StaticContent.create(   title: "About",
+#                         slug: "about",
+#                         body: "<p>Some information .</p>")
 
 ## Load bios
-file = File.read('db/data-cleanup/bios.json')
-bios = JSON.parse(file)
-bios.each do |bio|
-    Biography.create(   id: bio["id"],
-                        title: bio["title"],
-                        lifespan: bio["lifespan"],
-                        body: bio["body"],
-                        authors: bio["author"],
-                        slug: bio["slug"] )
-    puts "Bio: #{bio["title"]}"
-end
+# file = File.read('db/data-cleanup/bios.json')
+# bios = JSON.parse(file)
+# bios.each do |bio|
+#     Biography.create(   id: bio["id"],
+#                         title: bio["title"],
+#                         lifespan: bio["lifespan"],
+#                         body: bio["body"],
+#                         authors: bio["author"],
+#                         slug: bio["slug"] )
+#     puts "Bio: #{bio["title"]}"
+# end
 
 ## Load images
-file = File.read('db/data-cleanup/images-captions.json')
-imgs = JSON.parse(file)
-imgs.each do |img|
+# file = File.read('db/data-cleanup/images-captions.json')
+# imgs = JSON.parse(file)
+# imgs.each do |img|
+#
+#     base_file_name = "#{img['id']}".rjust(4, padstr='0')
+#     path = "#{Rails.root}/db/data-cleanup/images/"
+#
+#     if Pathname(path + base_file_name + ".jpg" ).exist?
+#         f = File.new(path + base_file_name + ".jpg")
+#     elsif Pathname(path + base_file_name + ".png" ).exist?
+#         f = File.new(path + base_file_name + ".png")
+#     end
+#     Image.create(   id: img["id"],
+#                     biography_id: img["biography_id"],
+#                     title: img["title"],
+#                     caption: img["caption"],
+#                     attribution: img["attribution"],
+#                     image: f )
+#     puts "Image: #{img["title"]}"
+# end
 
-    base_file_name = "#{img['id']}".rjust(4, padstr='0')
-    path = "#{Rails.root}/db/data-cleanup/images/"
-
-    if Pathname(path + base_file_name + ".jpg" ).exist?
-        f = File.new(path + base_file_name + ".jpg")
-    elsif Pathname(path + base_file_name + ".png" ).exist?
-        f = File.new(path + base_file_name + ".png")
-    end
-    Image.create(   id: img["id"],
-                    biography_id: img["biography_id"],
-                    title: img["title"],
-                    caption: img["caption"],
-                    attribution: img["attribution"],
-                    image: f )
-    puts "Image: #{img["title"]}"
+## Load Authors
+csv_text = File.read('db/data-cleanup/authors.csv')
+csv = CSV.parse(csv_text, :headers => true)
+csv.each do |row|
+    Author.create(
+        name: row['author'],
+        biography: row['bio'],
+        contributions: row['contributions']
+    )
 end
 
 puts "Bios: #{Biography.count}"
 puts "Imgs: #{Image.count}"
-ActiveRecord::Base.connection.reset_pk_sequence!(Biography.table_name)
-ActiveRecord::Base.connection.reset_pk_sequence!(Image.table_name)
-ActiveRecord::Base.connection.reset_pk_sequence!(StaticContent.table_name)
+puts "Authors: #{Author.count}"
+# ActiveRecord::Base.connection.reset_pk_sequence!(Biography.table_name)
+# ActiveRecord::Base.connection.reset_pk_sequence!(Image.table_name)
+# ActiveRecord::Base.connection.reset_pk_sequence!(StaticContent.table_name)
+ActiveRecord::Base.connection.reset_pk_sequence!(Author.table_name)
