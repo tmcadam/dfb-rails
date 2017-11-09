@@ -1,0 +1,21 @@
+<h3>
+  <strong>Authors</strong>
+</h3>
+<div id="authors" class="row">
+    <% if @authors.each do |author| %>
+        <div class="item col-md-4">
+            <div class="well">
+                <%= tag.h4( author.name ) %>
+                <% if author.biography %>
+                    <%= tag.p( author.biography ) %>
+                <% end %>
+                <h6><small>Contributions</small></h6>
+                <%= tag.p( author.contributions ) %>
+            </div>
+        </div>
+    <% end.empty? %>
+        <div class="item">
+            No authors
+        </div>
+    <% end %>
+</div>

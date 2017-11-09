@@ -1,7 +1,10 @@
 require "test_helper"
 
-describe AuthorsController do
-  # it "must be a real test" do
-  #   flunk "Need real tests"
-  # end
+class AuthorsControllerTest < ActionDispatch::IntegrationTest
+
+    test "can show authors index" do
+        get authors_path
+        assert_response :success
+    end
+
 end

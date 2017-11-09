@@ -17,4 +17,6 @@
 #= require lightbox-bootstrap
 #= require bootstrap
 #= require summernote
+#= require isotope
+
 #= require_tree .
