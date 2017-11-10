@@ -15,8 +15,8 @@
 #= require turbolinks
 #= require bootstrap-sprockets
 #= require lightbox-bootstrap
-#= require bootstrap
 #= require summernote
 #= require isotope
+#= require scrollTo
 
 #= require_tree .

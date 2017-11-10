@@ -43,6 +43,7 @@ gem 'lightbox-bootstrap-rails', '5.1.0.1'
 gem 'pg'
 gem 'summernote-rails', :git => 'https://github.com/summernote/summernote-rails.git'
 gem 'isotope-rails', '~> 2.2', '>= 2.2.2'
+gem 'scrollto-rails'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

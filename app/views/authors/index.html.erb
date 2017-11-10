@@ -18,7 +18,9 @@
                         <% if not biography.has_single_author %>
                             <ul>
                                 <li>with <strong>
-                                    <%= link_to biography.other_author(author).name, "javascript:document.getElementById('#{biography.other_author(author).simple_slug}').scrollIntoView(true);" %>
+                                    <%= tag.span biography.other_author(author).name,
+                                        class: "author-link",
+                                        data:  { "hash": biography.other_author(author).simple_slug  } %>
                                 </strong></li>
                             </ul>
                         <% end %>
