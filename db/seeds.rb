@@ -13,6 +13,7 @@ require 'csv'
 # Image.destroy_all
 # Biography.destroy_all
 Author.destroy_all
+BiographyAuthor.destroy_all
 
 ## Load static content
 # StaticContent.create(   title: "Home",
@@ -65,16 +66,27 @@ csv_text = File.read('db/data-cleanup/authors.csv')
 csv = CSV.parse(csv_text, :headers => true)
 csv.each do |row|
     Author.create(
-        name: row['author'],
-        biography: row['bio'],
-        contributions: row['contributions']
+        id: row['id'],
+        name: row['name'],
+        biography: row['biography']
+    )
+end
+csv_text = File.read('db/data-cleanup/biography_authors.csv')
+csv = CSV.parse(csv_text, :headers => true)
+csv.each do |row|
+    BiographyAuthor.create(
+        biography_id: row['biography_id'],
+        author_id: row['author_id'],
+        author_position: row['author_position']
     )
 end
 
 puts "Bios: #{Biography.count}"
 puts "Imgs: #{Image.count}"
 puts "Authors: #{Author.count}"
+puts "BioAuthors: #{BiographyAuthor.count}"
 # ActiveRecord::Base.connection.reset_pk_sequence!(Biography.table_name)
 # ActiveRecord::Base.connection.reset_pk_sequence!(Image.table_name)
 # ActiveRecord::Base.connection.reset_pk_sequence!(StaticContent.table_name)
 ActiveRecord::Base.connection.reset_pk_sequence!(Author.table_name)
+ActiveRecord::Base.connection.reset_pk_sequence!(BiographyAuthor.table_name)

@@ -5,6 +5,9 @@ class Biography < ApplicationRecord
     validates :body, presence: true
     default_scope { order(title: :asc) }
 
+    has_many :biography_authors
+    #has_many :authors, :through => :biography_authors
+
     def body_with_images
         output = ""
         images = generate_image_tags
