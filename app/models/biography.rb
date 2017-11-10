@@ -22,6 +22,16 @@ class Biography < ApplicationRecord
         output
     end
 
+    def has_single_author
+        biography_authors.length <= 1 ? true : false
+    end
+
+    def other_author (author)
+        if not has_single_author
+            biography_authors.where.not(author_id: author.id).first.author
+        end
+    end
+
 private
 
     def insert_image(p, images)

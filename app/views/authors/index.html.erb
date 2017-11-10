@@ -3,12 +3,28 @@
 </h3>
 <div id="authors" class="row">
     <% if @authors.each do |author| %>
-        <div class="item col-md-4">
+        <div class="item col-md-6">
             <div class="well">
+                <%= tag.span(nil, class: "anchor", id: author.simple_slug) %>
                 <%= tag.h4( author.name ) %>
                 <% if author.biography %>
                     <%= tag.p( author.biography ) %>
                 <% end %>
+                <hr>
+                <small><ul>
+                <% author.biographys.each do |biography| %>
+                    <li>
+                        <%= link_to biography.title, biography_path(biography) %>
+                        <% if not biography.has_single_author %>
+                            <ul>
+                                <li>with <strong>
+                                    <%= link_to biography.other_author(author).name, "javascript:document.getElementById('#{biography.other_author(author).simple_slug}').scrollIntoView(true);" %>
+                                </strong></li>
+                            </ul>
+                        <% end %>
+                    </li>
+                <% end %>
+                </ul></small>
             </div>
         </div>
     <% end.empty? %>

@@ -17,6 +17,17 @@ div.well h4 {
     font-weight: bold;
 }
 
+.anchor{
+   display:block;
+   height:80px; /* this is the height of your header */
+   margin-top:-80px; /* this is again negative value of the height of your header */
+   visibility:hidden;
+}
+
+div.well a {
+    color: #272727;
+}
+
 /* Isotope Transitions
 ------------------------------- */
 .isotope,

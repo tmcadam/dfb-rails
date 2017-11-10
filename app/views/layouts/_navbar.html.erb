@@ -13,7 +13,16 @@
       <ul class="nav navbar-nav">
           <li><%= link_to "Home", static_content_path("home") %></li>
           <li><%= link_to "Biographies", biographies_path %></li>
-          <li><%= link_to "About", static_content_path("about") %></li>
+          <li>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">About<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><%= link_to "Introduction", static_content_path("about") %></li>
+                    <li><%= link_to "Authors", authors_path %></li>
+                </ul>
+          </li>
+          <ul class="nav collapse">
+                <li><%= link_to "Authors", authors_path %></li>
+          </ul>
           <li><%= link_to "Contacts", static_content_path("contacts") %></li>
       </ul>
       <%= form_tag biographies_path, :method => 'get', class: "navbar-form navbar-right" do %>

@@ -60,4 +60,15 @@ class AuthorTest < ActiveSupport::TestCase
         assert_equal @a1.biographys.length, 2
     end
 
+    test "test simple_slug returns a slug" do
+        @a1.name = "Author1"
+        assert_equal "author1", @a1.simple_slug
+
+        @a1.name = "Author 1"
+        assert_equal "author-1", @a1.simple_slug
+
+        @a1.name = "Author 1^"
+        assert_equal "author-1", @a1.simple_slug
+    end
+
 end

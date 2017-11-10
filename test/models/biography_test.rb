@@ -93,6 +93,30 @@ class BiographyTest < ActiveSupport::TestCase
         assert_equal @b.body, @b.body_with_images
     end
 
+    test "has_single_author returns true if single author and returns false if multiple authors" do
+        @a1 = Author.new(name:"Author1", biography:"Biography of author")
+        @a2 = Author.new(name:"Author2", biography:"Biography of author")
+        @b.save
+
+        @b.biography_authors.create(author: @a1, author_position: 1)
+        assert @b.has_single_author
+
+        @b.biography_authors.create(author: @a2, author_position: 2)
+        assert_not @b.has_single_author
+    end
+
+    test "other_author returns the other author for biography or nil" do
+        @a1 = Author.new(name:"Author1", biography:"Biography of author")
+        @a2 = Author.new(name:"Author2", biography:"Biography of author")
+        @b.save
+
+        @b.biography_authors.create(author: @a1, author_position: 1)
+        assert_nil @b.other_author (@a1)
+
+        @b.biography_authors.create(author: @a2, author_position: 2)
+        assert_equal @b.other_author(@a1).name, @a2.name
+    end
+
     teardown do
         @b.images.each do |img|
             img.destroy

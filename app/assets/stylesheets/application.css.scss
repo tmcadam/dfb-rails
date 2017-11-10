@@ -35,6 +35,15 @@ body {
 .navbar-brand {
     display: none;
 }
+
+.dropdown-menu > .active > a,
+.dropdown-menu > .active > a:hover,
+.dropdown-menu > .active > a:focus {
+    color: #555;
+    background-color: #E7E7E7;
+}
+
+
 .page-header {
     margin-top: 0px;
 }
