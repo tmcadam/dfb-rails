@@ -31,9 +31,16 @@ div.well h4 {
    visibility:hidden;
 }
 
-div.well a {
+.more-link {
+    color: #337ab7 !important;
+    list-style-type: none !important;
+}
+
+div.well a,
+div.modal-body a {
     color: #272727;
 }
+
 
 /* Isotope Transitions
 ------------------------------- */

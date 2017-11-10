@@ -1,0 +1,43 @@
+<!-- Authors modal -->
+<div id="authors-info" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Authors</h4>
+        </div>
+        <div class="modal-body">
+        <% @biography.biography_authors.each do |biography_author| %>
+            <%= tag.h4( tag.strong(biography_author.author.name) ) %>
+            <% if biography_author.author.biography %>
+                <%= tag.p( biography_author.author.biography ) %>
+            <% end %>
+            <small><ul>
+            <% biography_author.author.biographys.take(3).each do |biography| %>
+                <li>
+                    <%= link_to biography.title, biography_path(biography) %>
+                    <% if not biography.has_single_author %>
+                        <ul>
+                            <li>with <strong>
+                                <%= link_to biography.other_author(biography_author.author).name,
+                                    "#{authors_path}##{biography.other_author(biography_author.author).simple_slug}" %>
+                            </strong></li>
+                        </ul>
+                    <% end %>
+                </li>
+            <% end %>
+            <% if biography_author.author.biographys.length > 3 %>
+                <li class="more-link"><%= link_to "more...", "#{authors_path}##{biography_author.author.simple_slug}", class:"more-link" %></li>
+            <% end %>
+            </ul></small>
+            <% if(biography_author != @biography.biography_authors.last) %>
+                <hr>
+            <% end %>
+        <% end %>
+        </div>
+        </div>
+
+    </div>
+</div>

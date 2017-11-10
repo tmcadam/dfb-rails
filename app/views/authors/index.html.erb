@@ -17,11 +17,11 @@
                         <%= link_to biography.title, biography_path(biography) %>
                         <% if not biography.has_single_author %>
                             <ul>
-                                <li>with <strong>
+                                <i><li>with
                                     <%= tag.span biography.other_author(author).name,
                                         class: "author-link",
                                         data:  { "hash": biography.other_author(author).simple_slug  } %>
-                                </strong></li>
+                                </li></i>
                             </ul>
                         <% end %>
                     </li>

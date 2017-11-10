@@ -9,7 +9,7 @@
 
 <% if @biography.authors.present? %>
     <p class="authors">
-        <%= tag.strong("Authors:"); @biography.authors %>
+        <%= tag.strong("Authors: ") + @biography.authors %>
         <button type="button" class="btn btn-default btn-xs pull-right" data-toggle="modal" data-target="#authors-info">Author Info</button>
     </p>
 <% end %>
@@ -26,26 +26,4 @@
     </p>
 <% end %>
 
-<!-- Authors modal -->
-<div id="authors-info" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Authors</h4>
-        </div>
-        <div class="modal-body">
-        <% @biography.biography_authors.each do |biography_author| %>
-            <%= tag.h4( tag.strong(biography_author.author.name) ) %>
-            <% if biography_author.author.biography %>
-                <%= tag.p( biography_author.author.biography ) %>
-            <% end %>
-            <%= link_to "more...", "#{authors_path}##{biography_author.author.simple_slug}" %>
-        <% end %>
-        </div>
-        </div>
-
-    </div>
-</div>
+<%= render partial: 'authors', locals: {biography: @biography} %>
