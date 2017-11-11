@@ -67,7 +67,8 @@ csv = CSV.parse(csv_text, :headers => true)
 csv.each do |row|
     Author.create(
         id: row['id'],
-        name: row['name'],
+        first_name: row['first-name'],
+        last_name: row['last-name'],
         biography: row['biography']
     )
 end
