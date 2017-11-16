@@ -40,10 +40,7 @@
     <footer class="footer">
         <div class="container">
             <p>&copy; 2012-17 David Tatham. All rights reserved.<br>
-            <% if user_signed_in? %>
-                <small>Logged in as: <%= current_user.email %>.</small>
-                 <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'small'  %>
-            <% else %>
+            <% if not user_signed_in? %>
                 <%= link_to "Login", new_user_session_path, :class => 'small'  %>
              <% end %>
           </p>
