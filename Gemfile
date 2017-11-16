@@ -44,6 +44,7 @@ gem 'pg'
 gem 'summernote-rails', :git => 'https://github.com/summernote/summernote-rails.git'
 gem 'isotope-rails', '~> 2.2', '>= 2.2.2'
 gem 'scrollto-rails'
+gem 'devise'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

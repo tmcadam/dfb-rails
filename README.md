@@ -25,9 +25,13 @@ Things you may want to cover:
    - Add a role `sudo -u postgres createuser --interactive`
 
 * How to run the test suite
+  * ```rails test```
 
 * Services (job queues, cache servers, search engines, etc.)
 
 * Deployment instructions
 
-* ...
+* Creating a user
+  * At the rails console
+    * ```rails console```
+    * ```User.create!({:email => "guy@gmail.com", :password => "111111", :password_confirmation => "111111" })```

@@ -16,22 +16,38 @@
      <![endif]-->
   </head>
   <body>
-
     <%= render 'layouts/navbar' %>
 
     <!-- Begin page content -->
     <div class="container">
+
         <div class="page-header">
             <h1>Dictionary of Falklands Biography
             <small><br>including South Georgia</small></h1>
         </div>
-    <%= yield %>
+
+        <% unless alert.nil? %>
+            <div class="alert alert-info"><%= alert %></p></div>
+        <% end %>
+        <% unless notice.nil? %>
+            <div class="alert alert-warning"><%= notice %></div>
+        <% end %>
+
+        <%= yield %>
     </div>
 
     <!-- Sticky footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2012-17 David Tatham. All rights reserved.</p>
+            <p>&copy; 2012-17 David Tatham. All rights reserved.<br>
+            <% if user_signed_in? %>
+                <small>Logged in as: <%= current_user.email %>.</small>
+                 <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'small'  %>
+            <% else %>
+                <%= link_to "Login", new_user_session_path, :class => 'small'  %>
+             <% end %>
+          </p>
+
         </div>
     </footer>
 

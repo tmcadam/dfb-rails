@@ -56,7 +56,8 @@ body {
   text-align: center;
   /* Set the fixed height of the footer here */
   height: 60px;
-  line-height: 60px;
+  line-height: 15px;
+  padding-top: 20px;
 }
 .show-mobile {
     display: none !important;
@@ -114,8 +115,10 @@ display: flex;
         margin-bottom: 0px;
     }
     .footer {
-         height: 30px;
+         height: 40px;
          line-height: 30px;
+         line-height: 15px;
+         padding-top: 5px;
     }
 }
 
