@@ -1,6 +1,6 @@
 <h3>
   <strong>Biographies</strong>
-  <% if Rails.env.development? or Rails.env.test? %>
+  <% if user_signed_in? %>
       <%= link_to "New", new_biography_path, class: "btn btn-default btn-xs pull-right", role:"button" %>
   <% end %>
 </h3>
@@ -9,7 +9,7 @@
     <tr>
         <td>
             <%= link_to biography.title, biography_path(biography.slug) %> <%= biography.lifespan %>
-            <% if Rails.env.development? or Rails.env.test? %>
+            <% if user_signed_in? %>
                 <%= link_to "Edit", edit_biography_path(biography), class: "btn btn-default btn-xs pull-right", role:"button" %>
                 <%= link_to "Delete", biography_path(biography),
                                         class: "btn btn-default btn-xs pull-right",

@@ -1,5 +1,5 @@
 class BiographiesController < ApplicationController
-    before_action :restrict_to_development, :only => [:new, :create, :edit, :update, :destroy]
+    before_action :authenticate_user!, :only => [:new, :create, :edit, :update, :destroy]
 
     def show
         @biography = Biography.find_by(slug: params[:id]) || Biography.find(params[:id])

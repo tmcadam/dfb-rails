@@ -8,6 +8,8 @@ class ImageControllerTest < ActionDispatch::IntegrationTest
         @img1 = Image.create( id: 1, biography: @b, title: "Bob Bobber", caption: "Bob at work", image: @image)
         @img2 = Image.create( id: 2, biography: @b, title: "Mike Michaels", caption: "Mike at work", image: @image)
         ActiveRecord::Base.connection.reset_pk_sequence!('images')
+        @u1 = User.create(email: "guy@gmail.com", password: "111111", password_confirmation: "111111" )
+        sign_in @u1
     end
 
     test "can show image page using id" do
@@ -117,6 +119,29 @@ class ImageControllerTest < ActionDispatch::IntegrationTest
         assert_not File.file?(@img1.image.path("medium"))
         assert_not File.file?(@img1.image.path("thumb"))
         assert_redirected_to images_path
+    end
+
+    test "redirected if not logged in, for all crud" do
+        sign_out(@u1)
+
+        delete image_path(@img1)
+        assert_redirected_to new_user_session_path
+
+        get edit_image_path(@img1)
+        assert_redirected_to new_user_session_path
+
+        post images_path, params: {     image: { biography_id: 1,
+                                                 image: @image,
+                                                 title: 'Image title',
+                                                 caption: 'Image caption' }}
+        assert_redirected_to new_user_session_path
+
+        patch image_url(@img1), params: { image: { title: "Updated title" } }
+        assert_redirected_to new_user_session_path
+
+        get new_image_path
+        assert_redirected_to new_user_session_path
+
     end
 
     teardown do

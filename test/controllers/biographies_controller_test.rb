@@ -2,6 +2,10 @@ require 'test_helper'
 
 class BiographiesControllerTest < ActionDispatch::IntegrationTest
 
+    setup do
+        @u1 = User.create(email: "guy@gmail.com", password: "111111", password_confirmation: "111111" )
+    end
+
     test "can show biography using id" do
         get biography_path(1) # uses one of the fixtures
         assert_response :success
@@ -85,6 +89,7 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "new renders empty biography form" do
+        sign_in @u1
         get new_biography_path
         assert_response :success
         assert_nil assigns(:biography).title
@@ -95,16 +100,18 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "Summernote elements are present" do
+        sign_in @u1
         get new_biography_path
         assert_select "textarea#biography_body[data-provider='summernote']"
-        DatabaseCleaner.clean
+        Biography.destroy_all
         @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body")
         get edit_biography_path(@b)
         assert_select "textarea#biography_body[data-provider='summernote']"
     end
 
     test "creates biography with correct params and redirects to show" do
-        DatabaseCleaner.clean
+        sign_in @u1
+        Biography.destroy_all
         assert_difference('Biography.count') do
             post biographies_path, params: { biography: { title: 'Biography Title',
                                                             slug: 'biography_title',
@@ -117,6 +124,7 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "re-renders new form if validation fails on create" do
+        sign_in @u1
         assert_no_difference('Biography.count') do
             post biographies_path, params: { biography: { title: 'Biography Title',
                                                             slug: '',
@@ -127,7 +135,7 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "edit returns populated form" do
-        DatabaseCleaner.clean
+        sign_in @u1
         @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body")
         get edit_biography_path(@b)
         assert_response :success
@@ -140,7 +148,7 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "updates biography with correct params and redirects to show" do
-        DatabaseCleaner.clean
+        sign_in @u1
         @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body")
         patch biography_url(@b), params: { biography: { title: "Updated title" } }
         assert_redirected_to biography_path(@b)
@@ -149,7 +157,7 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "re-renders new form if validation fails on update" do
-        DatabaseCleaner.clean
+        sign_in @u1
         @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body")
         patch biography_path(@b), params: { biography: { title: nil }}
         assert_template :edit
@@ -157,7 +165,7 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "delete will delete biography" do
-        DatabaseCleaner.clean
+        sign_in @u1
         @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body")
         assert_difference('Biography.count', -1) do
             delete biography_path(@b)
@@ -165,8 +173,8 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
         assert_redirected_to biographies_path
     end
 
-    test "delete, edit, back buttons present in detail views for dev and test" do
-        DatabaseCleaner.clean
+    test "delete, edit, back buttons present in detail views if signed in" do
+        sign_in @u1
         @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body")
         get biography_path(@b)
         assert_select "a.btn[href=?]", biographies_path, {:text => "Back"}
@@ -174,46 +182,51 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
         assert_select "a.btn[href=?]", biography_path, {:text => "Delete"}
     end
 
-    test "delete, edit, back buttons present not in detail views for production and staging" do
-        DatabaseCleaner.clean
+    test "delete, edit, back buttons not present in detail views for production and staging" do
         @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body")
-        Rails.stub(:env, ActiveSupport::StringInquirer.new('production')) do
-            assert Rails.env.production?
-            get biography_path(@b)
-            assert_select "a.btn", false, {:text => "Delete"}
-            assert_select "a.btn", false, {:text => "Edit"}
-        end
-        Rails.stub(:env, ActiveSupport::StringInquirer.new('staging')) do
-            assert Rails.env.staging?
-            get biography_path(@b)
-            assert_select "a.btn", false, {:text => "Delete"}
-            assert_select "a.btn", false, {:text => "Edit"}
-        end
+        get biography_path(@b)
+        assert_select "a.btn", false, {:text => "Delete"}
+        assert_select "a.btn", false, {:text => "Edit"}
     end
 
-    test "new, delete, edit, back buttons present in list view for dev and test" do
+    test "new, delete, edit, back buttons present in list view if signed in" do
+        sign_in @u1
         get biographies_path
         assert_select "a.btn", {:text => "New", :count => 1}
         assert_select "a.btn", {:text => "Edit", :count => Biography.count}
         assert_select "a.btn", {:text => "Delete", :count=> Biography.count}
     end
 
-    test "new, delete, edit, back buttons not present in list view in prod and staging" do
-        Rails.stub(:env, ActiveSupport::StringInquirer.new('production')) do
-            get biographies_path
-            assert Rails.env.production?
-            assert_select "a.btn", false, {:text => "New"}
-            assert_select "a.btn", false, {:text => "Edit"}
-            assert_select "a.btn", false, {:text => "Delete"}
-        end
-        Rails.stub(:env, ActiveSupport::StringInquirer.new('staging')) do
-            get biographies_path
-            assert Rails.env.staging?
-            assert_select "a.btn", false, {:text => "New"}
-            assert_select "a.btn", false, {:text => "Edit"}
-            assert_select "a.btn", false, {:text => "Delete"}
-        end
+    test "new, delete, edit, back buttons not present in list view if logged out" do
+        get biographies_path
+        assert_select "a.btn", false, {:text => "New"}
+        assert_select "a.btn", false, {:text => "Edit"}
+        assert_select "a.btn", false, {:text => "Delete"}
     end
 
+    test "redirected if not logged in, for all crud" do
+        @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body")
+        delete biography_path(@b)
+        assert_redirected_to new_user_session_path
+
+        get edit_biography_path(@b)
+        assert_redirected_to new_user_session_path
+
+        post biographies_path, params: { biography: { title: 'Biography Title',
+                                                        slug: '',
+                                                        body: 'Biography body' }}
+        assert_redirected_to new_user_session_path
+
+        patch biography_url(@b), params: { biography: { title: "Updated title" } }
+        assert_redirected_to new_user_session_path
+
+        get new_biography_path
+        assert_redirected_to new_user_session_path
+
+    end
+
+    teardown do
+        DatabaseCleaner.clean
+    end
 
 end

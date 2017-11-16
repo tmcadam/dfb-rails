@@ -10,3 +10,16 @@ class ActiveSupport::TestCase
   fixtures :all
   # Add more helper methods to be used by all tests here...
 end
+
+class ActionDispatch::IntegrationTest
+  def sign_in(user)
+    post user_session_path \
+      "user[email]"    => user.email,
+      "user[password]" => user.password
+  end
+
+  def sign_out(user)
+     delete destroy_user_session_path(user)
+  end
+
+end
