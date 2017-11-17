@@ -82,14 +82,28 @@ require 'csv'
 #     )
 # end
 
-csv_text = File.read('db/data-cleanup/countries.csv')
-csv = CSV.parse(csv_text, :headers => true)
-csv.each do |row|
-    Country.create(
-        id: row['id'],
-        name: row['name']
-    )
-end
+## load countries into Countries model
+# csv_text = File.read('db/data-cleanup/countries.csv')
+# csv = CSV.parse(csv_text, :headers => true)
+# csv.each do |row|
+#     Country.create(
+#         id: row['id'],
+#         name: row['name']
+#     )
+# end
+
+## add conutries to bios
+# file = File.read('db/data-cleanup/bios.json')
+# bios = JSON.parse(file)
+# bios.each do |bio|
+#     @b = Biography.find_by(id: bio["id"])
+#     @b.primary_country_id = bio["country_pri"]
+#     @b.secondary_country_id = bio["country_sec"]
+#     @b.south_georgia = bio["south_georgia"] == 1? true : false
+#     @b.save
+#     puts "Bio: #{@b.title}: #{@b.primary_country.present? ? @b.primary_country.name : "No country" }: #{@b.secondary_country.present? ? @b.secondary_country.name : "No country"}: #{@b.south_georgia}"
+# end
+# Country.find_by(id: 9).destroy
 
 puts "Bios: #{Biography.count}"
 puts "Imgs: #{Image.count}"
