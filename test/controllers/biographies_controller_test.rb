@@ -115,6 +115,9 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
     test "creates biography with correct params and redirects to show" do
         sign_in @u1
         Biography.destroy_all
+        Country.destroy_all
+        Country.create(id: 12, "name": "Country 1")
+        Country.create(id: 1, "name": "Country 2")
         assert_difference('Biography.count') do
             post biographies_path, params: { biography: { title: 'Biography Title',
                                                             slug: 'biography_title',
