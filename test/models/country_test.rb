@@ -4,7 +4,7 @@ class CountryTest < ActiveSupport::TestCase
 
     setup do
         @c1 = Country.new(name: "Name1")
-        @c2 = Country.new(name: "Name2")
+        @c2 = Country.new(name: "AName2")
     end
 
     test "valid country with name" do
@@ -25,6 +25,13 @@ class CountryTest < ActiveSupport::TestCase
         @c2.name = "Name1"
         assert_not @c2.valid?
     end
+
+    test "deafult ordering by name ascending" do
+        @c1.save
+        @c2.save
+        assert_equal Country.all.first, @c2        
+    end
+
 
     teardown do
         DatabaseCleaner.clean
