@@ -12,8 +12,8 @@ require 'csv'
 # StaticContent.destroy_all
 # Image.destroy_all
 # Biography.destroy_all
-Author.destroy_all
-BiographyAuthor.destroy_all
+# Author.destroy_all
+# BiographyAuthor.destroy_all
 
 ## Load static content
 # StaticContent.create(   title: "Home",
@@ -62,23 +62,32 @@ BiographyAuthor.destroy_all
 # end
 
 ## Load Authors
-csv_text = File.read('db/data-cleanup/authors.csv')
+# csv_text = File.read('db/data-cleanup/authors.csv')
+# csv = CSV.parse(csv_text, :headers => true)
+# csv.each do |row|
+#     Author.create(
+#         id: row['id'],
+#         first_name: row['first-name'],
+#         last_name: row['last-name'],
+#         biography: row['biography']
+#     )
+# end
+# csv_text = File.read('db/data-cleanup/biography_authors.csv')
+# csv = CSV.parse(csv_text, :headers => true)
+# csv.each do |row|
+#     BiographyAuthor.create(
+#         biography_id: row['biography_id'],
+#         author_id: row['author_id'],
+#         author_position: row['author_position']
+#     )
+# end
+
+csv_text = File.read('db/data-cleanup/countries.csv')
 csv = CSV.parse(csv_text, :headers => true)
 csv.each do |row|
-    Author.create(
+    Country.create(
         id: row['id'],
-        first_name: row['first-name'],
-        last_name: row['last-name'],
-        biography: row['biography']
-    )
-end
-csv_text = File.read('db/data-cleanup/biography_authors.csv')
-csv = CSV.parse(csv_text, :headers => true)
-csv.each do |row|
-    BiographyAuthor.create(
-        biography_id: row['biography_id'],
-        author_id: row['author_id'],
-        author_position: row['author_position']
+        name: row['name']
     )
 end
 
@@ -86,8 +95,10 @@ puts "Bios: #{Biography.count}"
 puts "Imgs: #{Image.count}"
 puts "Authors: #{Author.count}"
 puts "BioAuthors: #{BiographyAuthor.count}"
+puts "Country: #{Country.count}"
 # ActiveRecord::Base.connection.reset_pk_sequence!(Biography.table_name)
 # ActiveRecord::Base.connection.reset_pk_sequence!(Image.table_name)
 # ActiveRecord::Base.connection.reset_pk_sequence!(StaticContent.table_name)
-ActiveRecord::Base.connection.reset_pk_sequence!(Author.table_name)
-ActiveRecord::Base.connection.reset_pk_sequence!(BiographyAuthor.table_name)
+# ActiveRecord::Base.connection.reset_pk_sequence!(Author.table_name)
+# ActiveRecord::Base.connection.reset_pk_sequence!(BiographyAuthor.table_name)
+ActiveRecord::Base.connection.reset_pk_sequence!(Country.table_name)
