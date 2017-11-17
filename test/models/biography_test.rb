@@ -117,6 +117,32 @@ class BiographyTest < ActiveSupport::TestCase
         assert_equal @b.other_author(@a1).name, @a2.name
     end
 
+    test "can save biography with south_georgia" do
+        @b.south_georgia = true
+        @b.save
+    end
+
+    test "can save biography with primary and secondary countries" do
+        @c1 = Country.create(name: "Country 1")
+        @c2 = Country.create(name: "Country 2")
+        @b.primary_country = @c1
+        @b.secondary_country = @c2
+        @b.save
+        assert_equal @b.primary_country.name, "Country 1"
+        assert_equal @b.secondary_country.name, "Country 2"
+    end
+
+    test "can get 'primary' biographies in country" do
+        @c1 = Country.create(name: "Country 1")
+        @c2 = Country.create(name: "Country 2")
+        @b.primary_country = @c1
+        @b.secondary_country = @c2
+        @b.save
+        assert_equal @c1.biographies.count, 1
+        assert_equal @c1.biographies.first, @b
+    end
+
+
     teardown do
         @b.images.each do |img|
             img.destroy

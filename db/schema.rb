@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171117014750) do
+ActiveRecord::Schema.define(version: 20171117022035) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,9 @@ ActiveRecord::Schema.define(version: 20171117014750) do
     t.datetime "updated_at", null: false
     t.string "slug"
     t.text "revisions"
+    t.integer "primary_country_id"
+    t.integer "secondary_country_id"
+    t.boolean "south_georgia"
     t.index ["slug"], name: "index_biographies_on_slug"
   end
 
@@ -92,4 +95,6 @@ ActiveRecord::Schema.define(version: 20171117014750) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "biographies", "countries", column: "primary_country_id"
+  add_foreign_key "biographies", "countries", column: "secondary_country_id"
 end

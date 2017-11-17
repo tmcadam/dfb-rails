@@ -8,6 +8,9 @@ class Biography < ApplicationRecord
     has_many :biography_authors
     #has_many :authors, :through => :biography_authors
 
+    belongs_to :primary_country, foreign_key: :primary_country_id, class_name:"Country", optional: true
+    belongs_to :secondary_country, foreign_key: :secondary_country_id, class_name:"Country", optional: true
+
     def body_with_images
         output = ""
         images = generate_image_tags
