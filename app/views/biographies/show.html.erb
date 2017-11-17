@@ -6,14 +6,14 @@
 <h4>
 <%= @biography.lifespan %>
 <span class="pull-right">
-    <em>
         <% if @biography.primary_country.present? %>
-            <small>from</small> <%= @biography.primary_country.name + " " %>
-        <% end%>
-        <% if @biography.secondary_country.present? %>
-            (<small>also</small> <%= @biography.secondary_country.name %>)
+        <em><small>
+            from <%= @biography.primary_country.name + " " %>
+            <% if @biography.secondary_country.present? %>
+                (also <%= @biography.secondary_country.name %>)
+            <% end %>
+        </small></em>
         <% end %>
-    </em>
     <% if @biography.south_georgia %>
         <%= tag.button "SG", class:"btn btn-default btn-xs", data:{toggle:"popover", content:"South Georgia", "html":"true"} %>
     <% end %>

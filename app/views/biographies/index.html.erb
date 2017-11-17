@@ -23,10 +23,12 @@
             <br>
             <span class="small">
                 <% if biography.primary_country.present? %>
-                    <%= tag.em biography.primary_country.name + " " %>
+                    <em>
+                    <%= biography.primary_country.name + " " %>
                     <% if biography.secondary_country.present? %>
-                        (also <%= @biography.secondary_country.name %>)
+                        (also <%= biography.secondary_country.name %>)
                     <% end %>
+                </em>
                 <% end %>
                 <% if biography.south_georgia %>
                     <%= tag.button "SG", class:"btn btn-default btn-xs", data:{toggle:"popover", content:"South Georgia", "html":"true"} %>
