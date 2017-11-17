@@ -1,9 +1,25 @@
 <h3>
-  <strong><%= @biography.title %></strong>
+    <strong><%= @biography.title %></strong>
+    <small></small>
 </h3>
-<p>
-    <h4><%= @biography.lifespan %></h4>
-</p>
+
+<h4>
+<%= @biography.lifespan %>
+<span class="pull-right">
+    <em>
+        <% if @biography.primary_country.present? %>
+            <small>from</small> <%= @biography.primary_country.name + " " %>
+        <% end%>
+        <% if @biography.secondary_country.present? %>
+            (<small>also</small> <%= @biography.secondary_country.name %>)
+        <% end %>
+    </em>
+    <% if @biography.south_georgia %>
+        <%= tag.button "SG", class:"btn btn-default btn-xs", data:{toggle:"popover", content:"South Georgia", "html":"true"} %>
+    <% end %>
+</span>
+</h4>
+<br>
 
 <%= tag.div @biography.body_with_images.html_safe, class:"biography_body" %>
 
