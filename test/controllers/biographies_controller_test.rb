@@ -97,6 +97,9 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
         assert_nil assigns(:biography).body
         assert_nil assigns(:biography).authors
         assert_nil assigns(:biography).slug
+        assert_nil assigns(:biography).primary_country
+        assert_nil assigns(:biography).secondary_country
+        assert_nil assigns(:biography).south_georgia
     end
 
     test "Summernote elements are present" do
@@ -118,7 +121,11 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
                                                             body: 'Biography body',
                                                             authors: 'Authors',
                                                             lifespan: '1921-1987',
-                                                            revisions: '2017 - Joe Blow'}}
+                                                            revisions: '2017 - Joe Blow',
+                                                            south_georgia: false,
+                                                            primary_country_id: 12,
+                                                            secondary_country_id: 1
+                                                            }}
         end
         assert_redirected_to biography_path(Biography.last)
     end
@@ -182,7 +189,7 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
         assert_select "a.btn[href=?]", biography_path, {:text => "Delete"}
     end
 
-    test "delete, edit, back buttons not present in detail views for production and staging" do
+    test "delete, edit, back buttons not present in detail views if not signed in" do
         @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body")
         get biography_path(@b)
         assert_select "a.btn", false, {:text => "Delete"}
