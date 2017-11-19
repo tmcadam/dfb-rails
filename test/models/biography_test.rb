@@ -142,6 +142,12 @@ class BiographyTest < ActiveSupport::TestCase
         assert_equal @c1.biographies.first, @b
     end
 
+    test "can set biography to featured" do
+        @b1 = biographies(:three)
+        @b2 = biographies(:two)
+        @b1.update(featured: true)
+        assert_equal 1, Biography.where("featured = ?", true).count
+    end
 
     teardown do
         @b.images.each do |img|
