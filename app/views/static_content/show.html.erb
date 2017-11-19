@@ -3,3 +3,11 @@
 </h3>
 
 <%= @static_content.body.html_safe %>
+
+<% if @static_content.slug == 'home' %>
+<div class="row">
+  <div class="col-sm-4"><div class="well">Biography 1</div></div>
+  <div class="col-sm-4"><div class="well">Biography 2</div></div>
+  <div class="col-sm-4"><div class="well">Biography 3</div></div>
+</div>
+<% end %>

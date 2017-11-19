@@ -30,4 +30,15 @@ class StaticContentControllerTest < ActionDispatch::IntegrationTest
         assert_redirected_to static_content_path(@home)
     end
 
+    test "home page displays 'featured bios' wells" do
+        get "/home"
+        assert_select "div.well", 3
+    end
+
+    test "about doesn't display 'featured bios' wells" do
+        get "/about"
+        assert_select "div.well", 0
+    end
+
+
 end
