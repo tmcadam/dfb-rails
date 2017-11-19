@@ -9,7 +9,7 @@
     <hr>
     <p class="small"><strong>Featured biographies...</strong></p>
     <div class="row">
-        <% Biography.where('featured = ?', true).limit(3).each do |biography| %>
+        <% Biography.where(featured: true).limit(3).each do |biography| %>
               <div class="col-sm-4"><div class="well">
                   <%= render partial: 'biographies/featured', locals: {biography: biography} %>
               </div></div>

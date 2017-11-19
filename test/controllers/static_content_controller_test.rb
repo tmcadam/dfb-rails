@@ -31,11 +31,17 @@ class StaticContentControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "home page displays 'featured bios' wells" do
+        for x in 1..10 do
+            @b = Biography.create(title: x, slug: x, body: x, featured: true)
+        end
         get "/home"
         assert_select "div.well", 3
     end
 
     test "about doesn't display 'featured bios' wells" do
+        for x in 1..10 do
+            @b = Biography.create(title: x, slug: x, body: x, featured: true)
+        end
         get "/about"
         assert_select "div.well", 0
     end
