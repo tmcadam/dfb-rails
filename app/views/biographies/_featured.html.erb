@@ -1,0 +1,7 @@
+<a href="<%= biography_path(biography) %>">
+<h5><strong><%= biography.title %></strong></h5>
+</a>
+<img src="<%= biography.images.first.image.url(:medium) %>" alt="..." class="img-rounded img-responsive border-1" >
+<p class="small">
+    <%= truncate_html(biography.body, :length => 100 ) %>
+</p>
