@@ -325,6 +325,15 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
         assert_redirected_to new_user_session_path
     end
 
+    test "can set featured using form" do
+        sign_in @u1
+        @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body", featured: false)
+        patch biography_url(@b), params: { biography: { featured: true } }
+        assert_redirected_to biography_path(@b)
+        @b.reload
+        assert_equal true, @b.featured
+    end
+
     teardown do
         DatabaseCleaner.clean
     end
