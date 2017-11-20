@@ -5,6 +5,6 @@ Rails.application.routes.draw do
   get 'biographies/reset_featured' => "biographies#reset_featured"
   resources :biographies
   resources :authors, only: [:index]
-  resources :static_content, only: [:show], path: "/", param: :slug
+  resources :static_content, only: [:show, :edit, :update], path: "/", param: :slug
   root :to => redirect('/home')
 end

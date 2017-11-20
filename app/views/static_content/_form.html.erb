@@ -1,0 +1,8 @@
+<%= simple_form_for @static_content, url: url, method: method do |f| %>
+  <%= f.input :title %>
+  <%= f.input :body, as: :summernote %>
+  <%= f.input :slug %>
+
+  <%= link_to "Back", static_content_path(@static_content), class: "btn btn-default", role:"button" %>
+  <%= f.button :submit %>
+<% end %>

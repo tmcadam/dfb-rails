@@ -1,8 +1,11 @@
 <h3>
   <strong><%= @static_content.title %></strong>
+  <% if user_signed_in? %>
+      <%= link_to "Edit", edit_static_content_path(@static_content), class: "btn btn-default btn-xs", role:"button" %>
+  <% end %>
 </h3>
 
-<%= @static_content.body.html_safe %>
+<%= tag.div @static_content.body.html_safe, class: "static_content_body" %>
 
 <!-- Render featured biographies -->
 <% if @static_content.slug == "home" and Biography.where(featured: true).count >= 3  %>
