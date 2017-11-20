@@ -3,7 +3,7 @@
 </h3>
 <div id="authors" class="row">
     <% if @authors.each do |author| %>
-        <div class="item col-md-6">
+        <div class="item col-xs-12 col-sm-6">
             <div class="well">
                 <%= tag.span(nil, class: "anchor", id: author.simple_slug) %>
                 <%= tag.h4( author.name ) %>

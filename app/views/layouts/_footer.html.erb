@@ -1,0 +1,10 @@
+<footer class="footer">
+    <div class="container">
+        <p>&copy; 2012-17 David Tatham. All rights reserved.<br>
+        <% if not user_signed_in? %>
+            <%= link_to "Login", new_user_session_path, :class => 'small'  %>
+         <% end %>
+      </p>
+
+    </div>
+</footer>

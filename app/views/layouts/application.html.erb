@@ -7,7 +7,7 @@
     <title>DFB</title>
     <%= render 'application/favicon' %>
     <%= csrf_meta_tags %>
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
      <!--[if lt IE 9]>
@@ -16,6 +16,7 @@
      <![endif]-->
   </head>
   <body>
+
     <%= render 'layouts/navbar' %>
 
     <!-- Begin page content -->
@@ -36,17 +37,7 @@
         <%= yield %>
     </div>
 
-    <!-- Sticky footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2012-17 David Tatham. All rights reserved.<br>
-            <% if not user_signed_in? %>
-                <%= link_to "Login", new_user_session_path, :class => 'small'  %>
-             <% end %>
-          </p>
-
-        </div>
-    </footer>
+    <%= render 'layouts/footer' %>
 
   </body>
   </html>

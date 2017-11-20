@@ -9,10 +9,14 @@
     <hr>
     <p class="small"><strong>Featured biographies...</strong></p>
     <div class="row">
-        <% Biography.where(featured: true).limit(3).each do |biography| %>
-              <div class="col-sm-4"><div class="well">
-                  <%= render partial: 'biographies/featured', locals: {biography: biography} %>
-              </div></div>
-        <% end %>
+        <div class="col-xs-12 col-ms-6 col-sm-4"><div class="well">
+          <%= render partial: 'biographies/featured', locals: {biography: Biography.where(featured: true)[0] } %>
+        </div></div>
+        <div class="col-xs-12 col-ms-6 col-sm-4"><div class="well">
+          <%= render partial: 'biographies/featured', locals: {biography: Biography.where(featured: true)[1] } %>
+        </div></div>
+        <div class="col-xs-12 col-ms-6 col-ms-offset-3 col-sm-4 col-sm-offset-0"><div class="well">
+          <%= render partial: 'biographies/featured', locals: {biography: Biography.where(featured: true)[2] } %>
+        </div></div>
     </div>
 <% end %>

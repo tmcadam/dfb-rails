@@ -5,17 +5,18 @@
 .author-link {
     cursor: pointer;
 }
+
 .author-link:hover {
     text-decoration: underline;
     cursor: pointer;
 }
 
+/* These are from the Isotope examples */
 .row {
    margin-left:0;
    margin-right:0;
 }
 
-/* make the well swell */
 .well {
 	border-color:#eee;
 }
@@ -40,7 +41,6 @@ div.well a,
 div.modal-body a {
     color: #272727;
 }
-
 
 /* Isotope Transitions
 ------------------------------- */

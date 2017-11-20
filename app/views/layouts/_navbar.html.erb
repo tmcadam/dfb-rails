@@ -7,7 +7,9 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <%= link_to raw("<span class=\"hide-small-mobile\">Dictionary of </span>Falklands Biography"), static_content_path("home"), class: "navbar-brand" %>
+      <%= link_to "Dictionary of Falklands Biography", static_content_path("home"), class: "navbar-brand navbar-brand-large" %>
+      <%= link_to "Falklands Biography", static_content_path("home"), class: "navbar-brand navbar-brand-medium" %>
+      <%= link_to "DFB", static_content_path("home"), class: "navbar-brand navbar-brand-small" %>
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">

@@ -1,0 +1,30 @@
+// Place all the styles related to the Biographies controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+/* Main biographies display */
+.table th, .table td {
+     border-top: none !important;
+ }
+
+.biography-img-right {
+     float: right;
+     margin: 5px 0px 10px 10px;
+}
+
+.biography-img-left {
+     float: left;
+     margin: 5px 10px 10px 0px;
+}
+
+.authors {
+    clear: both;
+}
+
+div.biography_body h5 {
+    font-weight: bold;
+}
+
+#index div.btn-group {
+    display: flex;
+}

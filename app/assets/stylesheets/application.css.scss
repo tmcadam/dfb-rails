@@ -10,8 +10,6 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
- *= require_self
  */
 
 $font-size-base: 15px;
@@ -19,8 +17,13 @@ $blockquote-font-size: 15px;
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "bootstrap-grid-ms";
 @import "lightbox-bootstrap";
 @import "summernote";
+@import "biographies";
+@import "authors";
+@import "images";
+@import "lightbox";
 
 html {
   position: relative;
@@ -31,7 +34,10 @@ body {
   padding-top: 50px;
   /* Margin bottom by footer height */
   margin-bottom: 60px;
+  min-width: 260px;
 }
+
+/* Menu styles */
 .navbar-brand {
     display: none;
 }
@@ -43,10 +49,11 @@ body {
     background-color: #E7E7E7;
 }
 
-
 .page-header {
     margin-top: 0px;
 }
+
+
 .footer {
   overflow: hidden;
   position: absolute;
@@ -62,34 +69,8 @@ body {
 .show-mobile {
     display: none !important;
 }
-.table th, .table td {
-     border-top: none !important;
- }
- .biography-img-right {
-     float: right;
-     margin: 5px 0px 10px 10px;
- }
- .biography-img-left {
-     float: left;
-     margin: 5px 10px 10px 0px;
- }
- .container{
-      max-width: 850px;
- }
-.authors {
-    clear: both;
-}
-.img-footer-caption, .img-footer-id {
-    float:left;
-}
-.caption {
-    word-wrap: break-word;
-}
-div.biography_body h5 {
-    font-weight: bold;
-}
-#index div.btn-group {
-display: flex;
+.container{
+    max-width: 850px;
 }
 
 @media screen and (max-width: 767px) {
@@ -103,6 +84,12 @@ display: flex;
         display: none !important;
     }
     .show-mobile {
+        display: inline !important;
+    }
+    .navbar-brand-small, .navbar-brand-medium {
+        display: none !important;
+    }
+    .navbar-brand-large {
         display: inline !important;
     }
     .navbar-brand {
@@ -133,8 +120,22 @@ display: flex;
     }
 }
 
+/* Swapping in the shorter titles for small screens */
+
 @media screen and (max-width: 380px) {
-    .hide-small-mobile {
+    .navbar-brand-large, .navbar-brand-small {
         display: none !important;
+    }
+    .navbar-brand-medium {
+        display: inline !important;
+    }
+}
+
+@media screen and (max-width: 260px) {
+    .navbar-brand-large, .navbar-brand-medium {
+        display: none !important;
+    }
+    .navbar-brand-small {
+        display: inline !important;
     }
 }
