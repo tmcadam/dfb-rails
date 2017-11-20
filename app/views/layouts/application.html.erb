@@ -28,10 +28,14 @@
         </div>
 
         <% unless alert.nil? %>
-            <div class="alert alert-info"><%= alert %></p></div>
+            <div class="alert alert-info alert-dismissable"><%= alert %>
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </div>
         <% end %>
         <% unless notice.nil? %>
-            <div class="alert alert-warning"><%= notice %></div>
+            <div class="alert alert-warning alert-dismissable"><%= notice %>
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </div>
         <% end %>
 
         <%= yield %>
