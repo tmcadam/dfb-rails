@@ -1,12 +1,22 @@
 <h3>
   <strong>Authors</strong>
+  <% if user_signed_in? %>
+      <%= link_to "New", new_author_path, class: "btn btn-default btn-xs", role:"button" %>
+  <% end %>
 </h3>
 <div id="authors" class="row">
     <% if @authors.each do |author| %>
         <div class="item col-xs-12 col-sm-6">
             <div class="well">
                 <%= tag.span(nil, class: "anchor", id: author.simple_slug) %>
-                <%= tag.h4( author.name ) %>
+                <h4>
+                <%= author.name %>
+                <% if user_signed_in? %>
+                    <%= link_to "Edit", edit_author_path(author), class: "btn btn-default btn-xs", role:"button" %>
+                    <%= link_to "Delete", author_path(author), class: "btn btn-default btn-xs", role:"button", data: {:confirm => 'Are you sure?'}, method: :DELETE %>
+                <% end %>
+            </h4>
+
                 <% if author.biography %>
                     <%= tag.p( author.biography ) %>
                 <% end %>

@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resources :images
   get 'biographies/reset_featured' => "biographies#reset_featured"
   resources :biographies
-  resources :authors, only: [:index]
+  resources :authors, except: [:show]
   resources :static_content, only: [:show, :edit, :update], path: "/", param: :slug
   root :to => redirect('/home')
 end

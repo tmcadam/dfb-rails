@@ -1,0 +1,10 @@
+<%= simple_form_for @author, url: url, method: method do |f| %>
+  <%= f.input :last_name %>
+  <%= f.input :first_name %>
+  <%= f.input :biography %>
+
+  <div class="form-actions">
+      <%= link_to "Back", authors_path, class: "btn btn-default", role:"button" %>
+      <%= f.button :submit %>
+  </div>
+<% end %>
