@@ -15,11 +15,19 @@
       <ul class="nav navbar-nav">
           <li><%= link_to "Home", static_content_path("home") %></li>
           <li><%= link_to "Biographies", biographies_path %></li>
-          <li>
+          <li class="dropdown-submenu">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">About<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><%= link_to "Introduction", static_content_path("about") %></li>
+                    <li><%= link_to "About DFB", static_content_path("about") %></li>
                     <li><%= link_to "Authors", authors_path %></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header" >Book</li>
+                    <li><%= link_to "Foreword", static_content_path("book_foreword") %></li>
+                    <li><%= link_to "Introduction", static_content_path("book_introduction") %></li>
+                    <li><%= link_to "Acknowledgements", static_content_path("book_acknowledgements") %></li>
+                    <li><%= link_to "David Tatham", static_content_path("book_david_tatham") %></li>
+                    <li><%= link_to "How to buy", static_content_path("book_purchase") %></li>
+
                 </ul>
           </li>
           <ul class="nav collapse">
