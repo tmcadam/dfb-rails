@@ -14,7 +14,9 @@ $j(document).on "turbolinks:load", ->
              height: 500
              toolbar:   [
                         ['para', ['style', 'paragraph','ul', 'ol']],
-                        ['font', ['bold', 'italic', 'underline', 'clear']],
+                        ['font', ['bold', 'italic', 'underline', 'clear','superscript']],
+                        ['fontsize', ['fontsize']],
+                        ['color', ['color']],
                         ['link', ['link', 'picture']],
                         ['misc', ['codeview', 'undo', 'redo']]
                     ]
