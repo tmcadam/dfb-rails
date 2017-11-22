@@ -32,15 +32,33 @@ class StaticContentControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "home page displays 'featured bios' wells" do
-        for x in 1..10 do
+        for x in 1..3 do
             @b = Biography.create(title: x, slug: x, body: x, featured: true)
         end
         get "/home"
         assert_select "div.well", 3
     end
 
+    test "first bio image is displayed in featured wells" do
+        image1 = fixture_file_upload 'files/test_image_1.jpg', 'image/jpg'
+        image2 = fixture_file_upload 'files/test_image_3.png', 'image/png'
+        for x in 1..3 do
+            @b = Biography.create(title: x, slug: x, body: x, featured: true)
+            if x == 1
+                @i2 = Image.create( id: 2, biography: @b, title: "2", caption: "2", image: image2 )
+                @i1 = Image.create( id: 1, biography: @b, title: "1", caption: "1", image: image1 )
+            end
+        end
+        get "/home"
+        assert_select "div.well:nth-child(1)" do
+            assert_select "img" do
+                assert_select "[src=?]", @i1.image.url(:medium)
+            end
+        end
+    end
+
     test "about doesn't display 'featured bios' wells" do
-        for x in 1..10 do
+        for x in 1..3 do
             @b = Biography.create(title: x, slug: x, body: x, featured: true)
         end
         get "/about"
