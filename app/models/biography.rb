@@ -1,9 +1,12 @@
 class Biography < ApplicationRecord
+    include ApplicationHelper
     has_many :images
     validates :slug, presence: true, uniqueness: true
     validates :title, presence: true
     validates :body, presence: true
     default_scope { order(title: :asc) }
+    before_save :clean_bio_urls
+
 
     has_many :biography_authors
     #has_many :authors, :through => :biography_authors
@@ -36,6 +39,10 @@ class Biography < ApplicationRecord
     end
 
 private
+
+    def clean_bio_urls
+        clean_urls(self.body)
+    end
 
     def insert_image(p, images)
         images.each do |img|

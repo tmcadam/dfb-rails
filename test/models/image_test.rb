@@ -82,6 +82,13 @@ class ImageTest < ActiveSupport::TestCase
         assert_equal 86, geometry.height
     end
 
+    test "clean_urls cleans links in body on save" do
+        @i1.caption = "https://www.falklandsbiographies.org/biographies/robert_brown blah blah"
+        @i1.save
+        @i1.reload
+        assert_equal "/biographies/robert_brown blah blah", @i1.caption
+    end
+
     teardown do
         @i1.destroy
         @i2.destroy

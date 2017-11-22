@@ -152,6 +152,13 @@ class BiographyTest < ActiveSupport::TestCase
         assert_equal 1, Biography.where("featured = ?", true).count
     end
 
+    test "clean_urls cleans links in body on save" do
+        @b.body = "https://www.falklandsbiographies.org/biographies/robert_brown blah blah"
+        @b.save
+        @b.reload
+        assert_equal "/biographies/robert_brown blah blah", @b.body
+    end
+
     teardown do
         @b.images.each do |img|
             img.destroy
