@@ -5,8 +5,8 @@ class ImageControllerTest < ActionDispatch::IntegrationTest
     setup do
         @b = Biography.create(title: "Brian Black", slug: "brian_black", body: "Some body")
         @image = fixture_file_upload 'files/test_image_3.png', 'image/png'
-        @img1 = Image.create( id: 1, biography: @b, title: "Bob Bobber", caption: "Bob at work", image: @image)
         @img2 = Image.create( id: 2, biography: @b, title: "Mike Michaels", caption: "Mike at work", image: @image)
+        @img1 = Image.create( id: 1, biography: @b, title: "Bob Bobber", caption: "Bob at work", image: @image)
         ActiveRecord::Base.connection.reset_pk_sequence!('images')
         @u1 = User.create(email: "guy@gmail.com", password: "111111", password_confirmation: "111111" )
         sign_in @u1
@@ -32,6 +32,12 @@ class ImageControllerTest < ActionDispatch::IntegrationTest
         get images_path
         assert_response :success
         assert_not_nil assigns(:images)
+    end
+
+    test "can show images index with correct order applied" do
+        get images_path
+        assert_equal 1, assigns(:images).first.id
+        assert_equal 2, assigns(:images).last.id
     end
 
     test "index route returns all images" do
