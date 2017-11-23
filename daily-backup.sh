@@ -14,4 +14,4 @@ pg_dump --host localhost --port 5432 --username "$DFB_DB_USER_PRODUCTION" --no-p
 echo "Daily backup ran: $(date -I)" >> "$BACKUP_FOLDER/backup.log"
 
 #Delete daily backups older than 31 days
-find "$BACKUP_FOLDER/*.backup" -type f -mtime +31 -exec rm -f {} \;
+find "$BACKUP_FOLDER" -iname *.backup -type f -mtime +31 -exec rm -f {} \;
