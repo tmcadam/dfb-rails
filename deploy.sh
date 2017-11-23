@@ -12,6 +12,10 @@ env RAILS_ENV=$1 bundle install
 env RAILS_ENV=$1 rake db:migrate
 env RAILS_ENV=$1 bundle exec rake assets:precompile
 
+if [ $1 == "production" ]; then
+    bash "$APP_DIR/install_cronjobs.sh"
+fi
+
 cd $WEBAPP_DIR
 # Checks if this is the first run
 if [ -d "hello_world" ]; then

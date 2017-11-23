@@ -1,9 +1,12 @@
 class Biography < ApplicationRecord
+    include ApplicationHelper
     has_many :images
     validates :slug, presence: true, uniqueness: true
     validates :title, presence: true
     validates :body, presence: true
     default_scope { order(title: :asc) }
+    before_save :clean_bio_urls
+
 
     has_many :biography_authors
     #has_many :authors, :through => :biography_authors
@@ -37,6 +40,10 @@ class Biography < ApplicationRecord
 
 private
 
+    def clean_bio_urls
+        clean_urls(self.body)
+    end
+
     def insert_image(p, images)
         images.each do |img|
             if img["after_para"] == p
@@ -53,7 +60,7 @@ private
     def generate_image_tags
         tags = []
         after_para = 1
-        self.images.each do |image|
+        self.images.order(:id).each do |image|
             pos_class = ApplicationController.helpers.cycle("biography-img-right", "biography-img-left", name: "pos_class" )
             tag = ApplicationController.render(partial: 'images/tag', assigns: {img: image, class: pos_class})
             tags.push({"tag"=>tag, "after_para"=>after_para})

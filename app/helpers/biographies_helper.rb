@@ -1,4 +1,5 @@
 module BiographiesHelper
+
     def clear_featured
         Biography.update_all featured: false
     end

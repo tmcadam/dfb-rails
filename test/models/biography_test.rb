@@ -5,9 +5,9 @@ class BiographyTest < ActiveSupport::TestCase
     setup do
         @b = biographies(:three)
         image = fixture_file_upload 'files/test_image_3.png', 'image/png'
-        @b.images << Image.new( biography: @b, title: "1", caption: "1", image: image )
-        @b.images << Image.new( biography: @b, title: "2", caption: "2", image: image )
-        @b.images << Image.new( biography: @b, title: "3", caption: "3", image: image )
+        @b.images << Image.new( id: 1, biography: @b, title: "1", caption: "1", image: image )
+        @b.images << Image.new( id: 3, biography: @b, title: "3", caption: "3", image: image )
+        @b.images << Image.new( id: 2, biography: @b, title: "2", caption: "2", image: image )
     end
 
     test "valid biography with all attributes present and correct" do
@@ -84,8 +84,11 @@ class BiographyTest < ActiveSupport::TestCase
         assert_equal 11, tags.length
         assert_equal "p", tags[0].name
         assert tags[1].at_css('img')
+        assert_equal "1", tags[1].css('strong').first.text
         assert tags[6].at_css('img')
+        assert_equal "2", tags[6].css('strong').first.text
         assert tags[9].at_css('img')
+        assert_equal "3", tags[9].css('strong').first.text
     end
 
     test "body_with_images makes no changes to body if no images present" do
@@ -147,6 +150,13 @@ class BiographyTest < ActiveSupport::TestCase
         @b2 = biographies(:two)
         @b1.update(featured: true)
         assert_equal 1, Biography.where("featured = ?", true).count
+    end
+
+    test "clean_urls cleans links in body on save" do
+        @b.body = "https://www.falklandsbiographies.org/biographies/robert_brown blah blah"
+        @b.save
+        @b.reload
+        assert_equal "/biographies/robert_brown blah blah", @b.body
     end
 
     teardown do

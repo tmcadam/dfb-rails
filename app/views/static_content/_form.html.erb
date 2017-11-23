@@ -4,7 +4,7 @@
   <%= f.input :slug %>
 
     <div class="form-actions">
-      <%= link_to "Back", static_content_path(@static_content), class: "btn btn-default", role:"button" %>
+      <%= link_to "Back", static_content_path(@static_content.slug ? @static_content : "home" ), class: "btn btn-default", role:"button" %>
       <%= f.button :submit %>
      </div>
 <% end %>

@@ -11,6 +11,22 @@ Things you may want to cover:
 
 * Configuration
 
+    In the production/staging machines set the following variables. In webfaction set these in .bashrc.
+    ```
+    export BACKUP_EMAIL="<email address to send backups to>"
+    export SMTP_USER="<email server smtp username>"
+    export SMTP_PASSWORD="<email server smtp password>"
+
+    export DFB_DB_PASS_PRODUCTION="<production db password>"
+    export DFB_DB_USER_PRODUCTION="<production database user name>"
+    export DFB_DB_PRODUCTION=<production db name>
+    export DFB_SECRET_KEY_BASE_PRODUCTION="<rails generated secret key>"
+
+    export DFB_DB_PASS_STAGING="<staging db password>"
+    export DFB_DB_USER_STAGING="<staging db user name>"
+    export DFB_DB_STAGING="<staging db name>"
+    export DFB_SECRET_KEY_BASE_STAGING="<rails generated secret key>"
+    ```
 * Database creation
 
 * Database initialization

@@ -1,8 +1,21 @@
 class StaticContentController < ApplicationController
-    before_action :authenticate_user!, :only => [:edit, :update]
+    before_action :authenticate_user!, :only => [:edit, :update, :new, :create, :destroy]
 
     def show
         @static_content = StaticContent.find_by!(slug: params[:slug])
+    end
+
+    def new
+        @static_content = StaticContent.new
+    end
+
+    def create
+        @static_content = StaticContent.new( static_content_params )
+        if @static_content.save
+            redirect_to static_content_path(@static_content)
+        else
+            render 'new'
+        end
     end
 
     def edit
@@ -18,10 +31,16 @@ class StaticContentController < ApplicationController
         end
     end
 
-    private
+    def destroy
+        @static_content = StaticContent.find_by!(slug: params[:slug])
+        @static_content.destroy
+        redirect_to static_content_path("home")
+    end
 
-        def static_content_params
-            params.require(:static_content).permit(:title, :slug, :body)
-        end
+private
+
+    def static_content_params
+        params.require(:static_content).permit(:title, :slug, :body)
+    end
 
 end

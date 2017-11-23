@@ -45,6 +45,7 @@ gem 'summernote-rails', :git => 'https://github.com/summernote/summernote-rails.
 gem 'isotope-rails', '~> 2.2', '>= 2.2.2'
 gem 'scrollto-rails'
 gem 'devise'
+gem 'rufus-scheduler'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
