@@ -14,6 +14,20 @@ pg_dump --host localhost --port 5432 --username "$DFB_DB_USER_PRODUCTION" --no-p
 export PGPASSWORD="$DFB_DB_PASS_STAGING"
 pg_dump --host localhost --port 5432 --username "$DFB_DB_USER_STAGING" --no-password  --format custom --blobs --verbose --file "$BACKUP_STAGING_FILEPATH" "$DFB_DB_STAGING" >/dev/null 2>&1
 
+# send an email with the DB to the admin
 cp $BACKUP_PROD_FILEPATH $CURRENT_FILEPATH
 python2.7 "$PROJECT_DIR/sendmail.py" "$CURRENT_FILEPATH"
+
+# zip up the images
+BACKUP_ZIP_FILEPATH="$BACKUP_FOLDER/dfb-production-$(date -I).zip"
+cd "$PROJECT_DIR/public/system/"
+zip -r "$BACKUP_ZIP_FILEPATH" "biography_images" >/dev/null 2>&1
+# upload db backup and images to google drive https://github.com/labbots/google-drive-upload
+cd /home/ukfit/drive-upload
+bash upload.sh "$BACKUP_PROD_FILEPATH" "DFB" >/dev/null 2>&1
+bash upload.sh "$BACKUP_ZIP_FILEPATH" "DFB" >/dev/null 2>&1
+# delete the zip
+rm "$BACKUP_ZIP_FILEPATH"
+
+# write to the log
 echo "Monthly backup ran: $(date -I)" >> "$BACKUP_FOLDER/backup.log"
