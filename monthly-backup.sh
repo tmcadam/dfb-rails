@@ -1,6 +1,6 @@
 #!/bin/bash
 
-bash "/home/ukfit/.bashrc"
+. /home/ukfit/.bashrc
 
 PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 BACKUP_FOLDER="/home/ukfit/db_backups/dfb/monthly"
