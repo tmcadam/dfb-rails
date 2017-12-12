@@ -57,27 +57,29 @@ Set the following variables in Travis UI (allows deployment into Webfaction)
 - Copy the git_deploy script
   - Copy the git_deploy.sh script from https://github.com/tmcadam/webfaction-tools, to home folder in Webfaction shell
 - Add the following variables. In Webfaction shell set these in `.bashrc`. Used by rails and the backup scripts.
+```shell
+    export BACKUP_EMAIL="<email address to send backups to>"
+    export SMTP_USER="<email server smtp username>"
+    export SMTP_PASSWORD="<email server smtp password>"
 
-        export BACKUP_EMAIL="<email address to send backups to>"
-        export SMTP_USER="<email server smtp username>"
-        export SMTP_PASSWORD="<email server smtp password>"
+    export DFB_DB_PASS_PRODUCTION="<production db password>"
+    export DFB_DB_USER_PRODUCTION="<production database user name>"
+    export DFB_DB_PRODUCTION=<production db name>
+    export DFB_SECRET_KEY_BASE_PRODUCTION="<rails generated secret key>"
 
-        export DFB_DB_PASS_PRODUCTION="<production db password>"
-        export DFB_DB_USER_PRODUCTION="<production database user name>"
-        export DFB_DB_PRODUCTION=<production db name>
-        export DFB_SECRET_KEY_BASE_PRODUCTION="<rails generated secret key>"
-
-        export DFB_DB_PASS_STAGING="<staging db password>"
-        export DFB_DB_USER_STAGING="<staging db user name>"
-        export DFB_DB_STAGING="<staging db name>"
-        export DFB_SECRET_KEY_BASE_STAGING="<rails generated secret key>"
+    export DFB_DB_PASS_STAGING="<staging db password>"
+    export DFB_DB_USER_STAGING="<staging db user name>"
+    export DFB_DB_STAGING="<staging db name>"
+    export DFB_SECRET_KEY_BASE_STAGING="<rails generated secret key>"
+```
 
 ### Using rails commands in Webfaction
   - Use these commands from `~/webapps/<application-name>/` folder to run Rails related commands in Webfaction shell.
-        export PATH=$PWD/bin:$PATH
-        export GEM_HOME=$PWD/gems
-        export RUBYLIB=$PWD/lib
-
+  ```shell
+    export PATH=$PWD/bin:$PATH
+    export GEM_HOME=$PWD/gems
+    export RUBYLIB=$PWD/lib
+  ```
 
 ### Creating a user
   - `rails console`
