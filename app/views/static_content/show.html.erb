@@ -1,10 +1,13 @@
-<h3>
-  <strong><%= @static_content.title %></strong>
-  <% if user_signed_in? %>
-      <%= link_to "Edit", edit_static_content_path(@static_content), class: "btn btn-default btn-xs", role:"button" %>
-      <%= link_to "Delete", static_content_path(@static_content), class: "btn btn-default btn-xs", role:"button", data: {:confirm => 'Are you sure?'}, method: :DELETE %>
-  <% end %>
-</h3>
+
+<% if @static_content.slug != "home" or user_signed_in? %>
+    <h3 class="page-title">
+      <strong><%= @static_content.title %></strong>
+      <% if user_signed_in? %>
+          <%= link_to "Edit", edit_static_content_path(@static_content), class: "btn btn-default btn-xs", role:"button" %>
+          <%= link_to "Delete", static_content_path(@static_content), class: "btn btn-default btn-xs", role:"button", data: {:confirm => 'Are you sure?'}, method: :DELETE %>
+      <% end %>
+    </h3>
+<% end %>
 
 <%= tag.div @static_content.body.html_safe, class: "static_content_body" %>
 

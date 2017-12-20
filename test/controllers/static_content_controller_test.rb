@@ -164,6 +164,28 @@ class StaticContentControllerTest < ActionDispatch::IntegrationTest
         assert_redirected_to new_user_session_path
     end
 
+    test "'Home' title is not shown on homepage if not logged in" do
+        get "/home"
+        assert_select "h3.page-title", 0
+    end
+
+    test "'Home' title is shown on homepage if logged in" do
+        sign_in @u1
+        get "/home"
+        assert_select "h3.page-title", 1
+    end
+
+    test "'About' title is shown on about page if not logged in" do
+        get "/about"
+        assert_select "h3.page-title", 1
+    end
+
+    test "'About' title is shown on about page if logged in" do
+        sign_in @u1
+        get "/about"
+        assert_select "h3.page-title", 1
+    end
+
     teardown do
         DatabaseCleaner.clean
     end
