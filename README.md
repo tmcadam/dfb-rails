@@ -82,8 +82,18 @@ Set the following variables in Travis UI (allows deployment into Webfaction)
   ```
 
 ### Creating a user
-  - `rails console`
-  - `User.create!(email: "guy@gmail.com", password: "111111", password_confirmation: "111111")`
+  - Use these commands from `~/webapps/<application-name>/app`.
+  ```shell
+     rails console production
+     User.create!(email: "guy@gmail.com", password: "111111", password_confirmation: "111111")
+  ```
+
+### Adding a biography to an author
+  - Use these commands from `~/webapps/<application-name>/app`.
+  ```shell
+     rails console production
+     BiographyAuthor.create!( biography_id: 496, author_id: 148, author_position: 1 )
+  ```
 
 ### Configuring SSL
   - see https://github.com/tmcadam/webfaction-tools
