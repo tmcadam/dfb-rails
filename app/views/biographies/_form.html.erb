@@ -9,6 +9,12 @@
   <%= f.input :revisions %>
   <%= f.input :slug %>
   <%= f.input :featured %>
+  <div class="form-inline">
+  <%= f.simple_fields_for :biography_authors, class: 'form-inline' do |biography_author| %>
+        <%= biography_author.association :author %>
+        <%= biography_author.input :author_position %>
+  <% end %>
+  </div>
 
   <div class="form-actions">
       <%= link_to "Back", biographies_path, class: "btn btn-default", role:"button" %>

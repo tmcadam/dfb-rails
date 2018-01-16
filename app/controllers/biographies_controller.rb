@@ -33,7 +33,8 @@ class BiographiesController < ApplicationController
 
     def update
         @biography = Biography.find(params[:id])
-        if @biography.update( biography_params )
+        @biography.assign_attributes(biography_params)
+        if @biography.save
             redirect_to @biography
         else
             render 'edit'
@@ -54,7 +55,8 @@ class BiographiesController < ApplicationController
     private
 
         def biography_params
-            params.require(:biography).permit(:title, :body, :slug, :authors, :lifespan, :revisions, :primary_country_id, :secondary_country_id, :south_georgia, :featured)
+            params.require(:biography).permit(:title, :body, :slug, :authors, :lifespan, :revisions, :primary_country_id, :secondary_country_id, :south_georgia, :featured,
+                                                biography_authors_attributes: [:id, :author_position, :author_id ])
         end
 
 end

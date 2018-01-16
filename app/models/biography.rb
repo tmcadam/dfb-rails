@@ -7,8 +7,9 @@ class Biography < ApplicationRecord
     default_scope { order(title: :asc) }
     before_save :clean_bio_urls
 
-
     has_many :biography_authors
+    accepts_nested_attributes_for :biography_authors
+
     #has_many :authors, :through => :biography_authors
 
     belongs_to :primary_country, foreign_key: :primary_country_id, class_name:"Country", optional: true
