@@ -1,23 +1,68 @@
-<%= simple_form_for @biography, url: url, method: method do |f| %>
-  <%= f.input :title %>
-  <%= f.input :lifespan %>
-  <%= f.input :body, as: :summernote %>
-  <%= f.input :authors %>
-  <%= f.input :south_georgia %>
-  <%= f.association :primary_country %>
-  <%= f.association :secondary_country %>
-  <%= f.input :revisions %>
-  <%= f.input :slug %>
-  <%= f.input :featured %>
-  <div class="form-inline">
-  <%= f.simple_fields_for :biography_authors, class: 'form-inline' do |biography_author| %>
-        <%= biography_author.association :author %>
-        <%= biography_author.input :author_position %>
-  <% end %>
-  </div>
+<%= simple_form_for @biography, url: url, method: method, html: { class: 'form-horizontal' } do |f| %>
+    <br>
+    <%= f.input :title,
+            label: 'Subject name',
+            placeholder: 'Enter the name of the subject (required)',
+            required: false,
+            input_html:{class: 'col-sm-10'} ,
+            label_html: {class: 'col-sm-2'}  %>
+    <div class="row">
+        <%= f.input :lifespan,
+                label: 'Lifespan',
+                placeholder: 'Enter the subjects lifespan without brackets e.g. 1921-1987',
+                wrapper_html: {class: 'col-sm-4'},
+                input_html:{class: 'col-sm-6'} ,
+                label_html: {class: 'col-sm-6'} %>
+        <%= f.input :featured,
+                wrapper_html: {class: 'col-sm-2 pull-right'} %>
+    </div>
+    <hr>
+    <div class="row">
+        <%= f.association :primary_country,
+            label: '1st Country',
+            wrapper_html: {class: 'col-sm-5'},
+            input_html:{class: 'col-sm-6'} ,
+            label_html: {class: 'col-sm-6'}  %>
+        <%= f.association :secondary_country,
+            label: '2nd Country',
+            wrapper_html: {class: 'col-sm-5'},
+            input_html:{class: 'col-sm-6'} ,
+            label_html: {class: 'col-sm-6'}  %>
+        <%= f.input :south_georgia,
+            label: 'S. Georgia',
+            wrapper_html: {class: 'col-sm-2 pull-right'} %>
+    </div>
+    <hr>
+    <%= f.input :authors,
+            placeholder: 'Enter authors names as displayed in biography.',
+            input_html:{class: 'col-sm-10'} ,
+            label_html: {class: 'col-sm-2'} %>
 
-  <div class="form-actions">
-      <%= link_to "Back", biographies_path, class: "btn btn-default", role:"button" %>
-      <%= f.button :submit %>
-  </div>
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-6 pull-left"><small>Attributed author</small></div>
+        <div class="col-sm-2 pull-right"><small>Position</small></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <%= f.simple_fields_for :biography_authors do |biography_author| %>
+              <%= biography_author.association :author,
+                      wrapper_html: {class: 'col-sm-6 pull-left'},
+                      label_html: {class: 'hidden'}%>
+              <%= biography_author.input :author_position,
+                      wrapper_html: {class: 'col-sm-2 pull-right'},
+                      label_html: {class: 'hidden'}%>
+        <% end %>
+    </div>
+    <hr>
+
+    <%= f.input :body, as: :summernote,
+            required: false %>
+    <%= f.input :revisions %>
+
+    <div class="form-actions">
+        <%= link_to "Back", biographies_path, class: "btn btn-default", role:"button" %>
+        <%= f.button :submit %>
+    </div>
+
 <% end %>
