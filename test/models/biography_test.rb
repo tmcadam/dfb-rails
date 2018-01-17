@@ -109,8 +109,8 @@ class BiographyTest < ActiveSupport::TestCase
     end
 
     test "other_author returns the other author for biography or nil" do
-        @a1 = Author.new(last_name:"Author1", biography:"Biography of author")
-        @a2 = Author.new(last_name:"Author2", biography:"Biography of author")
+        @a1 = Author.create(last_name:"Author1", biography:"Biography of author")
+        @a2 = Author.create(last_name:"Author2", biography:"Biography of author")
         @b.save
 
         @b.biography_authors.create(author: @a1, author_position: 1)

@@ -155,33 +155,6 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
         assert_equal assigns(:biography).body, @b.body
     end
 
-    test "edit returns populated form, including inline authors fields" do
-        sign_in @u1
-        @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body")
-        @a1 = Author.create(first_name: "Bob", last_name:"Author1", biography:"Biography of author")
-        @a2 = Author.create(first_name: "Jim", last_name:"Author2", biography:"Biography of author")
-        BiographyAuthor.create(biography: @b, author: @a1, author_position: 1) #link biography and authors
-        BiographyAuthor.create(biography: @b, author: @a2, author_position: 2) #link biography and authors
-        get edit_biography_path(@b)
-        assert_response :success
-        assert_select 'select#biography_biography_authors_attributes_0_author_id option[selected]', "Bob Author1"
-        assert_select 'input#biography_biography_authors_attributes_0_author_position[value=?]', "1"
-        assert_select 'select#biography_biography_authors_attributes_1_author_id option[selected]', "Jim Author2"
-        assert_select 'input#biography_biography_authors_attributes_1_author_position[value=?]', "2"
-    end
-
-    test "updates biographyauthor with inline authors params biography form" do
-        sign_in @u1
-        @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body")
-        @a1 = Author.create(first_name: "Bob", last_name:"Author1", biography:"Biography of author")
-        @a2 = Author.create(first_name: "Jim", last_name:"Author2", biography:"Biography of author")
-        @ba1 = BiographyAuthor.create(biography: @b, author: @a1, author_position: 2) #link biography and authors
-        patch biography_url(@b), params: { biography: { title: "Updated title", biography_authors_attributes: [{id: @ba1.id, author_id: @a2.id, author_position: 1 }] } }
-        @ba1.reload
-        assert_equal @ba1.author, @a2
-        assert_equal @ba1.author_position, 1
-    end
-
     test "updates biography with correct params and redirects to show" do
         sign_in @u1
         @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body")

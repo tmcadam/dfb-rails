@@ -20,9 +20,14 @@ class BiographiesController < ApplicationController
 
     def create
         @biography = Biography.new( biography_params )
-        if @biography.save
-            redirect_to @biography
-        else
+        begin
+            if @biography.save
+                redirect_to @biography
+            else
+                render 'new'
+            end
+        rescue ActiveRecord::RecordNotUnique
+            @biography.errors.add(:base,'Attributed author and author position must be unique.')
             render 'new'
         end
     end
@@ -32,12 +37,16 @@ class BiographiesController < ApplicationController
     end
 
     def update
-        puts biography_params[:biography_authors_attributes]
         @biography = Biography.find(params[:id])
         @biography.assign_attributes(biography_params)
-        if @biography.save
-            redirect_to @biography
-        else
+        begin
+            if @biography.save
+                redirect_to @biography
+            else
+                render 'edit'
+            end
+        rescue ActiveRecord::RecordNotUnique
+            @biography.errors.add(:base,'Attributed author and author position must be unique.')
             render 'edit'
         end
     end

@@ -42,11 +42,13 @@ class AuthorTest < ActiveSupport::TestCase
         @b = Biography.new(title: "Bio1", slug: "bio1", body: "Bio  1")
         @b.save
 
-        @b.biography_authors.create(author: @a1, author_position: 1)
+        @a1.save
+        @b.biography_authors.create(author_id: @a1.id, author_position: 1)
         assert_equal @b.biography_authors.length, 1
         assert_equal Author.all.length, 1
         assert_equal @b.biography_authors.first.author.last_name, "Author1"
 
+        @a2.save
         @b.biography_authors.create(author: @a2, author_position: 2)
         assert_equal @b.biography_authors.length, 2
         assert_equal Author.all.length, 2
