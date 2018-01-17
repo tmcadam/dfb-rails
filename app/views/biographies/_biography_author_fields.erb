@@ -1,0 +1,10 @@
+<div class="row nested-fields">
+    <div class="col-sm-6"></div>
+    <%= f.collection_select :author_id, Author.all, :id, :name, {include_blank: true},
+            { class: 'col-sm-4 form-control' } %>
+    <%= f.input_field :author_position,
+            class: 'col-sm-1 form-control' %>
+    <div class="col-sm-1 small">
+        <%= link_to_remove_association '<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>'.html_safe, f, class:"btn btn-xs btn-warning" %>
+    </div>
+</div>

@@ -46,6 +46,7 @@ gem 'isotope-rails', '~> 2.2', '>= 2.2.2'
 gem 'scrollto-rails'
 gem 'devise'
 gem 'rufus-scheduler'
+gem "cocoon"
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

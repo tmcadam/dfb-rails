@@ -32,6 +32,7 @@ class BiographiesController < ApplicationController
     end
 
     def update
+        puts biography_params[:biography_authors_attributes]
         @biography = Biography.find(params[:id])
         @biography.assign_attributes(biography_params)
         if @biography.save
@@ -56,7 +57,7 @@ class BiographiesController < ApplicationController
 
         def biography_params
             params.require(:biography).permit(:title, :body, :slug, :authors, :lifespan, :revisions, :primary_country_id, :secondary_country_id, :south_georgia, :featured,
-                                                biography_authors_attributes: [:id, :author_position, :author_id ])
+                                                biography_authors_attributes: [:id, :author_position, :author_id, :_destroy ])
         end
 
 end

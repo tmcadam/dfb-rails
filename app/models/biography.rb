@@ -8,7 +8,7 @@ class Biography < ApplicationRecord
     before_save :clean_bio_urls
 
     has_many :biography_authors
-    accepts_nested_attributes_for :biography_authors
+    accepts_nested_attributes_for :biography_authors, reject_if: :all_blank, allow_destroy: true
 
     #has_many :authors, :through => :biography_authors
 

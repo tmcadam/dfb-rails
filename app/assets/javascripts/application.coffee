@@ -18,5 +18,6 @@
 #= require summernote
 #= require isotope
 #= require scrollTo
+#= require cocoon
 
 #= require_tree .
