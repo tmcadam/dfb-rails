@@ -65,7 +65,9 @@ class BiographiesController < ApplicationController
     private
 
         def biography_params
-            params.require(:biography).permit(:title, :body, :slug, :authors, :lifespan, :revisions, :primary_country_id, :secondary_country_id, :south_georgia, :featured,
+            params.require(:biography).permit(:title, :body, :slug, :authors, :lifespan,
+                                                :revisions, :primary_country_id, :secondary_country_id, :south_georgia, :featured,
+                                                :external_links,
                                                 biography_authors_attributes: [:id, :author_position, :author_id, :_destroy ])
         end
 
