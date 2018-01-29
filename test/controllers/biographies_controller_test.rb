@@ -91,25 +91,48 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
     test "new renders empty biography form" do
         sign_in @u1
         get new_biography_path
+
         assert_response :success
+
+        assert_select "input#biography_title",  { :count => 1 }
         assert_nil assigns(:biography).title
+
+        assert_select "input#biography_lifespan",  { :count => 1 }
         assert_nil assigns(:biography).lifespan
+
+        assert_select "textarea#biography_body",  { :count => 1 }
         assert_nil assigns(:biography).body
+
+        assert_select "input#biography_authors",  { :count => 1 }
         assert_nil assigns(:biography).authors
+
+        assert_select "input#biography_slug",  { :count => 1 }
         assert_nil assigns(:biography).slug
+
+        assert_select "select#biography_primary_country_id",  { :count => 1 }
         assert_nil assigns(:biography).primary_country
+
+        assert_select "select#biography_secondary_country_id",  { :count => 1 }
         assert_nil assigns(:biography).secondary_country
+
+        assert_select "input#biography_south_georgia",  { :count => 1 }
         assert_nil assigns(:biography).south_georgia
+
+        assert_select "textarea#biography_external_links", { :count => 1 }
+        assert_nil assigns(:biography).external_links
+
     end
 
     test "Summernote elements are present" do
         sign_in @u1
         get new_biography_path
         assert_select "textarea#biography_body[data-provider='summernote']"
+        assert_select "textarea#biography_external_links[data-provider='summernote']"
         Biography.destroy_all
         @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body")
         get edit_biography_path(@b)
         assert_select "textarea#biography_body[data-provider='summernote']"
+        assert_select "textarea#biography_external_links[data-provider='summernote']"
     end
 
     test "creates biography with correct params and redirects to show" do
@@ -127,9 +150,12 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
                                                             revisions: '2017 - Joe Blow',
                                                             south_georgia: false,
                                                             primary_country_id: 12,
-                                                            secondary_country_id: 1
+                                                            secondary_country_id: 1,
+                                                            external_links: 'some external links here'
                                                             }}
         end
+        assert_equal Biography.last.title, 'Biography Title'
+        assert_equal Biography.last.external_links, 'some external links here'
         assert_redirected_to biography_path(Biography.last)
     end
 
@@ -146,22 +172,24 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
 
     test "edit returns populated form" do
         sign_in @u1
-        @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body")
+        @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body", external_links: "A link")
         get edit_biography_path(@b)
         assert_response :success
         assert_select "input#biography_title[value=?]", "Original title"
         assert_equal assigns(:biography).title, @b.title
         assert_equal assigns(:biography).slug, @b.slug
         assert_equal assigns(:biography).body, @b.body
+        assert_equal assigns(:biography).external_links, @b.external_links
     end
 
     test "updates biography with correct params and redirects to show" do
         sign_in @u1
-        @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body")
-        patch biography_url(@b), params: { biography: { title: "Updated title" } }
+        @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body", external_links: "A link")
+        patch biography_url(@b), params: { biography: { title: "Updated title", external_links: "Updated link" } }
         assert_redirected_to biography_path(@b)
         @b.reload
         assert_equal "Updated title", @b.title
+        assert_equal "Updated link", @b.external_links
     end
 
     test "re-renders new form if validation fails on update" do

@@ -7,7 +7,6 @@ $j(document).on "turbolinks:load", ->
                  onFormatBlock(tagName)
              }
              linkTargetBlank: false
-             height: 500
              toolbar:   [
                         ['para', ['style']],
                         ['font', ['bold', 'italic', 'underline', 'clear']],
