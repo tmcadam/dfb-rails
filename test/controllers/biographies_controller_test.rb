@@ -91,25 +91,48 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
     test "new renders empty biography form" do
         sign_in @u1
         get new_biography_path
+
         assert_response :success
+
+        assert_select "input#biography_title",  { :count => 1 }
         assert_nil assigns(:biography).title
+
+        assert_select "input#biography_lifespan",  { :count => 1 }
         assert_nil assigns(:biography).lifespan
+
+        assert_select "textarea#biography_body",  { :count => 1 }
         assert_nil assigns(:biography).body
+
+        assert_select "input#biography_authors",  { :count => 1 }
         assert_nil assigns(:biography).authors
+
+        assert_select "input#biography_slug",  { :count => 1 }
         assert_nil assigns(:biography).slug
+
+        assert_select "select#biography_primary_country_id",  { :count => 1 }
         assert_nil assigns(:biography).primary_country
+
+        assert_select "select#biography_secondary_country_id",  { :count => 1 }
         assert_nil assigns(:biography).secondary_country
+
+        assert_select "input#biography_south_georgia",  { :count => 1 }
         assert_nil assigns(:biography).south_georgia
+
+        assert_select "textarea#biography_external_links", { :count => 1 }
+        assert_nil assigns(:biography).external_links
+
     end
 
     test "Summernote elements are present" do
         sign_in @u1
         get new_biography_path
         assert_select "textarea#biography_body[data-provider='summernote']"
+        assert_select "textarea#biography_external_links[data-provider='summernote']"
         Biography.destroy_all
         @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body")
         get edit_biography_path(@b)
         assert_select "textarea#biography_body[data-provider='summernote']"
+        assert_select "textarea#biography_external_links[data-provider='summernote']"
     end
 
     test "creates biography with correct params and redirects to show" do

@@ -32,3 +32,15 @@ div.biography_body h5 {
 #edit_biography_1 div.row {
     margin-top: 5px;
 }
+
+div.biography_body {
+    div.note-editable {
+        height: 500px;
+    }
+}
+
+div.biography_external_links {
+    div.note-editable {
+        height: 150px;
+    }
+}
