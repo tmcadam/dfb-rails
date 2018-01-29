@@ -24,10 +24,15 @@
 <%= tag.div @biography.body_with_images.html_safe, class:"biography_body" %>
 
 <% if @biography.authors.present? %>
-    <p class="authors">
-        <%= tag.strong("Authors: ") + @biography.authors %>
-        <button type="button" class="btn btn-default btn-xs pull-right" data-toggle="modal" data-target="#authors-info">Author Info</button>
-    </p>
+    <p class="authors"><%= tag.strong("Authors") %></p>
+        <%= tag.div class:"biography_authors" do %>
+            <%= @biography.authors %><%= '<button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#authors-info">Author Info</button>'.html_safe %>
+        <% end %>
+<% end %>
+
+<% if @biography.external_links.present? %>
+    <p class="external_links"><%= tag.strong("External links") %></p>
+    <%= tag.div @biography.external_links.html_safe, class:"biography_external_links" %>
 <% end %>
 
 <% if @biography.revisions.present? %>

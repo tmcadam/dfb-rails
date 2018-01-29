@@ -39,8 +39,13 @@ div.biography_body {
     }
 }
 
-div.biography_external_links {
+div.biography_external_links, div.biography_authors {
+    margin-left: 30px;
+    margin-bottom: 10px;
     div.note-editable {
         height: 150px;
+    }
+    button.btn {
+        margin-left: 30px;
     }
 }
