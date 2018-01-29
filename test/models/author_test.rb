@@ -111,4 +111,24 @@ class AuthorTest < ActiveSupport::TestCase
         assert_equal @a2, Author.last
     end
 
+    test "m2m biography-authors are destroyed when authors destroyed" do
+        @b = Biography.create(title: "Bio1", slug: "bio1", body: "Bio  1")
+        @a1.save
+        @a1.biography_authors.create(biography: @b, author_position: 1)
+        assert_equal @a1.biography_authors.length, 1
+        assert_difference('BiographyAuthor.count', -1) do
+            @a1.destroy
+        end
+    end
+
+    test "not deleting biographies when deleting authors" do
+        @b = Biography.create(title: "Bio1", slug: "bio1", body: "Bio  1")
+        @a1.save
+        @a1.biography_authors.create(biography: @b, author_position: 1)
+        assert_equal @a1.biography_authors.length, 1
+        assert_difference('Biography.count', 0) do
+            @a1.destroy
+        end
+    end
+
 end
