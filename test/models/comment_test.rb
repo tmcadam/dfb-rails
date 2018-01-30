@@ -24,6 +24,13 @@ describe Comment do
         assert_not @c1.valid?
     end
 
+    it "isn't valid with out formatted email" do
+        @c1.email = "blah"
+        assert_not @c1.valid?
+        @c1.email = "blah@blah.com"
+        assert @c1.valid?
+    end
+
     it "saves to db if valid" do
         assert_difference 'Comment.count', 1 do
             @c1.save

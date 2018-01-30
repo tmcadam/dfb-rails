@@ -47,6 +47,7 @@ gem 'scrollto-rails'
 gem 'devise'
 gem 'rufus-scheduler'
 gem "cocoon"
+gem 'validates_email_format_of'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
