@@ -1,6 +1,7 @@
 class Biography < ApplicationRecord
     include ApplicationHelper
     has_many :images
+    has_many :comments
     validates :slug, presence: true, uniqueness: true
     validates :title, presence: true
     validates :body, presence: true

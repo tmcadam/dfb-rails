@@ -1,0 +1,27 @@
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Comment</h4>
+            </div>
+            <div class="modal-body">
+                <%= simple_form_for @biography.comments.new, :remote=>true do |f| %>
+                    <%= f.input :name %>
+                    <%= f.input :email %>
+                    <%= f.input :comment %>
+                    <%= f.hidden_field :biography_id, :value => @biography.id %>
+                    <%= f.submit "Leave Comment" %>
+                <% end %>
+                <div id="comment_success">
+                    <h3>Submitted</h3>
+                    <p>Please note, comments are vetted by the web editor before appearing on the site.
+                        This process may take up to 48hrs. Email webeditor@falklandsbiographies.org
+                        for further information.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
