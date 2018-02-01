@@ -1,0 +1,16 @@
+<%= simple_form_for @comment, url: url, method: method do |f| %>
+  <%= f.association :biography %>
+  <%= f.input :name %>
+  <%= f.input :email %>
+  <%= f.input :comment %>
+  <%= f.input :approved %>
+  <div class="form-actions">
+      <%= link_to "Back", comments_path, class: "btn btn-default", role:"button" %>
+      <%= link_to "Delete", comment_path(@comment),
+                              class: "btn btn-default",
+                              role:"button",
+                              data: {:confirm => 'Are you sure?'},
+                              method: :DELETE %>
+      <%= f.button :submit %>
+  </div>
+<% end %>

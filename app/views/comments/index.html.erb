@@ -1,0 +1,36 @@
+<h4>
+  <strong>Comments</strong>
+</h4>
+
+<table id="index_list" class="table">
+    <% if @comments.each do |comment| %>
+    <tr>
+        <td>
+            <b><%= comment.biography.title %></b>
+            <span class="small">(<%= comment.name %> - <%= comment.created_at %>)</span>
+            <%= link_to "Delete", comment_path(comment),
+                                    class: "btn btn-default btn-xs pull-right",
+                                    role:"button",
+                                    data: {:confirm => 'Are you sure?'},
+                                    method: :DELETE %>
+            <%= link_to "Edit", edit_comment_path(comment), class: "btn btn-default btn-xs pull-right", role:"button" %>
+
+            <% if comment.approved? %>
+                <span class="glyphicon glyphicon-ok"></span>
+            <% else %>
+                <span class="glyphicon glyphicon-remove"></span>
+            <% end if %>
+
+            <p>
+                <%= truncate_html(comment.comment, :length => 200 ) %>
+            </p>
+
+        </td>
+    </tr>
+    <% end.empty? %>
+    <tr>
+        <td>No comments</td>
+    </tr>
+  <% end %>
+</table>
+<%= paginate @comments %>
