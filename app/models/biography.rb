@@ -16,6 +16,10 @@ class Biography < ApplicationRecord
     belongs_to :primary_country, foreign_key: :primary_country_id, class_name:"Country", optional: true
     belongs_to :secondary_country, foreign_key: :secondary_country_id, class_name:"Country", optional: true
 
+    def approved_comments
+       comments.where(approved: true).order(:created_at)
+    end
+
     def body_with_images
         output = ""
         images = generate_image_tags

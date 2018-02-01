@@ -37,4 +37,8 @@ describe Comment do
         end
     end
 
+    teardown do
+        DatabaseCleaner.clean
+    end
+
 end

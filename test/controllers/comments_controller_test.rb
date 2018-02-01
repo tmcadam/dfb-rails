@@ -3,6 +3,7 @@ require 'test_helper'
 class CommentControllerTest < ActionDispatch::IntegrationTest
 
     setup do
+        DatabaseCleaner.clean
         @u1 = User.create(email: "guy@gmail.com", password: "111111", password_confirmation: "111111" )
         @b = Biography.create(title: "Brian Black", slug: "brian_black", body: "Some body")
         @c1 = Comment.create(biography: @b, name: "Tom", email: "blah@blah.com", comment: "Some comment", approved: false)

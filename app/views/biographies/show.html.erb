@@ -3,17 +3,25 @@
     <small></small>
 </h3>
 
+<% if user_signed_in? %>
+    <p>
+        <%= link_to "Back", biographies_path, class: "btn btn-default btn-xs", role:"button" %>
+        <%= link_to "Edit", edit_biography_path, class: "btn btn-default btn-xs", role:"button" %>
+        <%= link_to "Delete", biography_path, class: "btn btn-default btn-xs", role:"button" , data: {:confirm => 'Are you sure?'}, method: :DELETE %>
+    </p>
+<% end %>
+
 <h4>
 <%= @biography.lifespan %>
 <span class="pull-right">
-        <% if @biography.primary_country.present? %>
+    <% if @biography.primary_country.present? %>
         <em><small>
             from <%= @biography.primary_country.name + " " %>
             <% if @biography.secondary_country.present? %>
                 (also <%= @biography.secondary_country.name %>)
             <% end %>
         </small></em>
-        <% end %>
+    <% end %>
     <% if @biography.south_georgia %>
         <%= tag.button "SG", class:"btn btn-default btn-xs", data:{toggle:"popover", content:"South Georgia", "html":"true"} %>
     <% end %>
@@ -24,31 +32,36 @@
 <%= tag.div @biography.body_with_images.html_safe, class:"biography_body" %>
 
 <% if @biography.authors.present? %>
-    <p class="authors"><%= tag.strong("Authors") %></p>
+    <h4><%= tag.strong("Authors") %></h4>
         <%= tag.div class:"biography_authors" do %>
             <%= @biography.authors %><%= '<button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#authors-info">Author Info</button>'.html_safe %>
         <% end %>
 <% end %>
 
+
 <% if @biography.external_links.present? %>
-    <p class="external_links"><%= tag.strong("External links") %></p>
+    <h4><%= tag.strong("External links") %></h4>
     <%= tag.div @biography.external_links.html_safe, class:"biography_external_links" %>
 <% end %>
 
+<% if @biography.approved_comments.present? %>
+    <h4><%= tag.strong("Comments") %></h4>
+    <% if @biography.approved_comments.each do |comment| %>
+        <%= render partial: 'comments/show_inline', locals: { comment: comment } %>
+    <% end.empty? %>
+    <% end %>
+<% end %>
+
+<button id="comment_button" type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal">Add comment</button>
+
 <% if @biography.revisions.present? %>
-<%= simple_format @biography.revisions, class: "small" %>
+    <h4><%= tag.strong("Revisions") %></h4>
+    <%= tag.div class:"biography_revsions" do %>
+        <%= simple_format @biography.revisions, class: "small" %>
+    <% end %>
 <% end %>
 
-<% if user_signed_in? %>
-     <p>
-        <%= link_to "Back", biographies_path, class: "btn btn-default", role:"button" %>
-        <%= link_to "Edit", edit_biography_path, class: "btn btn-default", role:"button" %>
-        <%= link_to "Delete", biography_path, class: "btn btn-default", role:"button" , data: {:confirm => 'Are you sure?'}, method: :DELETE %>
-    </p>
-<% end %>
-
-
-<%= render partial: 'comments/new', locals: { biography: @biography } %>
-<button id="comment_button" type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">Add comment</button>
+<%# Hidden content for modal popups %>
 
 <%= render partial: 'authors', locals: {biography: @biography} %>
+<%= render partial: 'comments/new', locals: { biography: @biography } %>
