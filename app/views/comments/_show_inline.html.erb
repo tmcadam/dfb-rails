@@ -3,7 +3,5 @@
         <b><%= comment.name %></b>
         <span class="small"> (<%= comment.created_at %>)</span>
     </h5>
-    <p>
-        <%= comment.comment %>
-    </p>
+    <%= simple_format comment.comment %>
 </div>
