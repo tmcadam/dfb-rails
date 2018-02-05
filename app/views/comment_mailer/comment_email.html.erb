@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>Thank you for submitting a comment to the Dictionary of Falklands Biography.
+        It will be reviewed by the web editor before being displayed publically,
+        this may take upto 3 days. Please contact David Tatham for further information
+        - <a href="mailto:webeditor@falklandsbiographies.org">webeditor@falklandsbiographies.org</a>
+    </p>
+    <div style="margin-left: 40px;color:DarkBlue">
+        <%= tag.h4 @comment.biography.title %>
+        <%= simple_format @comment.comment %>
+    </div>
+  </body>
+</html>

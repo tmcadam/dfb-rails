@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>A new comment has been received on the Dictionary of Falklands Biographies
+        web site. Please click on the link to approve the comment : <%= link_to 'Approve new comment', edit_comment_url(@comment) %>.
+    </p>
+    <div style="margin-left: 40px;color:DarkBlue">
+        <%= tag.h4 @comment.biography.title %>
+        <%= tag.h5 "#{@comment.name} / #{@comment.email }"%>
+        <%= simple_format @comment.comment %>
+    </div>
+  </body>
+</html>

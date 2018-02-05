@@ -26,11 +26,6 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
-  # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
-
-  config.action_mailer.perform_caching = false
-
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
@@ -54,6 +49,12 @@ Rails.application.configure do
 
   Paperclip.options[:command_path] = "/usr/bin/"
 
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+
+  #config.admin_comment_email = ENV["DFB_COMMENTS_EMAIL_DEV"] # uncomment and set variables to send real emails
+  config.admin_comment_email = "test@test.com" # comment this and set variables to dev on real emails
+  config.action_mailer.delivery_method = :test # comment this and set variables to dev on real emails
+  config.active_job.queue_adapter = :inline # comment this and set variables to dev on real emails
 
 end
