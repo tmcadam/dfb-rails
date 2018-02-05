@@ -12,6 +12,9 @@
                     <%= f.input :email, placeholder: 'This will not be displayed publically (required).'  %>
                     <%= f.input :comment %>
                     <%= f.hidden_field :biography_id, :value => @biography.id %>
+                    <%= tag.p class:'extra_field' do %>
+                        <input type="text" name="url" value=""/>
+                    <% end %>
                     <%= f.submit "Leave Comment" %>
                 <% end %>
                 <div id="comment_success">

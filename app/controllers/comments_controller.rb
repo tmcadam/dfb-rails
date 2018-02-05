@@ -26,15 +26,20 @@ class CommentsController < ApplicationController
     end
 
     def create
-        @comment = Comment.new( comment_params_public )
-        @comment.approved = false
         respond_to do |format|
-            if @comment.save
-                format.json { render json: {'status': 'Success' }, status: :created }
-                CommentMailer.comment_email(@comment).deliver_later
-                CommentMailer.admin_comment_email(@comment).deliver_later
+            if params[:url] == ""
+                @comment = Comment.new( comment_params_public )
+                @comment.approved = false
+                if @comment.save
+                    format.json { render json: {'status': 'Success' }, status: :created }
+                    CommentMailer.comment_email(@comment).deliver_later
+                    CommentMailer.admin_comment_email(@comment).deliver_later
+                else
+                    format.json { render json: {'status': 'Errors', 'errors': @comment.errors}, status: :unprocessable_entity }
+                end
             else
-                format.json { render json: {'status': 'Errors', 'errors': @comment.errors}, status: :unprocessable_entity }
+                # A dummy success response for spambots
+                format.json { render json: {'status': 'Success - extra' }, status: :created }
             end
         end
     end

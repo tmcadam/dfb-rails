@@ -78,7 +78,8 @@ class CommentControllerTest < ActionDispatch::IntegrationTest
 
     test "new comment created if correct parameters submitted and approved is false" do
         assert_difference('Comment.count', 1) do
-            post comments_path( comment: {
+            post comments_path( url: "",
+                comment: {
                 biography_id: @b.id,
                 name:"Joe",
                 email:"email@email.com",
@@ -93,7 +94,8 @@ class CommentControllerTest < ActionDispatch::IntegrationTest
 
     test "comment not created if paprameters incorrect" do
         assert_difference('Comment.count', 0) do
-            post comments_path( comment: {
+            post comments_path( url: "",
+                comment: {
                 biography_id: @b.id,
                 name:"Joe",
                 email:"not an email",
@@ -104,6 +106,25 @@ class CommentControllerTest < ActionDispatch::IntegrationTest
         json = ActiveSupport::JSON.decode @response.body
         assert_equal 'Errors', json['status']
         assert json['errors']['email'][0].include? "is not a valid email"
+    end
+
+    test "comment not created if spam parameters detected" do
+        assert_difference('Comment.count', 0) do
+            post comments_path( url: "some spam bot did this",
+                comment: {
+                biography_id: @b.id,
+                name:"Joe",
+                email:"not an email",
+                comment:"A great page" }), xhr: true
+        end
+        assert_equal 0, ActionMailer::Base.deliveries.count
+        assert_equal 201, @response.status
+        json = ActiveSupport::JSON.decode @response.body
+        assert_equal 'Success - extra', json['status']
+    end
+
+    test "spambot field is not visible" do
+        
     end
 
     teardown do
