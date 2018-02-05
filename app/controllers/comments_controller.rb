@@ -31,6 +31,8 @@ class CommentsController < ApplicationController
         respond_to do |format|
             if @comment.save
                 format.json { render json: {'status': 'Success' }, status: :created }
+                CommentMailer.comment_email(@comment).deliver_later
+                CommentMailer.admin_comment_email(@comment).deliver_later
             else
                 format.json { render json: {'status': 'Errors', 'errors': @comment.errors}, status: :unprocessable_entity }
             end

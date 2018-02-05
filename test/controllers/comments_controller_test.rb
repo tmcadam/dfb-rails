@@ -76,7 +76,6 @@ class CommentControllerTest < ActionDispatch::IntegrationTest
         end
     end
 
-
     test "new comment created if correct parameters submitted and approved is false" do
         assert_difference('Comment.count', 1) do
             post comments_path( comment: {
@@ -85,6 +84,7 @@ class CommentControllerTest < ActionDispatch::IntegrationTest
                 email:"email@email.com",
                 comment:"A great page" }), xhr: true
         end
+        assert_equal 2, ActionMailer::Base.deliveries.count
         assert_equal Comment.last.approved, false
         assert_equal 201, @response.status
         json = ActiveSupport::JSON.decode @response.body
@@ -99,6 +99,7 @@ class CommentControllerTest < ActionDispatch::IntegrationTest
                 email:"not an email",
                 comment:"A great page" }), xhr: true
         end
+        assert_equal 0, ActionMailer::Base.deliveries.count
         assert_equal 422, @response.status
         json = ActiveSupport::JSON.decode @response.body
         assert_equal 'Errors', json['status']
