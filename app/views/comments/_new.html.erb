@@ -8,8 +8,8 @@
             </div>
             <div class="modal-body">
                 <%= simple_form_for @biography.comments.new, :remote=>true do |f| %>
-                    <%= f.input :name %>
-                    <%= f.input :email %>
+                    <%= f.input :name, placeholder: 'Name displayed with the comment (required).' %>
+                    <%= f.input :email, placeholder: 'This will not be displayed publically (required).'  %>
                     <%= f.input :comment %>
                     <%= f.hidden_field :biography_id, :value => @biography.id %>
                     <%= f.submit "Leave Comment" %>
@@ -17,8 +17,8 @@
                 <div id="comment_success">
                     <h3>Submitted</h3>
                     <p>Please note, comments are reviewed by the web editor before appearing on the site.
-                        This process may take up to 3 days. Email webeditor@falklandsbiographies.org
-                        for further information.
+                        This process may take up to 3 days. Email <a target="_blank" href="mailto:webeditor@falklandsbiographies.org">
+                        webeditor@falklandsbiographies.org</a> for further information.
                     </p>
                 </div>
             </div>
