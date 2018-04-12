@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180129033732) do
+ActiveRecord::Schema.define(version: 20180130023656) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,17 @@ ActiveRecord::Schema.define(version: 20180129033732) do
     t.index ["biography_id", "author_id"], name: "index_biography_authors_on_biography_id_and_author_id", unique: true
     t.index ["biography_id", "author_position"], name: "index_biography_authors_on_biography_id_and_author_position", unique: true
     t.index ["biography_id"], name: "index_biography_authors_on_biography_id"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.bigint "biography_id"
+    t.string "name"
+    t.string "email"
+    t.text "comment"
+    t.boolean "approved"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["biography_id"], name: "index_comments_on_biography_id"
   end
 
   create_table "countries", force: :cascade do |t|
@@ -101,4 +112,5 @@ ActiveRecord::Schema.define(version: 20180129033732) do
 
   add_foreign_key "biographies", "countries", column: "primary_country_id"
   add_foreign_key "biographies", "countries", column: "secondary_country_id"
+  add_foreign_key "comments", "biographies"
 end

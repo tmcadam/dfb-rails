@@ -13,6 +13,7 @@
   - `gem install bundler`
   - `bundle install`
   - `rails server`
+  - NB. To send real emails in dev set `SMTP_USER`, `SMTP_PASSWORD` and `DFB_COMMENTS_EMAIL_DEV` environment variables, and comment out the email test settings in config/environments/development.rb.
 
 ### Dev/local database Configuration
   - Install Postgres 9.4
@@ -61,6 +62,8 @@ Set the following variables in Travis UI (allows deployment into Webfaction)
     export BACKUP_EMAIL="<email address to send backups to>"
     export SMTP_USER="<email server smtp username>"
     export SMTP_PASSWORD="<email server smtp password>"
+    export DFB_COMMENTS_EMAIL_PRODUCTION="email to send comment approval emails"
+    export DFB_COMMENTS_EMAIL_STAGING="email to send comment approval emails for testing"
 
     export DFB_DB_PASS_PRODUCTION="<production db password>"
     export DFB_DB_USER_PRODUCTION="<production database user name>"

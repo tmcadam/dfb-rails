@@ -37,7 +37,7 @@ gem 'yui-compressor'
 gem 'json'
 gem 'truncate_html'
 gem 'kaminari', :git => 'https://github.com/kaminari/kaminari'
-gem "paperclip", "~> 5.0.0"
+gem "paperclip", "~> 5.2.1"
 gem 'simple_form'
 gem 'lightbox-bootstrap-rails', '5.1.0.1'
 gem 'pg'
@@ -47,6 +47,7 @@ gem 'scrollto-rails'
 gem 'devise'
 gem 'rufus-scheduler'
 gem "cocoon"
+gem 'validates_email_format_of'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
