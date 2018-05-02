@@ -9,7 +9,6 @@ export RUBYLIB=$WEBAPP_DIR/lib
 
 cd $APP_DIR
 env RAILS_ENV=$1 bundle install
-env RAILS_ENV=$1 bundle update
 env RAILS_ENV=$1 rake db:migrate
 env RAILS_ENV=$1 bundle exec rake assets:precompile
 

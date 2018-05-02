@@ -297,7 +297,7 @@ DEPENDENCIES
   paperclip (~> 5.2.1)
   pg
   puma (~> 3.7)
-  rails (~> 5.1.6)
+  rails (= 5.1.6)
   rails-controller-testing
   rails_real_favicon
   rufus-scheduler
