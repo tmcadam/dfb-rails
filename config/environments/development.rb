@@ -53,7 +53,7 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 
   #config.admin_comment_email = ENV["DFB_COMMENTS_EMAIL_DEV"] # uncomment and set variables to send real emails
-  config.admin_comment_email = "test@test.com" # comment this and set variables to dev on real emails
+  config.admin_comment_email = "test1@test.com, test2@test.com" # comment this and set variables to dev on real emails
   config.action_mailer.delivery_method = :test # comment this and set variables to dev on real emails
   config.active_job.queue_adapter = :inline # comment this and set variables to dev on real emails
 

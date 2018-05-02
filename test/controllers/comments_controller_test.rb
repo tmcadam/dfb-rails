@@ -76,7 +76,7 @@ class CommentControllerTest < ActionDispatch::IntegrationTest
         end
     end
 
-    test "new comment created if correct parameters submitted and approved is false" do
+    test "new comment created if correct parameters submitted and approved set to false" do
         assert_difference('Comment.count', 1) do
             post comments_path( url: "",
                 comment: {
@@ -121,10 +121,6 @@ class CommentControllerTest < ActionDispatch::IntegrationTest
         assert_equal 201, @response.status
         json = ActiveSupport::JSON.decode @response.body
         assert_equal 'Success - extra', json['status']
-    end
-
-    test "spambot field is not visible" do
-        
     end
 
     teardown do
