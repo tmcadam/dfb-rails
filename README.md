@@ -1,14 +1,14 @@
 # The Dictionary of Falklands Biographies ![Build Status](https://travis-ci.org/tmcadam/dfb-rails.svg?branch=master "Build Status")
 
 ### Versions
-  - Ruby 2.2.7
-  - Rails 5.1.4
+  - Ruby 2.2.10
+  - Rails 5.1.6
 
 ### Dev/local environment configuration
   - Clone the project
   - Install RVM system wide
     - If you add .ruby-gemset and .ruby-version files, it will automatically use RVM in the project folder
-    - Alternatively you can run `rvm use 2.2.7@dfb-rails` each time you enter the folder
+    - Alternatively you can run `rvm use 2.2.10@dfb-rails` each time you enter the folder
     - It will prompt to install the correct ruby version through RVM if not available on the sytem - run the suggested command
   - `gem install bundler`
   - `bundle install`

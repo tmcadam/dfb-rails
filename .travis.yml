@@ -1,6 +1,6 @@
 language: ruby
 rvm:
-- 2.2.7
+- 2.2.10
 branches:
   only:
    - master
@@ -13,6 +13,7 @@ addons:
 services:
   - postgresql
 install:
+- bundle update
 - bundle install --jobs=3 --retry=3
 before_script:
   - psql -c 'create database dfb_test;' -U postgres
