@@ -34,7 +34,7 @@ class CommentMailerTest < ActionMailer::TestCase
 
         # Test the body of the sent email contains what we expect it to
         assert_equal ['webmaster@falklandsbiographies.org'], email.from
-        assert_equal ['test@test.com'], email.to
+        assert_equal ["test1@test.com", "test2@test.com"], email.to
         assert_equal 'New comment received', email.subject
     end
 

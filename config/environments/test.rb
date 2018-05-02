@@ -42,7 +42,7 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
   # a couple of test specific Settings
-  config.admin_comment_email = "test@test.com"
+  config.admin_comment_email = "test1@test.com, test2@test.com"
   config.action_mailer.delivery_method = :test
   config.active_job.queue_adapter = :inline
 end
