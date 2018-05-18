@@ -5,7 +5,7 @@ describe Comment do
     setup do
         @b = biographies(:three)
         @b.save
-        @c1 = Comment.new(biography: @b, name: "Tom", email: "blah@blah.com", comment: "Some comment", approved: false)
+        @c1 = Comment.new(biography: @b, name: "Tom", email: "blah@blah.com", comment: "Some comment", approved: false, approve_key: "test-key")
     end
 
     it "is valid with all required fields" do
