@@ -67,15 +67,6 @@ class CommentControllerTest < ActionDispatch::IntegrationTest
         assert_redirected_to new_user_session_path
     end
 
-    test "index route returns all biographies" do
-        get biographies_path
-        biographies = @controller.index
-        assert_equal(Biography.count, biographies.length)
-        assert_select 'table#index' do
-            assert_select 'tr', Biography.count
-        end
-    end
-
     test "new comment created if correct parameters submitted and approved set to false" do
         assert_difference('Comment.count', 1) do
             post comments_path( url: "",
@@ -87,6 +78,8 @@ class CommentControllerTest < ActionDispatch::IntegrationTest
         end
         assert_equal 2, ActionMailer::Base.deliveries.count
         assert_equal Comment.last.approved, false
+        assert_not_nil Comment.last.approve_key
+        assert Comment.last.approve_key.length > 16
         assert_equal 201, @response.status
         json = ActiveSupport::JSON.decode @response.body
         assert_equal 'Success', json['status']

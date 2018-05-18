@@ -1,3 +1,4 @@
+require 'securerandom'
 class CommentsController < ApplicationController
 
     before_action :authenticate_user!, :only => [:index, :edit, :update, :destroy]
@@ -30,6 +31,7 @@ class CommentsController < ApplicationController
             if params[:url] == ""
                 @comment = Comment.new( comment_params_public )
                 @comment.approved = false
+                @comment.approve_key = generate_approve_key
                 if @comment.save
                     format.json { render json: {'status': 'Success' }, status: :created }
                     CommentMailer.comment_email(@comment).deliver_later
@@ -45,6 +47,10 @@ class CommentsController < ApplicationController
     end
 
 private
+
+    def generate_approve_key
+        SecureRandom.urlsafe_base64(16)
+    end
 
     def comment_params_public
         params.require(:comment).permit(:biography_id, :name, :email, :comment)
