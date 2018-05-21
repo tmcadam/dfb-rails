@@ -26,6 +26,17 @@ class CommentsController < ApplicationController
         end
     end
 
+    def approve
+        @comment = Comment.find_by(approve_key: params[:approve_key])
+        if @comment && params[:approve_key] != "key-void"
+            if @comment.update(approved: true, approve_key: "key-void")
+                redirect_to "/home", :flash => { :notice => "Comment successfully approved." }
+            end
+        else
+            redirect_to "/home", :flash => { :alert => "Comment update link was invalid." }
+        end
+    end
+
     def create
         respond_to do |format|
             if params[:url] == ""

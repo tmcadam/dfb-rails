@@ -6,7 +6,39 @@ class CommentControllerTest < ActionDispatch::IntegrationTest
         DatabaseCleaner.clean
         @u1 = User.create(email: "guy@gmail.com", password: "111111", password_confirmation: "111111" )
         @b = Biography.create(title: "Brian Black", slug: "brian_black", body: "Some body")
-        @c1 = Comment.create(biography: @b, name: "Tom", email: "blah@blah.com", comment: "Some comment", approved: false)
+        @c1 = Comment.create(biography: @b, name: "Tom", email: "blah@blah.com", comment: "Some comment", approved: false, approve_key: "some-test-key" )
+    end
+
+    test "can approve comment with approve_key if not logged in" do
+        assert_not @c1.approved
+        get '/comments/approve/some-test-key'
+        @c1.reload
+        assert @c1.approved
+        assert_equal "key-void", @c1.approve_key
+        assert_redirected_to "/home"
+    end
+
+    test "can approve comment with approve_key if logged in" do
+        sign_in @u1
+        get '/comments/approve/some-test-key'
+        @c1.reload
+        assert @c1.approved
+    end
+
+    test "can not approve comment with approve_key using key-void" do
+        assert_not @c1.approved
+        get '/comments/approve/key-void'
+        @c1.reload
+        assert_not @c1.approved
+        assert_redirected_to "/home"
+    end
+
+    test "can not approve comment if incorrect key" do
+        assert_not @c1.approved
+        get '/comments/approve/some-wrong-test-key'
+        @c1.reload
+        assert_not @c1.approved
+        assert_redirected_to "/home"
     end
 
     test "can show comments index if logged in" do
