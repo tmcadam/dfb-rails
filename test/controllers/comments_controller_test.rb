@@ -39,11 +39,11 @@ class CommentControllerTest < ActionDispatch::IntegrationTest
     test "can not approve comment with nil approve_key" do
         @c1.approve_key = nil
         assert_not @c1.approved
-        assert_raise do
-            get '/comments/approve/'
-        end
+        
+        get '/comments/approve/'
         @c1.reload
         assert_not @c1.approved
+        assert_redirected_to "/home"
 
         get '/comments/approve/some-key'
         @c1.reload
