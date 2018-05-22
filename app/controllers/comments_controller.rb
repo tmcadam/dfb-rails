@@ -30,7 +30,7 @@ class CommentsController < ApplicationController
         @comment = Comment.find_by(approve_key: params[:approve_key])
         if @comment && @comment.approve_key
             if @comment.update(approved: true, approve_key: nil)
-                redirect_to "/home", :flash => { :notice => "Comment successfully approved." }
+                redirect_to biography_path(@comment.biography), :flash => { :notice => "Comment successfully approved." }
             end
         else
             redirect_to "/home", :flash => { :alert => "Comment update link was invalid." }

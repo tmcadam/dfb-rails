@@ -15,7 +15,7 @@ class CommentControllerTest < ActionDispatch::IntegrationTest
         @c1.reload
         assert @c1.approved
         assert_not @c1.approve_key
-        assert_redirected_to "/home"
+        assert_redirected_to biography_path(@b)
     end
     test "can approve comment with approve_key if logged in" do
         sign_in @u1
@@ -24,7 +24,7 @@ class CommentControllerTest < ActionDispatch::IntegrationTest
         @c1.reload
         assert @c1.approved
         assert_not @c1.approve_key
-        assert_redirected_to "/home"
+        assert_redirected_to biography_path(@b)
     end
 
     test "can not approve comment if incorrect key" do
@@ -39,7 +39,7 @@ class CommentControllerTest < ActionDispatch::IntegrationTest
     test "can not approve comment with nil approve_key" do
         @c1.approve_key = nil
         assert_not @c1.approved
-        
+
         get '/comments/approve/'
         @c1.reload
         assert_not @c1.approved
