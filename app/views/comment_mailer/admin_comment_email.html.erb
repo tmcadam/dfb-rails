@@ -5,12 +5,16 @@
   </head>
   <body>
     <p>A new comment has been received on the Dictionary of Falklands Biographies
-        web site. Please click on the link to approve the comment : <%= link_to 'Approve new comment', edit_comment_url(@comment), target: "_blank" %>.
+        web site.
     </p>
     <div style="margin-left: 40px;color:DarkBlue">
         <%= tag.h4 @comment.biography.title %>
         <%= tag.h5 "#{@comment.name} / #{@comment.email }"%>
         <%= simple_format @comment.comment %>
     </div>
+    <p>
+        <%= link_to 'Approve comment', approve_comment_url(:approve_key => @comment.approve_key), target: "_blank" %><br>
+        <%= link_to 'Edit comment', edit_comment_url(@comment), target: "_blank" %>
+    </p>
   </body>
 </html>
