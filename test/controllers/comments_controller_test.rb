@@ -14,28 +14,38 @@ class CommentControllerTest < ActionDispatch::IntegrationTest
         get '/comments/approve/some-test-key'
         @c1.reload
         assert @c1.approved
-        assert_equal "key-void", @c1.approve_key
+        assert_not @c1.approve_key
         assert_redirected_to "/home"
     end
-
     test "can approve comment with approve_key if logged in" do
         sign_in @u1
+        assert_not @c1.approved
         get '/comments/approve/some-test-key'
         @c1.reload
         assert @c1.approved
-    end
-
-    test "can not approve comment with approve_key using key-void" do
-        assert_not @c1.approved
-        get '/comments/approve/key-void'
-        @c1.reload
-        assert_not @c1.approved
+        assert_not @c1.approve_key
         assert_redirected_to "/home"
     end
 
     test "can not approve comment if incorrect key" do
         assert_not @c1.approved
         get '/comments/approve/some-wrong-test-key'
+        @c1.reload
+        assert_not @c1.approved
+        assert @c1.approve_key
+        assert_redirected_to "/home"
+    end
+
+    test "can not approve comment with nil approve_key" do
+        @c1.approve_key = nil
+        assert_not @c1.approved
+        assert_raise do
+            get '/comments/approve/'
+        end
+        @c1.reload
+        assert_not @c1.approved
+
+        get '/comments/approve/some-key'
         @c1.reload
         assert_not @c1.approved
         assert_redirected_to "/home"

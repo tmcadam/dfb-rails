@@ -28,8 +28,8 @@ class CommentsController < ApplicationController
 
     def approve
         @comment = Comment.find_by(approve_key: params[:approve_key])
-        if @comment && params[:approve_key] != "key-void"
-            if @comment.update(approved: true, approve_key: "key-void")
+        if @comment && @comment.approve_key
+            if @comment.update(approved: true, approve_key: nil)
                 redirect_to "/home", :flash => { :notice => "Comment successfully approved." }
             end
         else
