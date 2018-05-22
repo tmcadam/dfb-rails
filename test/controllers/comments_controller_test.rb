@@ -6,7 +6,49 @@ class CommentControllerTest < ActionDispatch::IntegrationTest
         DatabaseCleaner.clean
         @u1 = User.create(email: "guy@gmail.com", password: "111111", password_confirmation: "111111" )
         @b = Biography.create(title: "Brian Black", slug: "brian_black", body: "Some body")
-        @c1 = Comment.create(biography: @b, name: "Tom", email: "blah@blah.com", comment: "Some comment", approved: false)
+        @c1 = Comment.create(biography: @b, name: "Tom", email: "blah@blah.com", comment: "Some comment", approved: false, approve_key: "some-test-key" )
+    end
+
+    test "can approve comment with approve_key if not logged in" do
+        assert_not @c1.approved
+        get '/comments/approve/some-test-key'
+        @c1.reload
+        assert @c1.approved
+        assert_not @c1.approve_key
+        assert_redirected_to biography_path(@b)
+    end
+    test "can approve comment with approve_key if logged in" do
+        sign_in @u1
+        assert_not @c1.approved
+        get '/comments/approve/some-test-key'
+        @c1.reload
+        assert @c1.approved
+        assert_not @c1.approve_key
+        assert_redirected_to biography_path(@b)
+    end
+
+    test "can not approve comment if incorrect key" do
+        assert_not @c1.approved
+        get '/comments/approve/some-wrong-test-key'
+        @c1.reload
+        assert_not @c1.approved
+        assert @c1.approve_key
+        assert_redirected_to "/home"
+    end
+
+    test "can not approve comment with nil approve_key" do
+        @c1.approve_key = nil
+        assert_not @c1.approved
+
+        get '/comments/approve/'
+        @c1.reload
+        assert_not @c1.approved
+        assert_redirected_to "/home"
+
+        get '/comments/approve/some-key'
+        @c1.reload
+        assert_not @c1.approved
+        assert_redirected_to "/home"
     end
 
     test "can show comments index if logged in" do
@@ -67,15 +109,6 @@ class CommentControllerTest < ActionDispatch::IntegrationTest
         assert_redirected_to new_user_session_path
     end
 
-    test "index route returns all biographies" do
-        get biographies_path
-        biographies = @controller.index
-        assert_equal(Biography.count, biographies.length)
-        assert_select 'table#index' do
-            assert_select 'tr', Biography.count
-        end
-    end
-
     test "new comment created if correct parameters submitted and approved set to false" do
         assert_difference('Comment.count', 1) do
             post comments_path( url: "",
@@ -87,6 +120,8 @@ class CommentControllerTest < ActionDispatch::IntegrationTest
         end
         assert_equal 2, ActionMailer::Base.deliveries.count
         assert_equal Comment.last.approved, false
+        assert_not_nil Comment.last.approve_key
+        assert Comment.last.approve_key.length > 16
         assert_equal 201, @response.status
         json = ActiveSupport::JSON.decode @response.body
         assert_equal 'Success', json['status']
