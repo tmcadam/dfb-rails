@@ -7,6 +7,7 @@
 ### Dev/local environment configuration
   - Clone the project
   - Install RVM system wide
+    - Follow instructions on Github https://github.com/rvm/ubuntu_rvm
     - If you add .ruby-gemset and .ruby-version files, it will automatically use RVM in the project folder
     - Alternatively you can run `rvm use 2.2.10@dfb-rails` each time you enter the folder
     - It will prompt to install the correct ruby version through RVM if not available on the sytem - run the suggested command
