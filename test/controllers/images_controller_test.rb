@@ -150,6 +150,14 @@ class ImageControllerTest < ActionDispatch::IntegrationTest
 
     end
 
+    test "Summernote elements are present" do
+        sign_in @u1
+        get new_image_path
+        assert_select "textarea#image_caption[data-provider='summernote']"
+        get edit_image_path(@img1)
+        assert_select "textarea#image_caption[data-provider='summernote']"
+    end
+
     teardown do
         DatabaseCleaner.clean
     end

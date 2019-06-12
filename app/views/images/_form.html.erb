@@ -1,7 +1,7 @@
 <%= simple_form_for @image, url: url, method: method do |f| %>
   <%= f.association :biography %>
   <%= f.input :title %>
-  <%= f.input :caption %>
+  <%= f.input :caption , as: :summernote %>
   <%= f.input :attribution %>
   <% if @image.image.exists? %>
   <%= image_tag @image.image.url(:medium) %><br/>

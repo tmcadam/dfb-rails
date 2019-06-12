@@ -4,14 +4,14 @@
             link_to(
                 image_tag( @img.image.url("medium"), class:"img-rounded" ),
                 @img.image.url("original"),
-                data:{  footer: tag.span(@img.caption, class:"img-footer-caption text-left") +
+                data:{  footer: tag.span(@img.caption.html_safe, class:"img-footer-caption text-left") +
                                 tag.br +
                                 tag.span(tag.strong(@img.id), class:"img-footer-id") +
                                 tag.span(@img.attribution, class: "small"),
                         toggle:'lightbox',
                         gallery:'multiimages'
                 }) +
-                tag.div( truncate_html(tag.strong(@img.id) + " " + @img.caption,  :length => 40) , class:"caption small") , class:"#{@class}") ,
+                tag.div( truncate_html(tag.strong(@img.id) + " " + @img.caption.html_safe,  :length => 40) , class:"caption small") , class:"#{@class}") ,
     class:"img-container block-center")
 
 %>
