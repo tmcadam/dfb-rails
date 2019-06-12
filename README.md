@@ -103,4 +103,18 @@ Set the following variables in Travis UI (allows deployment into Webfaction)
   ```
 
 ### Configuring SSL
-  - see https://github.com/tmcadam/webfaction-tools
+  - built in tools in Webfaction UI
+
+### Updating Ruby version in Webfaction
+  - Navigate to the webapp bin directory
+  - Replace links to the required Ruby version
+  - export the environment variables (as above)
+  - in the webapp root directory `gem install bundler`
+  - in the webapp app directory `bundle install`
+  - `restart`
+
+### Updating Rails
+  - Update the version in Gemfile
+  - export the environment variables (as above)
+  - in the webapp app directory `bundle update rails`
+  - commit and push the changes to Gemfile and Gemfile.lock
