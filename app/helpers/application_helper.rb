@@ -10,4 +10,12 @@ module ApplicationHelper
         body.gsub!(Regexp.union(hosts), "")
     end
 
+    def clean_html body
+        scrubber = Loofah::Scrubber.new do |node|
+          node.remove if node.text.squish == ""
+        end
+        body = ActionController::Base.helpers.sanitize(body)
+        ActionController::Base.helpers.sanitize(body, scrubber: scrubber)
+    end
+
 end

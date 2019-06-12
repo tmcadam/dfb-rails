@@ -7,6 +7,7 @@ class Biography < ApplicationRecord
     validates :body, presence: true
     default_scope { order(title: :asc) }
     before_save :clean_bio_urls
+    before_save :clean_bio_html
 
     has_many :biography_authors
     accepts_nested_attributes_for :biography_authors, reject_if: :all_blank, allow_destroy: true
@@ -50,6 +51,10 @@ private
         clean_urls(self.body)
     end
 
+    def clean_bio_html
+        self.body = clean_html(self.body)
+    end
+
     def insert_image(p, images)
         images.each do |img|
             if img["after_para"] == p
@@ -75,4 +80,5 @@ private
         ApplicationController.helpers.reset_cycle("pos_class")
         tags
     end
+
 end

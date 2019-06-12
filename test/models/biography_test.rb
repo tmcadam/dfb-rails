@@ -159,6 +159,13 @@ class BiographyTest < ActiveSupport::TestCase
         assert_equal "/biographies/robert_brown blah blah", @b.body
     end
 
+    test "clean_html_tags removes unwanted tags and properties" do
+        @b.body = '<p>   </p><p style="blah:45;blah:46;">Blah <i>Blah</i></p>'
+        @b.save
+        @b.reload
+        assert_equal '<p>Blah <i>Blah</i></p>', @b.body
+    end
+
     teardown do
         @b.images.each do |img|
             img.destroy
