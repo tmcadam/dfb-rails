@@ -15,7 +15,7 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 
 # app specific gems
-gem 'bootstrap-sass', '~> 3.3.6'
+gem "bootstrap-sass", ">= 3.4.1"
 gem 'autoprefixer-rails'
 gem 'jquery-rails'
 gem 'yui-compressor'
