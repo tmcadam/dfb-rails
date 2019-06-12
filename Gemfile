@@ -6,7 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 # rails gems
-gem 'rails', '5.1.6'
+gem 'rails', '5.2.3'
 gem 'puma', '~> 3.7'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
@@ -15,7 +15,7 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 
 # app specific gems
-gem 'bootstrap-sass', '~> 3.3.6'
+gem "bootstrap-sass", ">= 3.4.1"
 gem 'autoprefixer-rails'
 gem 'jquery-rails'
 gem 'yui-compressor'

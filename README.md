@@ -1,15 +1,19 @@
 # The Dictionary of Falklands Biographies ![Build Status](https://travis-ci.org/tmcadam/dfb-rails.svg?branch=master "Build Status")
 
 ### Versions
-  - Ruby 2.2.10
-  - Rails 5.1.6
+  - Ruby 2.5.5
+  - Rails 5.2.3
 
 ### Dev/local environment configuration
   - Clone the project
   - Install RVM system wide
-    - If you add .ruby-gemset and .ruby-version files, it will automatically use RVM in the project folder
-    - Alternatively you can run `rvm use 2.2.10@dfb-rails` each time you enter the folder
-    - It will prompt to install the correct ruby version through RVM if not available on the sytem - run the suggested command
+    - Follow instructions on Github https://github.com/rvm/ubuntu_rvm
+    - Add user to the rvm group `sudo usermod -a -G rvm [USERNAME]`
+    - Reboot after install
+    - Add a .ruby-version and .ruby-gemset file to project folder
+      - Install the current Ruby version `rvm install "ruby-2.5.5"`
+      - Generate the version file `rvm --ruby-version use 2.5.5`
+      - Generate the gemset file `rvm --ruby-version use 2.5.5@dfb-rails`
   - `gem install bundler`
   - `bundle install`
   - `rails server`
@@ -99,4 +103,18 @@ Set the following variables in Travis UI (allows deployment into Webfaction)
   ```
 
 ### Configuring SSL
-  - see https://github.com/tmcadam/webfaction-tools
+  - built in tools in Webfaction UI
+
+### Updating Ruby version in Webfaction
+  - Navigate to the webapp bin directory
+  - Replace links to the required Ruby version
+  - export the environment variables (as above)
+  - in the webapp root directory `gem install bundler`
+  - in the webapp app directory `bundle install`
+  - `restart`
+
+### Updating Rails
+  - Update the version in Gemfile
+  - export the environment variables (as above)
+  - in the webapp app directory `bundle update rails`
+  - commit and push the changes to Gemfile and Gemfile.lock
