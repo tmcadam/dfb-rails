@@ -121,6 +121,9 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
         assert_select "textarea#biography_external_links", { :count => 1 }
         assert_nil assigns(:biography).external_links
 
+        assert_select "textarea#biography_references", { :count => 1 }
+        assert_nil assigns(:biography).references
+
     end
 
     test "Summernote elements are present" do
@@ -128,11 +131,13 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
         get new_biography_path
         assert_select "textarea#biography_body[data-provider='summernote']"
         assert_select "textarea#biography_external_links[data-provider='summernote']"
+        assert_select "textarea#biography_references[data-provider='summernote']"
         Biography.destroy_all
         @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body")
         get edit_biography_path(@b)
         assert_select "textarea#biography_body[data-provider='summernote']"
         assert_select "textarea#biography_external_links[data-provider='summernote']"
+        assert_select "textarea#biography_references[data-provider='summernote']"
     end
 
     test "creates biography with correct params and redirects to show" do
@@ -151,11 +156,13 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
                                                             south_georgia: false,
                                                             primary_country_id: 12,
                                                             secondary_country_id: 1,
-                                                            external_links: 'some external links here'
+                                                            external_links: 'some external links here',
+                                                            references: 'some references here'
                                                             }}
         end
-        assert_equal Biography.last.title, 'Biography Title'
-        assert_equal Biography.last.external_links, 'some external links here'
+        assert_equal 'Biography Title', Biography.last.title
+        assert_equal 'some external links here', Biography.last.external_links
+        assert_equal 'some references here', Biography.last.references
         assert_redirected_to biography_path(Biography.last)
     end
 
@@ -172,7 +179,7 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
 
     test "edit returns populated form" do
         sign_in @u1
-        @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body", external_links: "A link")
+        @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body", external_links: "A link", references: "A reference")
         get edit_biography_path(@b)
         assert_response :success
         assert_select "input#biography_title[value=?]", "Original title"
@@ -180,16 +187,18 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
         assert_equal assigns(:biography).slug, @b.slug
         assert_equal assigns(:biography).body, @b.body
         assert_equal assigns(:biography).external_links, @b.external_links
+        assert_equal assigns(:biography).references, @b.references
     end
 
     test "updates biography with correct params and redirects to show" do
         sign_in @u1
-        @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body", external_links: "A link")
-        patch biography_url(@b), params: { biography: { title: "Updated title", external_links: "Updated link" } }
+        @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body", external_links: "A link", references: "A reference")
+        patch biography_url(@b), params: { biography: { title: "Updated title", external_links: "Updated link", references: "Updated reference" } }
         assert_redirected_to biography_path(@b)
         @b.reload
         assert_equal "Updated title", @b.title
         assert_equal "Updated link", @b.external_links
+        assert_equal "Updated reference", @b.references
     end
 
     test "re-renders new form if validation fails on update" do

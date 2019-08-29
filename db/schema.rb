@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_18_112002) do
+ActiveRecord::Schema.define(version: 2019_08_29_103139) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 2018_05_18_112002) do
     t.boolean "south_georgia"
     t.boolean "featured"
     t.text "external_links"
+    t.text "references"
     t.index ["slug"], name: "index_biographies_on_slug"
   end
 

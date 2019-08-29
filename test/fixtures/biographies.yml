@@ -31,3 +31,4 @@ three:
   authors: Joe Blow
   slug: some_slug
   external_links: '<a href="https://www.w3schools.com">Visit W3Schools.com!</a>'
+  references: 'Some reference'
