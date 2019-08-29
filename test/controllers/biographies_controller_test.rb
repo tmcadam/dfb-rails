@@ -121,6 +121,9 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
         assert_select "textarea#biography_external_links", { :count => 1 }
         assert_nil assigns(:biography).external_links
 
+        assert_select "textarea#biography_references", { :count => 1 }
+        assert_nil assigns(:biography).references
+
     end
 
     test "Summernote elements are present" do
@@ -128,11 +131,13 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
         get new_biography_path
         assert_select "textarea#biography_body[data-provider='summernote']"
         assert_select "textarea#biography_external_links[data-provider='summernote']"
+        assert_select "textarea#biography_references[data-provider='summernote']"
         Biography.destroy_all
         @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body")
         get edit_biography_path(@b)
         assert_select "textarea#biography_body[data-provider='summernote']"
         assert_select "textarea#biography_external_links[data-provider='summernote']"
+        assert_select "textarea#biography_references[data-provider='summernote']"
     end
 
     test "creates biography with correct params and redirects to show" do
