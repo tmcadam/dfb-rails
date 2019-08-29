@@ -33,6 +33,8 @@ gem 'devise'
 gem 'rufus-scheduler'
 gem "cocoon"
 gem 'validates_email_format_of'
+gem "nokogiri", ">= 1.10.4"
+
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
