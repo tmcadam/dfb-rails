@@ -22,10 +22,9 @@ python2.7 "$PROJECT_DIR/sendmail.py" "$CURRENT_FILEPATH"
 BACKUP_ZIP_FILEPATH="$BACKUP_FOLDER/dfb-production-$(date -I).zip"
 cd "$PROJECT_DIR/public/system/"
 zip -r "$BACKUP_ZIP_FILEPATH" "biography_images" >/dev/null 2>&1
-# upload db backup and images to google drive https://github.com/labbots/google-drive-upload
-cd /home/ukfit/drive-upload
-bash upload.sh "$BACKUP_PROD_FILEPATH" "DFB" >/dev/null 2>&1
-bash upload.sh "$BACKUP_ZIP_FILEPATH" "DFB" >/dev/null 2>&1
+# upload db backup and images to google drive using rclone
+rclone copy "$BACKUP_PROD_FILEPATH" drive-personal:DFB >/dev/null 2>&1
+rclone copy "$BACKUP_ZIP_FILEPATH" drive-personal:DFB >/dev/null 2>&1
 # delete the zip
 rm "$BACKUP_ZIP_FILEPATH"
 
