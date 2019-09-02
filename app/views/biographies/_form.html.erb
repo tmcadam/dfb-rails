@@ -83,6 +83,9 @@
     <%= f.input :external_links, as: :summernote,
             required: false %>
     <hr>
+    <%= f.input :references, as: :summernote,
+            required: false %>
+    <hr>
     <%= f.input :revisions %>
     <div class="form-actions">
         <%= link_to "Back", biographies_path, class: "btn btn-default", role:"button" %>
