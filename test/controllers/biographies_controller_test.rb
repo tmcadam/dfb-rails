@@ -301,6 +301,17 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
         assert_equal true, @b.featured
     end
 
+    test "will render analytics js if not logged in" do
+        get biographies_path
+        assert_select "script#matomo"
+    end
+
+    test "will NOT render analytics js if logged in" do
+        sign_in @u1
+        get biographies_path
+        assert_select "script#matomo", false
+    end
+
     teardown do
         DatabaseCleaner.clean
     end
