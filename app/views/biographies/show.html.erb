@@ -44,6 +44,11 @@
     <%= tag.div @biography.external_links.html_safe, class:"biography_external_links" %>
 <% end %>
 
+<% if @biography.references.present? %>
+    <h4><%= tag.strong("References") %></h4>
+    <%= tag.div @biography.references.html_safe, class:"biography_references" %>
+<% end %>
+
 <% if @biography.approved_comments.present? %>
     <h4><%= tag.strong("Comments") %></h4>
     <% if @biography.approved_comments.each do |comment| %>
