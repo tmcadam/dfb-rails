@@ -11,8 +11,8 @@
             <%= link_to biography.title, biography_path(biography.slug) %>
             <%= biography.lifespan %>
             <% if user_signed_in? %>
-                <%= link_to "Edit", edit_biography_path(biography), class: "btn btn-default btn-xs", role:"button" %>
-                <%= link_to "Delete", biography_path(biography),
+                <%= link_to "Edit", edit_biography_path(biography.slug), class: "btn btn-default btn-xs", role:"button" %>
+                <%= link_to "Delete", biography_path(biography.slug),
                                         class: "btn btn-default btn-xs",
                                         role:"button",
                                         data: {:confirm => 'Are you sure?'},

@@ -6,8 +6,8 @@
 <% if user_signed_in? %>
     <p>
         <%= link_to "Back", biographies_path, class: "btn btn-default btn-xs", role:"button" %>
-        <%= link_to "Edit", edit_biography_path, class: "btn btn-default btn-xs", role:"button" %>
-        <%= link_to "Delete", biography_path, class: "btn btn-default btn-xs", role:"button" , data: {:confirm => 'Are you sure?'}, method: :DELETE %>
+        <%= link_to "Edit", edit_biography_path(@biography.slug), class: "btn btn-default btn-xs", role:"button" %>
+        <%= link_to "Delete", biography_path(@biography.slug), class: "btn btn-default btn-xs", role:"button" , data: {:confirm => 'Are you sure?'}, method: :DELETE %>
     </p>
 <% end %>
 

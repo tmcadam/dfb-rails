@@ -22,7 +22,7 @@ class BiographiesController < ApplicationController
         @biography = Biography.new( biography_params )
         begin
             if @biography.save
-                redirect_to @biography
+                redirect_to biography_path(@biography.slug)
             else
                 render 'new'
             end
@@ -37,11 +37,11 @@ class BiographiesController < ApplicationController
     end
 
     def update
-        @biography = Biography.find(params[:id])
+        @biography = Biography.find_by(slug: params[:id]) || Biography.find(params[:id])
         @biography.assign_attributes(biography_params)
         begin
             if @biography.save
-                redirect_to @biography
+                redirect_to biography_path(@biography.slug)
             else
                 render 'edit'
             end

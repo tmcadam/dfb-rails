@@ -163,7 +163,7 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
         assert_equal 'Biography Title', Biography.last.title
         assert_equal 'some external links here', Biography.last.external_links
         assert_equal 'some references here', Biography.last.references
-        assert_redirected_to biography_path(Biography.last)
+        assert_redirected_to biography_path(Biography.last.slug)
     end
 
     test "re-renders new form if validation fails on create" do
@@ -193,8 +193,8 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
     test "updates biography with correct params and redirects to show" do
         sign_in @u1
         @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body", external_links: "A link", references: "A reference")
-        patch biography_url(@b), params: { biography: { title: "Updated title", external_links: "Updated link", references: "Updated reference" } }
-        assert_redirected_to biography_path(@b)
+        patch biography_url(@b.slug), params: { biography: { title: "Updated title", external_links: "Updated link", references: "Updated reference" } }
+        assert_redirected_to biography_path(@b.slug)
         @b.reload
         assert_equal "Updated title", @b.title
         assert_equal "Updated link", @b.external_links
@@ -223,8 +223,8 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
         @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body")
         get biography_path(@b)
         assert_select "a.btn[href=?]", biographies_path, {:text => "Back"}
-        assert_select "a.btn[href=?]", edit_biography_path(@b), {:text => "Edit"}
-        assert_select "a.btn[href=?]", biography_path, {:text => "Delete"}
+        assert_select "a.btn[href=?]", edit_biography_path(@b.slug), {:text => "Edit"}
+        assert_select "a.btn[href=?]", biography_path(@b.slug), {:text => "Delete"}
     end
 
     test "delete, edit, back buttons not present in detail views if not signed in" do
@@ -295,8 +295,8 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
     test "can set featured using form" do
         sign_in @u1
         @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body", featured: false)
-        patch biography_url(@b), params: { biography: { featured: true } }
-        assert_redirected_to biography_path(@b)
+        patch biography_path(@b.slug), params: { biography: { featured: true } }
+        assert_redirected_to biography_path(@b.slug)
         @b.reload
         assert_equal true, @b.featured
     end

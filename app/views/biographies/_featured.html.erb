@@ -1,4 +1,4 @@
-<a href="<%= biography_path(biography) %>">
+<a href="<%= biography_path(biography.slug) %>">
 <h5 class="text-center"><strong><%= biography.title %></strong></h5>
 <% if biography.images.present? %>
     <img src="<%= biography.images.order(:id).first.image.url(:medium) %>" alt="..." class="img-rounded img-responsive center-block" >
