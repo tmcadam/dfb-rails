@@ -49,14 +49,13 @@
     <%= tag.div @biography.references.html_safe, class:"biography_references" %>
 <% end %>
 
+<h4><%= tag.strong("Comments") %></h4>
 <% if @biography.approved_comments.present? %>
-    <h4><%= tag.strong("Comments") %></h4>
     <% if @biography.approved_comments.each do |comment| %>
         <%= render partial: 'comments/show_inline', locals: { comment: comment } %>
     <% end.empty? %>
     <% end %>
 <% end %>
-
 <button id="comment_button" type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal">Add comment</button>
 
 <% if @biography.revisions.present? %>
