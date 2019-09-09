@@ -78,7 +78,7 @@ ActiveRecord::Schema.define(version: 2019_08_29_103139) do
     t.string "title"
     t.text "caption"
     t.string "attribution"
-    t.bigint "biography_id"
+    t.integer "biography_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "image_file_name"
@@ -116,5 +116,4 @@ ActiveRecord::Schema.define(version: 2019_08_29_103139) do
   add_foreign_key "biographies", "countries", column: "primary_country_id"
   add_foreign_key "biographies", "countries", column: "secondary_country_id"
   add_foreign_key "comments", "biographies"
-  add_foreign_key "images", "biographies"
 end
