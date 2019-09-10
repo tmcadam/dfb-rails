@@ -33,9 +33,10 @@ module BiographiesHelper
         set_featured(bios)
     end
 
-    def check_all_links
+    def gather_all_links
+        links = Array.new
         Biography.all.each do |bio|
-          puts bio.check_links
+            links += bio.gather_links
         end
     end
 

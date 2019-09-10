@@ -166,29 +166,29 @@ class BiographyTest < ActiveSupport::TestCase
         assert_equal '<p>Blah <i>Blah</i></p>', @b.body
     end
 
-    test "check_links returns correct number of links tested" do
+    test "gather_links returns correct number of links for testing" do
         @b.external_links = '<a href="www.google.com">Google</a></br><a href="www.yahoo.com">Yahoo</a>'
-        result = @b.instance_eval{ check_links }
-        assert_equal 2, result[:count]
+        @b.references = '<a href="www.google.com">Google</a>'
+        links = @b.instance_eval{ gather_links }
+        assert_equal 3, links.length
 
         @b.external_links = '<h1>No links</h1>'
-        result = @b.instance_eval{ check_links }
-        assert_equal 0, result[:count]
+        @b.references = '<a href="www.google.com">Google</a>'
+        links = @b.instance_eval{ gather_links }
+        assert_equal 1, links.length
+
+        @b.external_links = '<h1>No links</h1>'
+        @b.references = '<p></p>'
+        links = @b.instance_eval{ gather_links }
+        assert_equal 0, links.length
     end
 
-    test "check_links returns no fails if all links are valid" do
-      @b.external_links = '<a href="www.google.com">Google</a></br><a href="www.yahoo.com">Yahoo</a>'
-      result = @b.instance_eval{ check_links }
-      assert_equal 0, result[:fails].length
-    end
-
-    test "check_links returns fails if links are invalid" do
-      @b.external_links = '<a href="www.googl1e.com">Google</a></br><a href="www.yahoo.com">Yahoo</a>'
-      result = @b.instance_eval{ check_links }
-      assert_equal 2, result[:count]
-      assert_equal 1, result[:fails].length
-      assert_equal "www.googl1e.com", result[:fails].first[:url]
-      assert_equal "Google", result[:fails].first[:title]
+    test "gather_links returns array of hashes" do
+        @b.external_links = '<a href="www.google.com">Google</a></br><a href="www.yahoo.com">Yahoo</a>'
+        @b.references = '<a href="www.google.com">Google</a>'
+        links = @b.instance_eval{ gather_links }
+        assert_equal 3, links.length
+        
     end
 
     teardown do

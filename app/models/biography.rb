@@ -1,5 +1,3 @@
-require 'rest-client'
-
 class Biography < ApplicationRecord
     include ApplicationHelper
     has_many :images
@@ -82,20 +80,21 @@ private
         ApplicationController.helpers.reset_cycle("pos_class")
         tags
     end
-    
+
 public
-    def check_links
-        page = Nokogiri::HTML::fragment(self.external_links).children
-        links = page.css('a')
-        fails = Array.new
+
+    def parse_links (links)
+        parsed_links = Array.new
         links.each do |link|
-            begin
-              response = RestClient.get link['href']
-            rescue
-              fails.push({title: link.inner_html, url: link['href']})
-            end
+          parsed_links.push({title: link.inner_html, url: link['href']})
         end
-        {  count: links.length, fails: fails}
+        parsed_links
+    end
+
+    def gather_links
+        links = Nokogiri::HTML::fragment(self.external_links).children.css('a')
+        links += Nokogiri::HTML::fragment(self.references).children.css('a')
+        parse_links(links)
     end
 
 end
