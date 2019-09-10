@@ -82,7 +82,8 @@ private
         ApplicationController.helpers.reset_cycle("pos_class")
         tags
     end
-
+    
+public
     def check_links
         page = Nokogiri::HTML::fragment(self.external_links).children
         links = page.css('a')
