@@ -36,8 +36,9 @@ module BiographiesHelper
     def gather_all_links
         links = Array.new
         Biography.all.each do |bio|
-            links += bio.gather_links
+             links += bio.gather_links
         end
+        links
     end
 
 end

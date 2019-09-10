@@ -45,6 +45,20 @@ class Biography < ApplicationRecord
         end
     end
 
+    def parse_links (links)
+        parsed_links = Array.new
+        links.each do |link|
+          parsed_links.push({title: link.inner_html, url: link['href']})
+        end
+        parsed_links
+    end
+
+    def gather_links
+        links = Nokogiri::HTML::fragment(self.external_links).children.css('a')
+        links += Nokogiri::HTML::fragment(self.references).children.css('a')
+        parse_links(links)
+    end
+
 private
 
     def clean_bio_urls
@@ -79,22 +93,6 @@ private
         end
         ApplicationController.helpers.reset_cycle("pos_class")
         tags
-    end
-
-public
-
-    def parse_links (links)
-        parsed_links = Array.new
-        links.each do |link|
-          parsed_links.push({title: link.inner_html, url: link['href']})
-        end
-        parsed_links
-    end
-
-    def gather_links
-        links = Nokogiri::HTML::fragment(self.external_links).children.css('a')
-        links += Nokogiri::HTML::fragment(self.references).children.css('a')
-        parse_links(links)
     end
 
 end

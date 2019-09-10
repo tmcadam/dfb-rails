@@ -68,6 +68,16 @@ class BiographiesHelperTest < ActionView::TestCase
         assert_equal true, Biography.find(3).featured
     end
 
+    test "gather_all_links collects links from bios" do
+        for x in 1..10 do
+            @b = Biography.create(title: x, slug: x, body: x, external_links: '<a href="http://www.google%s.com">Link%s</a>' % [x, x])
+        end
+        links = gather_all_links
+        assert_equal 10, links.length
+        assert_equal "Link1", links.first[:title]
+        assert_equal "http://www.google1.com", links.first[:url]
+    end
+
     teardown do
         Biography.destroy_all
         Image.destroy_all
