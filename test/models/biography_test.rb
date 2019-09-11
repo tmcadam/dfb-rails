@@ -166,10 +166,35 @@ class BiographyTest < ActiveSupport::TestCase
         assert_equal '<p>Blah <i>Blah</i></p>', @b.body
     end
 
+    test "gather_links returns correct number of links for testing" do
+        @b.external_links = '<a href="www.google.com">Google</a></br><a href="www.yahoo.com">Yahoo</a>'
+        @b.references = '<a href="www.google.com">Google</a>'
+        links = @b.instance_eval{ gather_links }
+        assert_equal 3, links.length
+
+        @b.external_links = '<h1>No links</h1>'
+        @b.references = '<a href="www.google.com">Google</a>'
+        links = @b.instance_eval{ gather_links }
+        assert_equal 1, links.length
+
+        @b.external_links = '<h1>No links</h1>'
+        @b.references = '<p></p>'
+        links = @b.instance_eval{ gather_links }
+        assert_equal 0, links.length
+    end
+
+    test "gather_links returns array of hashes" do
+        @b.external_links = '<a href="www.google.com">Google</a></br><a href="www.yahoo.com">Yahoo</a>'
+        @b.references = '<a href="www.google.com">Google</a>'
+        links = @b.instance_eval{ gather_links }
+        assert_equal 3, links.length
+
+    end
+
     teardown do
-        @b.images.each do |img|
-            img.destroy
-        end
+      Image.destroy_all
+      Comment.destroy_all
+      Biography.destroy_all
     end
 
 end

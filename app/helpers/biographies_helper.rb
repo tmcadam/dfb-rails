@@ -33,4 +33,34 @@ module BiographiesHelper
         set_featured(bios)
     end
 
+    def gather_all_links
+        links = Array.new
+        Biography.all.each do |bio|
+             links += bio.gather_links
+        end
+        links
+    end
+
+    def check_links
+      user_agent = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:69.0) Gecko/20100101 Firefox/69.0"
+      fails = Array.new
+      hydra = Typhoeus::Hydra.new
+      links = gather_all_links
+      links.each do |link|
+        request = Typhoeus::Request.new(link[:url], followlocation: true, ssl_verifypeer: false, headers: {"User-Agent" => user_agent})
+        request.on_complete do |response|
+            if not response.success?
+              fails.push(link)
+            end
+        end
+        hydra.queue(request)
+      end
+      hydra.run
+      {count:links.length, fails:fails}
+    end
+
+    def links_report
+      LinksReportMailer.links_report_email(check_links[:fails], check_links[:count]).deliver_later
+    end
+
 end

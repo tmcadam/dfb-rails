@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>The weekly report of links has been completed.</p>
+    <p>
+      Links scanned: <%= @count %>
+      <br>
+      Links failed: <%= @fails.length %>
+    </p>
+
+    <% if @fails %>
+      <h3>Failures</h3>
+      <dl>
+      <%  @fails.each do |fail| %>
+        <dt><%= link_to fail[:bio].title,  edit_biography_url(fail[:bio].slug), target: '_blank' %></dt>
+        <dd><%= link_to fail[:title], fail[:url], target: '_blank' %></dd>
+      <% end %>
+      </dl>
+    <% end %>
+
+  </body>
+</html>

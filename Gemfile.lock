@@ -110,6 +110,8 @@ GEM
     erubi (1.8.0)
     et-orbi (1.2.2)
       tzinfo
+    ethon (0.12.0)
+      ffi (>= 1.3.0)
     execjs (2.7.0)
     ffi (1.11.1)
     fugit (1.3.3)
@@ -251,6 +253,8 @@ GEM
     turbolinks (5.2.0)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
+    typhoeus (1.3.1)
+      ethon (>= 0.9.0)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
     uglifier (4.1.20)
@@ -308,6 +312,7 @@ DEPENDENCIES
   summernote-rails!
   truncate_html
   turbolinks (~> 5)
+  typhoeus
   uglifier (>= 1.3.0)
   validates_email_format_of
   web-console (>= 3.3.0)

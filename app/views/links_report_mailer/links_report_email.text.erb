@@ -1,0 +1,12 @@
+The weekly report of links has been completed.
+
+Links scanned: <%= @count %>
+Links failed: <%= @fails.length %>
+
+<% if @fails %>
+Failures
+--------------------
+<%  @fails.each do |fail| %>
+  <%= fail[:bio].title %> - <%= fail[:title] %>
+<% end %>
+<% end %>
