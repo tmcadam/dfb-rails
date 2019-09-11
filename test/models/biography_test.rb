@@ -188,13 +188,13 @@ class BiographyTest < ActiveSupport::TestCase
         @b.references = '<a href="www.google.com">Google</a>'
         links = @b.instance_eval{ gather_links }
         assert_equal 3, links.length
-        
+
     end
 
     teardown do
-        @b.images.each do |img|
-            img.destroy
-        end
+      Image.destroy_all
+      Comment.destroy_all
+      Biography.destroy_all
     end
 
 end

@@ -69,6 +69,7 @@ class BiographiesHelperTest < ActionView::TestCase
     end
 
     test "gather_all_links collects links from bios" do
+        Biography.destroy_all
         @b1 = Biography.create(title: "1", slug: "1", body: "1", external_links: '<a href="http://www.google.com">Link1</a>')
         @b2 = Biography.create(title: "2", slug: "2", body: "2", external_links: '<a href="http://www.google.com">Link2</a>')
         @b3 = Biography.create(title: "3", slug: "3", body: "3", references: '<a href="http://www.google.com">Link3</a>')
@@ -76,31 +77,44 @@ class BiographiesHelperTest < ActionView::TestCase
         assert_equal 3, links.length
         assert_equal "Link1", links.first[:title]
         assert_equal "http://www.google.com", links.first[:url]
-        assert_equal @b1.id, links.first[:bio]
+        assert_equal @b1, links.first[:bio]
     end
 
     test "check_links returns fails if links bad" do
+      Biography.destroy_all
       @b1 = Biography.create(title: "1", slug: "1", body: "1", external_links: '<a href="http://www.google.com">Link1</a>')
       @b2 = Biography.create(title: "2", slug: "2", body: "2", external_links: '<a href="http://www.goog-ERROR-le.com">Link2</a>')
       @b3 = Biography.create(title: "3", slug: "3", body: "3", references: '<a href="http://www.google.com">Link3</a>')
-      fails = check_links
-      assert_equal 1, fails.length
-      assert_equal "Link2", fails.first[:title]
-      assert_equal "http://www.goog-ERROR-le.com", fails.first[:url]
-      assert_equal @b2.id, fails.first[:bio]
+      result = check_links
+      assert_equal 3, result[:count]
+      assert_equal 1, result[:fails].length
+      assert_equal "Link2", result[:fails].first[:title]
+      assert_equal "http://www.goog-ERROR-le.com", result[:fails].first[:url]
+      assert_equal @b2, result[:fails].first[:bio]
     end
 
     test "check_links returns no fails if links good" do
+      Biography.destroy_all
       @b1 = Biography.create(title: "1", slug: "1", body: "1", external_links: '<a href="http://www.google.com">Link1</a>')
       @b2 = Biography.create(title: "2", slug: "2", body: "2", external_links: '<a href="http://www.google.com">Link2</a>')
       @b3 = Biography.create(title: "3", slug: "3", body: "3", references: '<a href="http://www.google.com">Link3</a>')
-      fails = check_links
-      assert_equal 0, fails.length
+      result = check_links
+      assert_equal 3, result[:count]
+      assert_equal 0, result[:fails].length
+    end
+
+    test "links_report returns fails if links bad" do
+      Biography.destroy_all
+      @b1 = Biography.create(title: "1", slug: "1", body: "1", external_links: '<a href="http://www.google.com">Link1</a>')
+      @b2 = Biography.create(title: "2", slug: "2", body: "2", external_links: '<a href="http://www.goog-ERROR-le.com">Link2</a>')
+      @b3 = Biography.create(title: "3", slug: "3", body: "3", references: '<a href="http://www.google.com">Link3</a>')
+      links_report
     end
 
     teardown do
-        Biography.destroy_all
-        Image.destroy_all
+      Image.destroy_all
+      Comment.destroy_all
+      Biography.destroy_all
     end
 
 end

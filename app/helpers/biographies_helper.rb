@@ -56,7 +56,11 @@ module BiographiesHelper
         hydra.queue(request)
       end
       hydra.run
-      fails
+      {count:links.length, fails:fails}
+    end
+
+    def links_report
+      LinksReportMailer.links_report_email(check_links[:fails], check_links[:count]).deliver_later
     end
 
 end

@@ -48,10 +48,11 @@ class Biography < ApplicationRecord
     def parse_links (links)
         parsed_links = Array.new
         links.each do |link|
-          parsed_links.push({title: link.inner_html, url: link['href'], bio: self.id})
+          parsed_links.push({title: link.inner_html, url: link['href'], bio: self})
         end
         parsed_links
     end
+
 
     def gather_links
         links = Nokogiri::HTML::fragment(self.external_links).children.css('a')
