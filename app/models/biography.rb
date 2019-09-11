@@ -48,7 +48,7 @@ class Biography < ApplicationRecord
     def parse_links (links)
         parsed_links = Array.new
         links.each do |link|
-          parsed_links.push({title: link.inner_html, url: link['href']})
+          parsed_links.push({title: link.inner_html, url: link['href'], bio: self.id})
         end
         parsed_links
     end
