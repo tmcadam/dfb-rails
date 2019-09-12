@@ -301,6 +301,17 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
         assert_equal true, @b.featured
     end
 
+    test "cannot check_links if not logged in" do
+        get '/biographies/check_links'
+        assert_redirected_to new_user_session_path
+    end
+
+    test "can see check_links if not logged in" do
+        sign_in @u1
+        get '/'
+        assert_select "a", {:text => "Check Links"}
+    end
+
     test "will render analytics js if not logged in" do
         get biographies_path
         assert_select "script#matomo"

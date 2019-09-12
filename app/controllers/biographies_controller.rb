@@ -1,6 +1,6 @@
 class BiographiesController < ApplicationController
     include BiographiesHelper
-    before_action :authenticate_user!, :only => [:new, :create, :edit, :update, :destroy, :reset_featured]
+    before_action :authenticate_user!, :only => [:new, :create, :edit, :update, :destroy, :reset_featured, :check_links]
 
     def show
         @biography = Biography.find_by(slug: params[:id]) || Biography.find(params[:id])
@@ -60,6 +60,12 @@ class BiographiesController < ApplicationController
     def reset_featured
         reset_featured_bios
         redirect_to "/home", :flash => { :notice => "Featured biographies reset successful" }
+    end
+
+    def check_links
+        links_result = check_links_in_bios
+        @fails = links_result[:fails]
+        @count = links_result[:count]
     end
 
     private

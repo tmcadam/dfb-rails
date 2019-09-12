@@ -1,0 +1,21 @@
+<h3>
+    <strong>Links Report</strong>
+    <small></small>
+</h3>
+
+<h4><strong>Report of links has been completed.</strong></h4>
+<p>
+  Links scanned: <%= @count %>
+  <br>
+  Links failed: <%= @fails.length %>
+</p>
+
+<% if @fails %>
+  <h4><strong>Failures</strong></h4>
+  <dl>
+  <%  @fails.each do |fail| %>
+    <dt><%= link_to fail[:bio].title,  edit_biography_url(fail[:bio].slug), target: '_blank' %></dt>
+    <dd><%= link_to fail[:title], fail[:url], target: '_blank' %></dd>
+  <% end %>
+  </dl>
+<% end %>
