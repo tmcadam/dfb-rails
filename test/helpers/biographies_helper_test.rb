@@ -85,12 +85,12 @@ class BiographiesHelperTest < ActionView::TestCase
       @b1 = Biography.create(title: "1", slug: "1", body: "1", external_links: '<a href="http://www.google.com">Link1</a>')
       @b2 = Biography.create(title: "2", slug: "2", body: "2", external_links: '<a href="http://www.goog-ERROR-le.com">Link2</a>')
       @b3 = Biography.create(title: "3", slug: "3", body: "3", references: '<a href="http://www.google.com">Link3</a>')
-      result = check_links
-      assert_equal 3, result[:count]
-      assert_equal 1, result[:fails].length
-      assert_equal "Link2", result[:fails].first[:title]
-      assert_equal "http://www.goog-ERROR-le.com", result[:fails].first[:url]
-      assert_equal @b2, result[:fails].first[:bio]
+      @b2 = Biography.create(title: "4", slug: "4", body: "4", external_links: '<a href="http://www.google.com/sfdsfsf">Link4</a>')
+      result = check_links_in_bios
+      assert_equal 4, result[:count]
+      assert_equal 2, result[:fails].length
+      assert_not_nil result[:fails].detect {|f| f[:title] == "Link2" }
+      assert_not_nil result[:fails].detect {|f| f[:title] == "Link4" }
     end
 
     test "check_links returns no fails if links good" do
@@ -98,7 +98,7 @@ class BiographiesHelperTest < ActionView::TestCase
       @b1 = Biography.create(title: "1", slug: "1", body: "1", external_links: '<a href="http://www.google.com">Link1</a>')
       @b2 = Biography.create(title: "2", slug: "2", body: "2", external_links: '<a href="http://www.google.com">Link2</a>')
       @b3 = Biography.create(title: "3", slug: "3", body: "3", references: '<a href="http://www.google.com">Link3</a>')
-      result = check_links
+      result = check_links_in_bios
       assert_equal 3, result[:count]
       assert_equal 0, result[:fails].length
     end
