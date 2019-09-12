@@ -63,7 +63,8 @@ module BiographiesHelper
     end
 
     def links_report
-      LinksReportMailer.links_report_email(check_links[:fails], check_links[:count]).deliver_later
+      links_result = check_links
+      LinksReportMailer.links_report_email(result_links[:fails], result_links[:count]).deliver_later
     end
 
 end
