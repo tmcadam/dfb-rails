@@ -44,14 +44,17 @@ module BiographiesHelper
     def check_links
       user_agent = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:69.0) Gecko/20100101 Firefox/69.0"
       fails = Array.new
-      hydra = Typhoeus::Hydra.new
+      hydra = Typhoeus::Hydra.new(max_concurrency: 20)
       links = gather_all_links
       links.each do |link|
         request = Typhoeus::Request.new(link[:url], followlocation: true, ssl_verifypeer: false, headers: {"User-Agent" => user_agent})
-        request.on_complete do |response|
-            if not response.success?
+        request.on_headers do |response|
+            if not response.code.in?([200])
               fails.push(link)
             end
+        end
+        request.on_body do |chunk|
+            :abort
         end
         hydra.queue(request)
       end
