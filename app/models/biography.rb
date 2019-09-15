@@ -68,6 +68,8 @@ private
 
     def clean_bio_html
         self.body = clean_html(self.body)
+        self.references = clean_html(self.references)
+        self.external_links = clean_html(self.external_links)
     end
 
     def insert_image(p, images)
