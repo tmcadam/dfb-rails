@@ -301,16 +301,38 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
         assert_equal true, @b.featured
     end
 
+    ##### Check links #####
+
     test "cannot check_links if not logged in" do
         get '/biographies/check_links'
         assert_redirected_to new_user_session_path
     end
 
-    test "can see check_links if not logged in" do
+    test "can see check_links menu item if logged in" do
         sign_in @u1
-        get '/'
-        assert_select "a", {:text => "Check Links"}
+        get '/home'
+        assert_select "a", {:text => "Check links"}
     end
+
+    test "test check_links shows failures if failures" do
+        @b1 = Biography.create(title: "1", slug: "1", body: "1", external_links: '<a href="http://www.google.com">Link1</a>')
+        @b2 = Biography.create(title: "2", slug: "2", body: "2", external_links: '<a href="http://www.goog-ERROR-le.com">Link2</a>')
+        @b3 = Biography.create(title: "3", slug: "3", body: "3", references: '<a href="http://www.google.com">Link3</a>')
+        sign_in @u1
+        get '/biographies/check_links'
+        assert_select "h4", "Failures"
+        assert_select "a", "Link2"
+    end
+
+    test "test check_links shows No failures if no failures" do
+        @b1 = Biography.create(title: "1", slug: "1", body: "1", external_links: '<a href="https://www.google.com">Link1</a>')
+        @b3 = Biography.create(title: "3", slug: "3", body: "3", references: '<a href="https://www.yahoo.com">Link3</a>')
+        sign_in @u1
+        get '/biographies/check_links'
+        assert_select "h4", "No failures"
+    end
+
+    ##### Analytics #####
 
     test "will render analytics js if not logged in" do
         get biographies_path
@@ -324,7 +346,9 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
     end
 
     teardown do
-        DatabaseCleaner.clean
+        Image.destroy_all
+        Comment.destroy_all
+        Biography.destroy_all
     end
 
 end
