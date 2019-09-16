@@ -29,7 +29,7 @@ gem 'pg'
 gem 'summernote-rails', :git => 'https://github.com/summernote/summernote-rails.git'
 gem 'isotope-rails', '~> 2.2', '>= 2.2.2'
 gem 'scrollto-rails'
-gem 'devise'
+gem "devise", ">= 4.7.1"
 gem 'rufus-scheduler'
 gem "cocoon"
 gem 'validates_email_format_of'
