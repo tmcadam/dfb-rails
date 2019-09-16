@@ -10,6 +10,8 @@ s.cron('00 01 * * Sun') do
 end
 
 s.cron('00 05 * * Sun') do
-  Rails.logger.info "#{Time.now}: Audit links and email report"
-  links_report
+  if Rails.env.production?
+    Rails.logger.info "#{Time.now}: Audit links and email report"
+    links_report
+  end
 end
