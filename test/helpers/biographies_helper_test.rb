@@ -97,7 +97,7 @@ class BiographiesHelperTest < ActionView::TestCase
       Biography.destroy_all
       @b1 = Biography.create(title: "1", slug: "1", body: "1", external_links: '<a href="http://www.google.com">Link1</a>')
       @b2 = Biography.create(title: "2", slug: "2", body: "2", external_links: '<a href="http://www.facebook.com">Link2</a>')
-      @b3 = Biography.create(title: "3", slug: "3", body: "3", references: '<a href="http://www.yahoo.com">Link3</a>')
+      @b3 = Biography.create(title: "3", slug: "3", body: "3", references: '<a href="https://api.parliament.uk/historic-hansard/people/dr-david-owen/index.html">Link3</a>')
       result = check_links_in_bios
       assert_equal 3, result[:count]
       assert_equal 0, result[:fails].length

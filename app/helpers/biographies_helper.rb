@@ -47,11 +47,14 @@ module BiographiesHelper
       hydra = Typhoeus::Hydra.new(max_concurrency: 20)
       links = gather_all_links
       links.each do |link|
-        request = Typhoeus::Request.new(link[:url], method: :head, followlocation: true, ssl_verifypeer: false, headers: {"User-Agent" => user_agent})
+        request = Typhoeus::Request.new(link[:url], method: :get, followlocation: true, ssl_verifypeer: false, headers: {"User-Agent" => user_agent})
         request.on_complete do |response|
-          if not response.code.in?([200])
+          if response.code == 0 or response.code > 308
             fails.push(link)
           end
+        end
+        request.on_body do |chunk|
+            :abort
         end
         hydra.queue(request)
       end
