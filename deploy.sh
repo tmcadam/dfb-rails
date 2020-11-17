@@ -3,6 +3,7 @@
 APP_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd $APP_DIR
+chmod +x -R $APP_DIR
 bundle install
 rake db:migrate
 bundle exec rake assets:precompile
@@ -27,12 +28,12 @@ server {
 EOSQL
 
 echo -ne "\t" >> "$TEMP_FILE" && echo "passenger_app_env $RAILS_ENV ;" >> "$TEMP_FILE"
-echo -ne "\t" >> "$TEMP_FILE" && echo "passenger_env_var DFB_DB_NAME $DFB_DB_NAME" >> "$TEMP_FILE"
-echo -ne "\t" >> "$TEMP_FILE" && echo "passenger_env_var DFB_DB_PASS $DFB_DB_PASS" >> "$TEMP_FILE"
-echo -ne "\t" >> "$TEMP_FILE" && echo "passenger_env_var DFB_DB_USER $DFB_DB_USER" >> "$TEMP_FILE"
-echo -ne "\t" >> "$TEMP_FILE" && echo "passenger_env_var DFB_DB_HOST $DFB_DB_HOST" >> "$TEMP_FILE"
-echo -ne "\t" >> "$TEMP_FILE" && echo "passenger_env_var DFB_DB_PORT $DFB_DB_PORT" >> "$TEMP_FILE"
-echo -ne "\t" >> "$TEMP_FILE" && echo "passenger_env_var DFB_SECRET_KEY_BASE $DFB_SECRET_KEY_BASE" >> "$TEMP_FILE"
+echo -ne "\t" >> "$TEMP_FILE" && echo "passenger_env_var DFB_DB_NAME $DFB_DB_NAME ;" >> "$TEMP_FILE"
+echo -ne "\t" >> "$TEMP_FILE" && echo "passenger_env_var DFB_DB_PASS $DFB_DB_PASS ;" >> "$TEMP_FILE"
+echo -ne "\t" >> "$TEMP_FILE" && echo "passenger_env_var DFB_DB_USER $DFB_DB_USER ;" >> "$TEMP_FILE"
+echo -ne "\t" >> "$TEMP_FILE" && echo "passenger_env_var DFB_DB_HOST $DFB_DB_HOST ;" >> "$TEMP_FILE"
+echo -ne "\t" >> "$TEMP_FILE" && echo "passenger_env_var DFB_DB_PORT $DFB_DB_PORT ;" >> "$TEMP_FILE"
+echo -ne "\t" >> "$TEMP_FILE" && echo "passenger_env_var DFB_SECRET_KEY_BASE $DFB_SECRET_KEY_BASE ;" >> "$TEMP_FILE"
 
 echo '}' >> "$TEMP_FILE"
 
