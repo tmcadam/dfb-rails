@@ -22,11 +22,11 @@ script:
 deploy:
   #deploy to production
   - provider: script
-    script: bash $TRAVIS_BUILD_DIR/travis-webfaction-deploy.sh production
+    script: bash $TRAVIS_BUILD_DIR/travis-swb-deploy.sh production
     on:
      branch: master
   #deploy to staging
   - provider: script
-    script: bash $TRAVIS_BUILD_DIR/travis-webfaction-deploy.sh staging
+    script: bash $TRAVIS_BUILD_DIR/travis-swb-deploy.sh staging
     on:
       branch: staging

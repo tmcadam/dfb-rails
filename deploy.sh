@@ -1,26 +1,39 @@
 #!/bin/bash
 
 APP_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-WEBAPP_DIR="$(dirname "$APP_DIR")"
-
-export PATH=$WEBAPP_DIR/bin:$PATH
-export GEM_HOME=$WEBAPP_DIR/gems
-export RUBYLIB=$WEBAPP_DIR/lib
 
 cd $APP_DIR
-env RAILS_ENV=$1 bundle install
-env RAILS_ENV=$1 rake db:migrate
-env RAILS_ENV=$1 bundle exec rake assets:precompile
+bundle install
+rake db:migrate
+bundle exec rake assets:precompile
 
 if [ $1 == "production" ]; then
     bash "$APP_DIR/install_cronjobs.sh"
 fi
 
-cd $WEBAPP_DIR
-# Checks if this is the first run
-if [ -d "hello_world" ]; then
-    rm -rf "hello_world"
-    sed -i 's/hello_world/app/g' nginx/conf/nginx.conf
-fi
+TEMP_FILE='/etc/nginx/sites-enabled/webapp.conf'
+
+cat > "$TEMP_FILE" <<-EOSQL
+server {
+  listen 80;
+  #server_name dfb;
+  root /usr/src/app/public;
+
+  passenger_enabled on;
+  passenger_user root;
+
+  passenger_ruby /usr/bin/ruby2.6;
+
+EOSQL
+
+echo -ne "\t" >> "$TEMP_FILE" && echo "passenger_app_env $RAILS_ENV ;" >> "$TEMP_FILE"
+echo -ne "\t" >> "$TEMP_FILE" && echo "passenger_env_var DFB_DB_STAGING $DFB_DB_STAGING" >> "$TEMP_FILE"
+echo -ne "\t" >> "$TEMP_FILE" && echo "passenger_env_var DFB_DB_PASS_STAGING $DFB_DB_PASS_STAGING" >> "$TEMP_FILE"
+echo -ne "\t" >> "$TEMP_FILE" && echo "passenger_env_var DFB_DB_USER_STAGING $DFB_DB_USER_STAGING" >> "$TEMP_FILE"
+echo -ne "\t" >> "$TEMP_FILE" && echo "passenger_env_var DFB_DB_STAGING_HOST $DFB_DB_STAGING_HOST" >> "$TEMP_FILE"
+echo -ne "\t" >> "$TEMP_FILE" && echo "passenger_env_var DFB_DB_STAGING_PORT $DFB_DB_STAGING_PORT" >> "$TEMP_FILE"
+echo -ne "\t" >> "$TEMP_FILE" && echo "passenger_env_var DFB_SECRET_KEY_BASE_STAGING $DFB_SECRET_KEY_BASE_STAGING" >> "$TEMP_FILE"
+
+echo '}' >> "$TEMP_FILE"
 
 restart
