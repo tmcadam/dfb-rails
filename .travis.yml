@@ -1,12 +1,12 @@
 language: ruby
 rvm:
-- 2.5.5
+- 2.6.6
 branches:
   only:
    - master
    - staging
 addons:
-  postgresql: "9.4"
+  postgresql: "12"
   apt:
     packages:
     - sshpass
@@ -20,13 +20,5 @@ before_script:
 script:
 - bin/rails test
 deploy:
-  #deploy to production
   - provider: script
-    script: bash $TRAVIS_BUILD_DIR/travis-swb-deploy.sh production
-    on:
-     branch: master
-  #deploy to staging
-  - provider: script
-    script: bash $TRAVIS_BUILD_DIR/travis-swb-deploy.sh staging
-    on:
-      branch: staging
+    script: bash $TRAVIS_BUILD_DIR/travis-swb-deploy.sh
