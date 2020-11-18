@@ -17,12 +17,16 @@ test:
 
 staging:
     <<: *default
-    database: <%= ENV['DFB_DB_STAGING'] %>
-    username: <%= ENV['DFB_DB_USER_STAGING'] %>
-    password: <%= ENV['DFB_DB_PASS_STAGING'] %>
+    port:     <%= ENV['DFB_DB_PORT'] %>
+    host:     <%= ENV['DFB_DB_HOST'] %>
+    database: <%= ENV['DFB_DB_NAME'] %>
+    username: <%= ENV['DFB_DB_USER'] %>
+    password: <%= ENV['DFB_DB_PASS'] %>
 
 production:
     <<: *default
-    database: <%= ENV['DFB_DB_PRODUCTION'] %>
-    username: <%= ENV['DFB_DB_USER_PRODUCTION'] %>
-    password: <%= ENV['DFB_DB_PASS_PRODUCTION'] %>
+    port:     <%= ENV['DFB_DB_PORT'] %>
+    host:     <%= ENV['DFB_DB_HOST'] %>
+    database: <%= ENV['DFB_DB_NAME'] %>
+    username: <%= ENV['DFB_DB_USER'] %>
+    password: <%= ENV['DFB_DB_PASS'] %>
