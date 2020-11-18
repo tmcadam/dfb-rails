@@ -6,9 +6,11 @@ branches:
    - master
    - staging
 addons:
-  postgresql: "9.4"
+  postgresql: "10"
   apt:
     packages:
+    - postgresql-10
+    - postgresql-client-10
     - sshpass
 services:
   - postgresql
