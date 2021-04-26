@@ -1,7 +1,10 @@
-name: Test
-on: [push, pull_request]
+name: Build
+on:
+  push:
+    branches: [ staging, master ]
 jobs:
-  test:
+  build_and_test:
+    name: "Build and Test"
     runs-on: ubuntu-20.04
     services:
       db:
@@ -17,20 +20,23 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.6.6
           bundler-cache: true
+
       - name: Set up Node
         uses: actions/setup-node@v1
         with:
           node-version: 10.13.0
+
       - name: Install dependencies
         run: |
-          sudo apt update && sudo apt -yqq install libpq-dev build-essential libcurl4-openssl-dev zlib1g-dev default-jre imagemagick file
-          bundle install --jobs 4 --retry 3
+          sudo apt update && sudo apt -yqq install default-jre imagemagick file
+
       - name: Build and run tests
         env:
           PGHOST: localhost
@@ -42,4 +48,43 @@ jobs:
         run: |
           bundle exec rails db:create
           bundle exec rails db:migrate
-          rails test -v
+          bundle exec rails test -v
+  
+  deploy:
+    name: "Deploy"
+    runs-on: ubuntu-20.04
+    needs: build_and_test
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Configure SSH
+        run: sh ./ssh_config.sh
+      
+      - name: Deploy to staging
+        if: github.ref == 'refs/heads/staging'
+        env:
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH_STAGING }}
+          DEPLOY_CONT: ${{ secrets.DEPLOY_CONT_STAGING }}
+        run: |
+          echo "Available at https://staging.falklandsbiographies.org"
+          scp ${GITHUB_WORKSPACE}/git-deploy.sh server:${DEPLOY_HOME}
+          ssh server "sudo bash ${DEPLOY_HOME}/git-deploy.sh ${DEPLOY_PATH} ${GITHUB_REPOSITORY} ${GITHUB_SHA}"
+          ssh server "sudo docker container exec ${DEPLOY_CONT} bash -l 'deploy.sh'"
+
+      - name: Deploy to production
+        if: github.ref == 'refs/heads/master'
+        env:
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH_PROD }}
+          DEPLOY_CONT: ${{ secrets.DEPLOY_CONT_PROD }}
+        run: |
+          echo "Available at https://www.falklandsbiographies.org"
+          scp ${GITHUB_WORKSPACE}/git-deploy.sh server:${DEPLOY_HOME}
+          ssh server "sudo bash ${DEPLOY_HOME}/git-deploy.sh ${DEPLOY_PATH} ${GITHUB_REPOSITORY} ${GITHUB_SHA}"
+          ssh server "sudo docker container exec ${DEPLOY_CONT} bash -l 'deploy.sh'"
+
+    env:
+      DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+      DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+      DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+      DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
+      DEPLOY_HOME: ${{ secrets.DEPLOY_HOME }}
