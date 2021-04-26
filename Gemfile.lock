@@ -16,6 +16,13 @@ GIT
     kaminari-core (1.2.1)
 
 GIT
+  remote: https://github.com/mimemagicrb/mimemagic.git
+  revision: 01f92d86d15d85cfd0f20dabd025dcbd36a8a60f
+  ref: 01f92d86d15d85cfd0f20dabd025dcbd36a8a60f
+  specs:
+    mimemagic (0.3.5)
+
+GIT
   remote: https://github.com/summernote/summernote-rails.git
   revision: dd92b3cd21cfa573daf5d510b08b96698bd0e295
   specs:
@@ -146,7 +153,6 @@ GEM
     mime-types (3.3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2020.1104)
-    mimemagic (0.3.5)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
     minitest (5.14.2)
@@ -295,6 +301,7 @@ DEPENDENCIES
   kaminari!
   lightbox-bootstrap-rails (= 5.1.0.1)
   listen (>= 3.0.5, < 3.2)
+  mimemagic!
   minitest-rails
   nokogiri (>= 1.10.4)
   paperclip (~> 5.2.1)
@@ -320,6 +327,4 @@ DEPENDENCIES
   validates_email_format_of
   web-console (>= 3.3.0)
   yui-compressor
-
-BUNDLED WITH
-   1.17.2
+  
