@@ -9,6 +9,7 @@ RUN mkdir /usr/src/scripts
 
 RUN apt update -q && apt install -yq imagemagick default-jre nodejs npm default-jre
 RUN npm install --global yarn
+RUN gem install bundler -v 1.17.3
 
 RUN rm -f /etc/service/nginx/down
 RUN rm /etc/nginx/sites-enabled/default
