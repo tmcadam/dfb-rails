@@ -6,7 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 # rails gems
-gem 'rails', '5.2.4.5'
+gem 'rails', '6.1.3.1'
 gem 'puma', '~> 3.7'
 gem 'sass-rails', '~> 5.0'
 gem 'sassc', '2.1.0'
@@ -53,7 +53,7 @@ end
 
 group :test do
     gem 'capybara', '~> 2.13'
-    gem 'minitest-rails'
+    gem "minitest-rails", "~> 6.1.0"
     gem 'selenium-webdriver'
     gem 'rails-controller-testing'
     gem 'database_cleaner'
