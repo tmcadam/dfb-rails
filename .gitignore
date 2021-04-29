@@ -36,3 +36,4 @@ db/data-cleanup/*.xml
 
 *.tar
 secrets.txt
+.env

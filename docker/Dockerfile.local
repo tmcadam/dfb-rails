@@ -1,0 +1,11 @@
+FROM ruby:2.6.6
+
+RUN apt update -q
+RUN apt install -yq nodejs npm default-jre imagemagick
+RUN npm install --global yarn
+RUN gem install bundler -v 1.17.3
+
+EXPOSE 3000
+
+WORKDIR /usr/src/app
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

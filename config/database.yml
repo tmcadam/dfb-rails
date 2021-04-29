@@ -7,13 +7,17 @@ default: &default
 
 development:
     <<: *default
+    host: db
     database: dfb_development
     username: postgres
+    password: <%= ENV['DFB_DB_PASS'] %>
 
 test:
     <<: *default
+    host: db
     database: dfb_test
     username: postgres
+    password: <%= ENV['DFB_DB_PASS'] %>
 
 staging:
     <<: *default
