@@ -118,7 +118,7 @@ class CommentControllerTest < ActionDispatch::IntegrationTest
                 email:"email@email.com",
                 comment:"A great page" }), xhr: true
         end
-        assert_equal 2, ActionMailer::Base.deliveries.count
+        assert_enqueued_emails 2
         assert_equal Comment.last.approved, false
         assert_not_nil Comment.last.approve_key
         assert Comment.last.approve_key.length > 16
@@ -136,7 +136,7 @@ class CommentControllerTest < ActionDispatch::IntegrationTest
                 email:"not an email",
                 comment:"A great page" }), xhr: true
         end
-        assert_equal 0, ActionMailer::Base.deliveries.count
+        assert_no_enqueued_emails
         assert_equal 422, @response.status
         json = ActiveSupport::JSON.decode @response.body
         assert_equal 'Errors', json['status']
@@ -152,7 +152,7 @@ class CommentControllerTest < ActionDispatch::IntegrationTest
                 email:"not an email",
                 comment:"A great page" }), xhr: true
         end
-        assert_equal 0, ActionMailer::Base.deliveries.count
+        assert_no_enqueued_emails
         assert_equal 201, @response.status
         json = ActiveSupport::JSON.decode @response.body
         assert_equal 'Success - extra', json['status']
