@@ -5,11 +5,11 @@ class ImageTest < ActiveSupport::TestCase
     setup do
         DatabaseCleaner.clean
         @b = Biography.create(title: "Brian Black", slug: "brian_black")
-        image1 = fixture_file_upload 'files/test_image_1.jpg', 'image/jpg'
+        image1 = fixture_file_upload 'test_image_1.jpg', 'image/jpg'
         @i1 = Image.new(biography: @b, title:"Image1", caption:"Brian at work", image: image1)
-        image2 = fixture_file_upload 'files/test_image_2.tif', 'image/tif'
+        image2 = fixture_file_upload 'test_image_2.tif', 'image/tif'
         @i2 = Image.new(biography: @b, title:"Image1", caption:"Brian at work", image: image2)
-        image3 = fixture_file_upload 'files/test_image_3.png', 'image/png'
+        image3 = fixture_file_upload 'test_image_3.png', 'image/png'
         @i3 = Image.new(biography: @b, title:"Image1", caption:"Brian at work", image: image3)
     end
 
