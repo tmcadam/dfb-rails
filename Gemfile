@@ -6,7 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 # rails gems
-gem 'rails', '5.2.3'
+gem 'rails', '5.2.4.5'
 gem 'puma', '~> 3.7'
 gem 'sass-rails', '~> 5.0'
 gem 'sassc', '2.1.0'
@@ -36,7 +36,7 @@ gem "devise", ">= 4.7.1"
 gem 'rufus-scheduler'
 gem "cocoon"
 gem 'validates_email_format_of'
-gem "nokogiri", ">= 1.10.4"
+gem "nokogiri", ">= 1.11.0"
 gem "typhoeus"
 
 group :development, :test do
