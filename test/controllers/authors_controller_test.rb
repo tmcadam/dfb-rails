@@ -105,6 +105,14 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
         assert_redirected_to new_user_session_path
     end
 
+    test "authors_biographies_links_uses_slug" do
+        @b = Biography.create(title: "Original title", slug: "a_slug", body: "A body")
+        @a1 = Author.create(first_name: "Bob", last_name:"Author1", biography:"Biography of author")
+        BiographyAuthor.create(biography: @b, author: @a1, author_position: 1) #link biography and authors
+        get authors_path
+        assert_select "a[href=?]", "/biographies/a_slug"
+    end
+    
     teardown do
         DatabaseCleaner.clean
     end

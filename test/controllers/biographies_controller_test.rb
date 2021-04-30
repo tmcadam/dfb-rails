@@ -301,6 +301,16 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
         assert_equal true, @b.featured
     end
 
+    test "authors_biographies_links_uses_slug" do
+        @a1 = Author.create(first_name: "Bob", last_name:"Author1", biography:"Biography of author")
+        @b1 = Biography.create(title: "Original title", slug: "a_slug", body: "A body")
+        @b2 = Biography.create(title: "Original title", slug: "b_slug", body: "A body")
+        BiographyAuthor.create(biography: @b1, author: @a1, author_position: 1) #link biography and authors
+        BiographyAuthor.create(biography: @b2, author: @a1, author_position: 1) #link biography and authors
+        get biography_path(@b1)
+        assert_select "a[href=?]", "/biographies/b_slug"
+    end
+
     ##### Check links #####
 
     test "cannot check_links if not logged in" do
