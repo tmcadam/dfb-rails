@@ -4,7 +4,7 @@ class ImageControllerTest < ActionDispatch::IntegrationTest
 
     setup do
         @b = Biography.create(title: "Brian Black", slug: "brian_black", body: "Some body")
-        @image = fixture_file_upload 'files/test_image_3.png', 'image/png'
+        @image = fixture_file_upload 'test_image_3.png', 'image/png'
         @img2 = Image.create( id: 2, biography: @b, title: "Mike Michaels", caption: "Mike at work", image: @image)
         @img1 = Image.create( id: 1, biography: @b, title: "Bob Bobber", caption: "Bob at work", image: @image)
         ActiveRecord::Base.connection.reset_pk_sequence!('images')

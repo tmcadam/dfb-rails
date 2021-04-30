@@ -9,6 +9,8 @@ chown -R app:app $APP_DIR
 echo "Deploy: Installing dependencies"
 bundle install
 echo "Deploy: Applying migrations"
-rake db:migrate
+bin/rake db:migrate
 echo "Deploy: Compiling assets"
-bundle exec rake assets:precompile
+bin/rake assets:precompile
+echo "Deploy: Flush cache"
+bin/rake cache:clear

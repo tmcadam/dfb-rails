@@ -4,7 +4,7 @@ class BiographyTest < ActiveSupport::TestCase
 
     setup do
         @b = biographies(:three)
-        image = fixture_file_upload 'files/test_image_3.png', 'image/png'
+        image = fixture_file_upload 'test_image_3.png', 'image/png'
         @b.images << Image.new( id: 1, biography: @b, title: "1", caption: "1", image: image )
         @b.images << Image.new( id: 3, biography: @b, title: "3", caption: "3", image: image )
         @b.images << Image.new( id: 2, biography: @b, title: "2", caption: "2", image: image )

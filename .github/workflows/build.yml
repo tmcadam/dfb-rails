@@ -1,0 +1,90 @@
+name: Build
+on:
+  push:
+    branches: [ staging, master ]
+jobs:
+  build_and_test:
+    name: "Build and Test"
+    runs-on: ubuntu-20.04
+    services:
+      db:
+        image: postgres:13
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: dfb_test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.6.6
+          bundler-cache: true
+
+      - name: Set up Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.13.0
+
+      - name: Install dependencies
+        run: |
+          sudo apt update && sudo apt -yqq install default-jre imagemagick file
+
+      - name: Build and run tests
+        env:
+          PGHOST: localhost
+          PGUSER: postgres
+          PGPASSWORD: postgres
+          DATABASE_URL: postgres://postgres:@localhost:5432/dfb_test
+          RAILS_ENV: test
+          RAILS_MASTER_KEY: $
+        run: |
+          bundle exec rails db:create
+          bundle exec rails db:migrate
+          bundle exec rails test -v
+  
+  deploy:
+    name: "Deploy"
+    runs-on: ubuntu-20.04
+    needs: build_and_test
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Configure SSH
+        run: sh ./ssh_config.sh
+      
+      - name: Deploy to staging
+        if: github.ref == 'refs/heads/staging'
+        env:
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH_STAGING }}
+          DEPLOY_CONT: ${{ secrets.DEPLOY_CONT_STAGING }}
+        run: |
+          echo "Available at https://staging.falklandsbiographies.org"
+          scp ${GITHUB_WORKSPACE}/git-deploy.sh server:${DEPLOY_HOME}
+          ssh server "sudo bash ${DEPLOY_HOME}/git-deploy.sh ${DEPLOY_PATH} ${GITHUB_REPOSITORY} ${GITHUB_SHA}"
+          ssh server "sudo docker container exec ${DEPLOY_CONT} bash -l 'deploy.sh'"
+
+      - name: Deploy to production
+        if: github.ref == 'refs/heads/master'
+        env:
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH_PROD }}
+          DEPLOY_CONT: ${{ secrets.DEPLOY_CONT_PROD }}
+        run: |
+          echo "Available at https://www.falklandsbiographies.org"
+          scp ${GITHUB_WORKSPACE}/git-deploy.sh server:${DEPLOY_HOME}
+          ssh server "sudo bash ${DEPLOY_HOME}/git-deploy.sh ${DEPLOY_PATH} ${GITHUB_REPOSITORY} ${GITHUB_SHA}"
+          ssh server "sudo docker container exec ${DEPLOY_CONT} bash -l 'deploy.sh'"
+
+    env:
+      DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+      DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+      DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+      DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
+      DEPLOY_HOME: ${{ secrets.DEPLOY_HOME }}

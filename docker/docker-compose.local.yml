@@ -1,0 +1,40 @@
+version: "2"
+
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile.local
+        environment:
+            DFB_DB_PASS: "${DFB_DB_PASS}"
+            BACKUP_EMAIL: "${BACKUP_EMAIL}"
+            SMTP_USER: "${SMTP_USER}"
+            SMTP_PASS: "${SMTP_PASS}"
+            DFB_COMMENTS_EMAIL_DEV: "${DFB_COMMENTS_EMAIL_DEV}"
+        volumes:
+            - ..:/usr/src/app
+            - gems:/usr/local/bundle
+            - log:/usr/src/app/log
+            - tmp:/usr/src/app/tmp
+        ports:
+            - "3000:3000"
+        depends_on: 
+            - db
+        stdin_open: true
+        tty: true
+        cpus: "1.0"
+        mem_limit: 1024M
+    db:
+        image: postgres:13
+        environment:
+            POSTGRES_PASSWORD: "${DFB_DB_PASS}"
+        volumes:
+            - database-data:/var/lib/postgresql/data/
+            - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+        ports: 
+            - "54320:5432"
+volumes:
+    database-data:
+    gems:
+    log:
+    tmp:

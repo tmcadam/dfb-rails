@@ -34,5 +34,6 @@ db/data-cleanup/*.json
 db/data-cleanup/*.csv
 db/data-cleanup/*.xml
 
-docker.tar
+*.tar
 secrets.txt
+.env

@@ -274,7 +274,7 @@ class BiographiesControllerTest < ActionDispatch::IntegrationTest
         sign_in @u1
         Biography.destroy_all
         Image.destroy_all
-        image = fixture_file_upload 'files/test_image_3.png', 'image/png'
+        image = fixture_file_upload 'test_image_3.png', 'image/png'
         for x in 1..50 do
             @b = Biography.create(id: x, title: x, slug: x, body: x, authors: "authors", lifespan: "lifespan", featured: false)
             @i = Image.create(biography: @b, title: x, caption: x, image: image )
