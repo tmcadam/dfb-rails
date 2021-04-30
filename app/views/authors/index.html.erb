@@ -24,7 +24,7 @@
                 <small><ul>
                 <% author.biographys.each do |biography| %>
                     <li>
-                        <%= link_to biography.title, biography_path(biography) %>
+                        <%= link_to biography.title, biography_path(biography.slug) %>
                         <% if not biography.has_single_author %>
                             <ul>
                                 <i><li>with
