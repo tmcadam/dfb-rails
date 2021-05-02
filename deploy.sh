@@ -7,7 +7,7 @@ chmod +x -R $APP_DIR
 chown -R app:app $APP_DIR
 
 echo "Deploy: Installing dependencies"
-bundle install
+bundle install --without development test
 echo "Deploy: Applying migrations"
 bin/rake db:migrate
 echo "Deploy: Compiling assets"
