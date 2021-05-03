@@ -17,9 +17,6 @@
     - `docker-compose -f docker/docker-compose.local.yml run --rm  app bin/rails -e test db:migrate`
     - `docker-compose -f docker/docker-compose.local.yml run --rm  app bin/rails -e development db:migrate`
 
-### Run tests
-  - `docker-compose -f docker/docker-compose.local.yml run --rm app rails test`
-
 ### Environment Variables
   - create a `.env` file in the docker folder
     - DFB_DB_PASS => Password for the PostgreSQL user (set to anything, this variable creates and uses)
@@ -28,6 +25,15 @@
     - SMTP_PASS => SMTP password
     - DFB_COMMENTS_EMAIL_DEV => emails that comments and reports go to
 
+### Run tests
+  - `docker-compose -f docker/docker-compose.local.yml run --rm app rails test`
+
+### Run development server
+  - Populate development database with recent backup
+  - Copy image foldes from the same backup into `public/system/`
+  - Start the server
+    - `docker-compose -f docker/docker-compose.local.yml run --rm --service-ports app bin/rails server -b 0.0.0.0`
+  - Navigate to `http://localhost:3000` 
 
 ## Production Environment
 
