@@ -1,17 +1,17 @@
 #!/bin/bash
 
-. /home/ukfit/.bashrc
+source /src/swb_secrets
 
-PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+DFB_BACKUP_DIR="$BACKUP_DIR/dfb/daily"
+BACKUP_FILEPATH="$DFB_BACKUP_DIR/dfb-$(date -I).backup"
 
-BACKUP_FOLDER="/home/ukfit/db_backups/dfb/daily"
-BACKUP_FILEPATH="$BACKUP_FOLDER/dfb-production-$(date -I).backup"
+mkdir -p $DFB_BACKUP_DIR
+export PGPASSWORD="$POSTGRES_PASS"
 
-mkdir -p $BACKUP_FOLDER
-export PGPASSWORD="$DFB_DB_PASS_PRODUCTION"
-pg_dump --host localhost --port 5432 --username "$DFB_DB_USER_PRODUCTION" --no-password  --format custom --blobs --verbose --file "$BACKUP_FILEPATH" "$DFB_DB_PRODUCTION" >/dev/null 2>&1
+pg_dump --host $POSTGRES_HOST --port $POSTGRES_PORT --username "$POSTGRES_USER" --no-password  --format custom --blobs --verbose --file "$BACKUP_FILEPATH" "$DFB_DB"
 
-echo "Daily backup ran: $(date -I)" >> "$BACKUP_FOLDER/backup.log"
+find "$DFB_BACKUP_DIR" -iname *.backup -type f -mtime +31 -exec rm -f {} \;
 
-#Delete daily backups older than 31 days
-find "$BACKUP_FOLDER" -iname *.backup -type f -mtime +31 -exec rm -f {} \;
+# write to the log
+echo "DFB daily backup ran: $(date -I)" >> "$BACKUP_DIR/backup.log"
+
