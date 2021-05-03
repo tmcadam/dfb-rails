@@ -9,7 +9,7 @@ s.cron('00 01 * * Sun') do
   reset_featured_bios
 end
 
-s.cron('00 05 * * Sun') do
+s.cron('00 05 * * *') do
   if Rails.env.production?
     Rails.logger.info "#{Time.now}: Audit links and email report"
     links_report

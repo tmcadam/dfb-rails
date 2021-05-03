@@ -70,7 +70,7 @@ module BiographiesHelper
 
     def links_report
       links_result = check_links_in_bios
-      # LinksReportMailer.links_report_email(links_result[:fails], links_result[:count]).deliver_now
+      LinksReportMailer.links_report_email(links_result[:fails], links_result[:count]).deliver_now
     end
 
 end
