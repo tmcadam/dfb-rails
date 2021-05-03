@@ -58,7 +58,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Configure SSH
-        run: sh ./ssh_config.sh
+        run: sh ./.github/workflows/ssh_config.sh
       
       - name: Deploy to staging
         if: github.ref == 'refs/heads/staging'
@@ -68,7 +68,7 @@ jobs:
         run: |
           echo "Available at https://staging.falklandsbiographies.org"
           scp ${GITHUB_WORKSPACE}/git-deploy.sh server:${DEPLOY_HOME}
-          ssh server "sudo bash ${DEPLOY_HOME}/git-deploy.sh ${DEPLOY_PATH} ${GITHUB_REPOSITORY} ${GITHUB_SHA}"
+          ssh server "sudo bash ${DEPLOY_HOME}/.github/workflows/git-deploy.sh ${DEPLOY_PATH} ${GITHUB_REPOSITORY} ${GITHUB_SHA}"
           ssh server "sudo docker container exec ${DEPLOY_CONT} bash -l 'deploy.sh'"
           ssh server "sudo docker container restart ${DEPLOY_CONT}"
 
@@ -80,7 +80,7 @@ jobs:
         run: |
           echo "Available at https://www.falklandsbiographies.org"
           scp ${GITHUB_WORKSPACE}/git-deploy.sh server:${DEPLOY_HOME}
-          ssh server "sudo bash ${DEPLOY_HOME}/git-deploy.sh ${DEPLOY_PATH} ${GITHUB_REPOSITORY} ${GITHUB_SHA}"
+          ssh server "sudo bash ${DEPLOY_HOME}/.github/workflows/git-deploy.sh ${DEPLOY_PATH} ${GITHUB_REPOSITORY} ${GITHUB_SHA}"
           ssh server "sudo docker container exec ${DEPLOY_CONT} bash -l 'deploy.sh'"
           ssh server "sudo docker container restart ${DEPLOY_CONT}"
 
