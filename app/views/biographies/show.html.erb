@@ -32,12 +32,13 @@
 <%= tag.div @biography.body_with_images.html_safe, class:"biography_body" %>
 
 <% if @biography.authors.present? %>
-    <h4><%= tag.strong("Authors") %></h4>
+    <%= tag.div class:"biography_authors_wrapper" do%>
+        <h4><%= tag.strong("Authors") %></h4>
         <%= tag.div class:"biography_authors" do %>
             <%= @biography.authors %><%= '<button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#authors-info">Author Info</button>'.html_safe %>
         <% end %>
+    <% end %>
 <% end %>
-
 
 <% if @biography.external_links.present? %>
     <h4><%= tag.strong("External links") %></h4>
