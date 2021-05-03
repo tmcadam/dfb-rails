@@ -70,6 +70,7 @@ jobs:
           scp ${GITHUB_WORKSPACE}/git-deploy.sh server:${DEPLOY_HOME}
           ssh server "sudo bash ${DEPLOY_HOME}/git-deploy.sh ${DEPLOY_PATH} ${GITHUB_REPOSITORY} ${GITHUB_SHA}"
           ssh server "sudo docker container exec ${DEPLOY_CONT} bash -l 'deploy.sh'"
+          ssh server "sudo docker container restart ${DEPLOY_CONT}"
 
       - name: Deploy to production
         if: github.ref == 'refs/heads/master'
@@ -81,6 +82,7 @@ jobs:
           scp ${GITHUB_WORKSPACE}/git-deploy.sh server:${DEPLOY_HOME}
           ssh server "sudo bash ${DEPLOY_HOME}/git-deploy.sh ${DEPLOY_PATH} ${GITHUB_REPOSITORY} ${GITHUB_SHA}"
           ssh server "sudo docker container exec ${DEPLOY_CONT} bash -l 'deploy.sh'"
+          ssh server "sudo docker container restart ${DEPLOY_CONT}"
 
     env:
       DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
