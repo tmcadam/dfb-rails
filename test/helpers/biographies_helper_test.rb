@@ -80,6 +80,18 @@ class BiographiesHelperTest < ActionView::TestCase
         assert_equal @b1, links.first[:bio]
     end
 
+
+    test "gather_all_links adds a reformatted youtube url to link hash" do
+        Biography.destroy_all
+        @b1 = Biography.create(title: "1", slug: "1", body: "1", external_links: '<a href="https://www.youtube.com/watch?v=x7X-TN64Qb0">Link1</a>')
+        links = gather_all_links
+        assert_equal 1, links.length
+        assert_equal "Link1", links.first[:title]
+        assert_equal "https://www.youtube.com/watch?v=x7X-TN64Qb0", links.first[:url]
+        assert_equal "https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=x7X-TN64Qb0&format=json", links.first[:youtube_url]
+        assert_equal @b1, links.first[:bio]
+    end
+
     test "check_links returns fails if links bad" do
       Biography.destroy_all
       @b1 = Biography.create(title: "1", slug: "1", body: "1", external_links: '<a href="http://www.google.com">Link1</a>')

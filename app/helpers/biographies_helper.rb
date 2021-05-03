@@ -36,7 +36,12 @@ module BiographiesHelper
     def gather_all_links
         links = Array.new
         Biography.all.each do |bio|
-             links += bio.gather_links
+          bio.gather_links.each do |link|
+            if link[:url].start_with?('https://www.youtube.com')
+              link[:youtube_url] = "https://www.youtube.com/oembed?url=" + link[:url] + "&format=json"
+            end
+            links << link
+          end
         end
         links
     end
@@ -47,7 +52,8 @@ module BiographiesHelper
       hydra = Typhoeus::Hydra.new(max_concurrency: 20)
       links = gather_all_links
       links.each do |link|
-        request = Typhoeus::Request.new(link[:url], method: :get, followlocation: true, ssl_verifypeer: false, headers: {"User-Agent" => user_agent})
+        url = link.key?(:youtube_url) ? link[:youtube_url] : link[:url]
+        request = Typhoeus::Request.new(url, method: :get, followlocation: true, timeout: 30, ssl_verifypeer: false, headers: {"User-Agent" => user_agent})
         request.on_complete do |response|
           if response.code == 0 or response.code > 308
             fails.push(link)
@@ -64,7 +70,7 @@ module BiographiesHelper
 
     def links_report
       links_result = check_links_in_bios
-      LinksReportMailer.links_report_email(links_result[:fails], links_result[:count]).deliver_now
+      # LinksReportMailer.links_report_email(links_result[:fails], links_result[:count]).deliver_now
     end
 
 end
