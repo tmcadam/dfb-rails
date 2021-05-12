@@ -18,7 +18,8 @@ gem 'tzinfo-data'
 gem 'mimemagic', github: 'mimemagicrb/mimemagic', ref: '01f92d86d15d85cfd0f20dabd025dcbd36a8a60f'
 
 # app specific gems
-gem "bootstrap-sass", ">= 3.4.1"
+gem 'bootstrap', '>=4.6', '<5.0.0'
+gem "font-awesome-rails"
 gem 'autoprefixer-rails'
 gem 'jquery-rails'
 gem 'yui-compressor'
