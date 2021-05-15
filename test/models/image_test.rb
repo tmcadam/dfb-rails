@@ -89,6 +89,13 @@ class ImageTest < ActiveSupport::TestCase
         assert_equal "/biographies/robert_brown blah blah", @i1.caption
     end
 
+    test "populate_dims adds dimmensions on save" do
+        # test_image_1.jpg
+        @i1.save
+        geometry = Paperclip::Geometry.from_file(@i1.image.path("original"))
+        assert_equal @i1.dim_x, geometry.width
+        assert_equal @i1.dim_y, geometry.height
+    end
     teardown do
         @i1.destroy
         @i2.destroy

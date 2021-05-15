@@ -22,4 +22,10 @@ private
       clean_urls(self.caption)
     end
 
+    def populate_dims
+        dimensions = Paperclip::Geometry.from_file(self.image.queued_for_write[:original].path)
+        self.dim_x = dimensions.width
+        self.dim_y = dimensions.height
+    end
+
 end
