@@ -11,6 +11,8 @@ class ImageTest < ActiveSupport::TestCase
         @i2 = Image.new(biography: @b, title:"Image1", caption:"Brian at work", image: image2)
         image3 = fixture_file_upload 'test_image_3.png', 'image/png'
         @i3 = Image.new(biography: @b, title:"Image1", caption:"Brian at work", image: image3)
+        image4 = fixture_file_upload 'test_image_4.jpg', 'image/jpg'
+        @i4 = Image.new(biography: @b, title:"Image4", caption:"A portrait", image: image4)
     end
 
     test "valid image with all attributes present and correct" do
@@ -96,10 +98,21 @@ class ImageTest < ActiveSupport::TestCase
         assert_equal @i1.dim_x, geometry.width
         assert_equal @i1.dim_y, geometry.height
     end
+
+    test "orientation returns the orientation of image" do
+        @i1.save
+        assert_equal "square", @i1.orientation
+        @i2.save
+        assert_equal "landscape", @i2.orientation
+        @i4.save
+        assert_equal "portrait", @i4.orientation
+    end
+
     teardown do
         @i1.destroy
         @i2.destroy
         @i3.destroy
+        @i4.destroy
     end
 
 end

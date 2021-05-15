@@ -15,6 +15,18 @@ class Image < ApplicationRecord
     validates :title, presence: true
     validates :caption, presence: true
     before_save :clean_image_urls
+    before_save :populate_dims
+
+    def orientation
+        ratio = self.dim_x.to_f / self.dim_y.to_f
+        if ratio > 0.6 and ratio < 1.4   
+            "square"
+        elsif ratio >= 1.4
+            "landsacpe"
+        else
+            "portrait"
+        end
+    end
 
 private
 
