@@ -38,7 +38,7 @@ module BiographiesHelper
         Biography.update_all featured: false
         bios = with_images(Biography.all)
         bios = with_lifespan_author(bios)
-        portrait_ids = with_first_image_as_portrait(bios)
+        portrait_ids = with_first_image_orientated(bios, "portrait")
         bios_ids = get_random_ids(portrait_ids, 6)
         bios = get_features(bios_ids)
         set_featured(bios)
