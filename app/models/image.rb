@@ -35,9 +35,19 @@ private
     end
 
     def populate_dims
-        dimensions = Paperclip::Geometry.from_file(self.image.queued_for_write[:original].path)
-        self.dim_x = dimensions.width
-        self.dim_y = dimensions.height
+        if self.image.queued_for_write[:original] != nil
+            path = self.image.queued_for_write[:original].path
+        else
+            path = self.image.path(:original)
+        end
+        
+        if File.file?(path)
+            dimensions = Paperclip::Geometry.from_file(path)
+            self.dim_x = dimensions.width
+            self.dim_y = dimensions.height
+        else
+            puts "MISSING: %s" % path
+        end 
     end
 
 end

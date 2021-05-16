@@ -91,6 +91,8 @@ class ImageControllerTest < ActionDispatch::IntegrationTest
                                                      title: 'Image title',
                                                      caption: 'Image caption' }}
         end
+        assert_not_nil Image.last.dim_x
+        assert_not_nil Image.last.dim_y
         assert_redirected_to image_path(Image.last)
     end
 
