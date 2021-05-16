@@ -108,6 +108,24 @@ class ImageTest < ActiveSupport::TestCase
         assert_equal "portrait", @i4.orientation
     end
 
+    test "orientation returns missing if dim_x or dim_y are nil" do
+        @i1.save
+        assert_equal "square", @i1.orientation
+        @i1.dim_x = nil
+        assert_equal "missing", @i1.orientation
+
+        @i2.save
+        assert_equal "landscape", @i2.orientation
+        @i2.dim_y = nil
+        assert_equal "missing", @i2.orientation
+
+        @i4.save
+        assert_equal "portrait", @i4.orientation
+        @i4.dim_x = nil
+        @i4.dim_y = nil
+        assert_equal "missing", @i4.orientation
+    end
+
     teardown do
         @i1.destroy
         @i2.destroy

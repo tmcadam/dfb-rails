@@ -18,13 +18,19 @@ class Image < ApplicationRecord
     before_save :populate_dims
 
     def orientation
-        ratio = self.dim_x.to_f / self.dim_y.to_f
-        if ratio > 0.6 and ratio < 1.4   
-            "square"
-        elsif ratio >= 1.4
-            "landsacpe"
-        else
-            "portrait"
+        if self.dim_x.nil? or self.dim_y.nil? 
+            "missing"
+        else 
+            ratio = self.dim_x.to_f / self.dim_y.to_f
+            if ratio > 0.65 and ratio <= 0.85
+                "portrait"
+            elsif ratio >= 1.15
+                "landscape" 
+            elsif ratio > 0.85 and ratio < 1.15   
+                "square"
+            else
+                "other"
+            end
         end
     end
 
