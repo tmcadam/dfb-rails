@@ -1,29 +1,10 @@
-
-<% if @static_content.slug != "home" or user_signed_in? %>
-    <h3 class="page-title">
-      <strong><%= @static_content.title %></strong>
-      <% if user_signed_in? %>
-          <%= link_to "Edit", edit_static_content_path(@static_content), class: "btn btn-default btn-xs", role:"button" %>
-          <%= link_to "Delete", static_content_path(@static_content), class: "btn btn-default btn-xs", role:"button", data: {:confirm => 'Are you sure?'}, method: :DELETE %>
-      <% end %>
-    </h3>
-<% end %>
-
-<%= tag.div @static_content.body.html_safe, class: "static_content_body" %>
-
-<!-- Render featured biographies -->
-<% if @static_content.slug == "home" and Biography.where(featured: true).count >= 3  %>
-    <hr>
-    <p class="small text-muted"><strong>Featured biographies...</strong></p>
-    <div class="row">
-        <div class="col-xs-12 col-ms-6 col-sm-4"><div class="well">
-          <%= render partial: 'biographies/featured', locals: {biography: Biography.where(featured: true)[0] } %>
-        </div></div>
-        <div class="col-xs-12 col-ms-6 col-sm-4"><div class="well">
-          <%= render partial: 'biographies/featured', locals: {biography: Biography.where(featured: true)[1] } %>
-        </div></div>
-        <div class="col-xs-12 col-ms-6 col-ms-offset-3 col-sm-4 col-sm-offset-0"><div class="well">
-          <%= render partial: 'biographies/featured', locals: {biography: Biography.where(featured: true)[2] } %>
-        </div></div>
-    </div>
-<% end %>
+<div class="container">
+  <h3 class="page-title">
+    <strong><%= @static_content.title %></strong>
+    <% if user_signed_in? %>
+        <%= link_to "Edit", edit_static_content_path(@static_content), class: "btn btn-default btn-xs", role:"button" %>
+        <%= link_to "Delete", static_content_path(@static_content), class: "btn btn-default btn-xs", role:"button", data: {:confirm => 'Are you sure?'}, method: :DELETE %>
+    <% end %>
+  </h3>
+  <%= tag.div @static_content.body.html_safe, class: "static_content_body" %>
+</div>
