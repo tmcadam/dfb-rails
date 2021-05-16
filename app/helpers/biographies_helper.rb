@@ -12,8 +12,18 @@ module BiographiesHelper
         bios.where("lifespan IS NOT NULL").where("authors IS NOT NULL")
     end
 
-    def get_random_ids(bios)
-        bios.pluck(:id).sample(3)
+    def with_first_image_orientated(bios, orientation)
+      portrait_ids = []
+      bios.each do |bio|
+        if orientation == bio.images.order(:id).first.orientation
+          portrait_ids << bio.id
+        end
+      end
+      portrait_ids
+    end
+
+    def get_random_ids(portrait_ids, count)
+        return portrait_ids.sample(count)
     end
 
     def get_features(ids)
@@ -28,7 +38,8 @@ module BiographiesHelper
         Biography.update_all featured: false
         bios = with_images(Biography.all)
         bios = with_lifespan_author(bios)
-        bios_ids = get_random_ids(bios)
+        portrait_ids = with_first_image_as_portrait(bios)
+        bios_ids = get_random_ids(portrait_ids, 6)
         bios = get_features(bios_ids)
         set_featured(bios)
     end
