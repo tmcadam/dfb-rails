@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_29_103139) do
+ActiveRecord::Schema.define(version: 2021_05_13_020215) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,13 +78,15 @@ ActiveRecord::Schema.define(version: 2019_08_29_103139) do
     t.string "title"
     t.text "caption"
     t.string "attribution"
-    t.bigint "biography_id"
+    t.integer "biography_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "image_file_name"
     t.string "image_content_type"
     t.integer "image_file_size"
     t.datetime "image_updated_at"
+    t.integer "dim_x"
+    t.integer "dim_y"
     t.index ["biography_id"], name: "index_images_on_biography_id"
   end
 
@@ -116,5 +118,4 @@ ActiveRecord::Schema.define(version: 2019_08_29_103139) do
   add_foreign_key "biographies", "countries", column: "primary_country_id"
   add_foreign_key "biographies", "countries", column: "secondary_country_id"
   add_foreign_key "comments", "biographies"
-  add_foreign_key "images", "biographies"
 end
