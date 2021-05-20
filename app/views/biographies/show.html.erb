@@ -5,9 +5,9 @@
 
 <% if user_signed_in? %>
     <p>
-        <%= link_to "Back", biographies_path, class: "btn btn-default btn-xs", role:"button" %>
-        <%= link_to "Edit", edit_biography_path(@biography.slug), class: "btn btn-default btn-xs", role:"button" %>
-        <%= link_to "Delete", biography_path(@biography.slug), class: "btn btn-default btn-xs", role:"button" , data: {:confirm => 'Are you sure?'}, method: :DELETE %>
+        <%= link_to "Back", biographies_path, class: "btn btn-outline-dark btn-sm", role:"button" %>
+        <%= link_to "Edit", edit_biography_path(@biography.slug), class: "btn btn-outline-dark btn-sm", role:"button" %>
+        <%= link_to "Delete", biography_path(@biography.slug), class: "btn btn-red btn-sm", role:"button" , data: {:confirm => 'Are you sure?'}, method: :DELETE %>
     </p>
 <% end %>
 
@@ -23,7 +23,7 @@
         </small></em>
     <% end %>
     <% if @biography.south_georgia %>
-        <%= tag.button "SG", class:"btn btn-default btn-xs", data:{toggle:"popover", content:"South Georgia", "html":"true"} %>
+        <%= tag.button "SG", class:"btn btn-outline-dark btn-sm", data:{toggle:"popover", content:"South Georgia", "html":"true"} %>
     <% end %>
 </span>
 </h4>
@@ -32,10 +32,11 @@
 <%= tag.div @biography.body_with_images.html_safe, class:"biography_body" %>
 
 <% if @biography.authors.present? %>
-    <%= tag.div class:"biography_authors_wrapper" do%>
+    <%= tag.div class:"biography_authors_wrapper row-fluid", style:"clear:both;" do%>
+        <hr>
         <h4><%= tag.strong("Authors") %></h4>
         <%= tag.div class:"biography_authors" do %>
-            <%= @biography.authors %><%= '<button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#authors-info">Author Info</button>'.html_safe %>
+            <%= @biography.authors %><%= '<button type="button" class="btn btn-dark btn-sm" data-toggle="modal" data-target="#authors-info">Author Info</button>'.html_safe %>
         <% end %>
     <% end %>
 <% end %>
@@ -57,7 +58,7 @@
     <% end.empty? %>
     <% end %>
 <% end %>
-<button id="comment_button" type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal">Add comment</button>
+<button id="comment_button" type="button" class="btn btn-dark" data-toggle="modal" data-target="#myModal">Add comment</button>
 
 <% if @biography.revisions.present? %>
     <h4><%= tag.strong("Revisions") %></h4>

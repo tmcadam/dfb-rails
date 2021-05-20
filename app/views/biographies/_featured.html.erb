@@ -1,6 +1,6 @@
 <a href="<%= biography_path(biography.slug) %>">
     <% if biography.images.present? %>
-        <img src="<%= biography.images.order(:id).first.image.url(:medium) %>" alt="..." class="card-img-top" style="object-fit:cover; height:400px;">
+        <img src="<%= biography.images.order(:id).first.image.url(:medium) %>" alt="..." class="card-img-top">
     <% end %>
     <div class="card-body">
         <h5 class="card-title"><strong><%= biography.title %></strong></h5>
