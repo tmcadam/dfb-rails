@@ -4,34 +4,34 @@
       <%= link_to "New", new_author_path, class: "btn btn-default btn-xs", role:"button" %>
   <% end %>
 </h3>
-<div id="authors" class="row">
+<div class="card-columns custom-columns">
     <% if @authors.each do |author| %>
-        <div class="item col-xs-12 col-sm-6">
-            <div class="well">
+        <div class="card">
+            <div class="card-body">
                 <%= tag.span(nil, class: "anchor", id: author.simple_slug) %>
-                <h4>
+                <h5 class="card-title">
                 <%= author.name %>
                 <% if user_signed_in? %>
                     <%= link_to "Edit", edit_author_path(author), class: "btn btn-default btn-xs", role:"button" %>
                     <%= link_to "Delete", author_path(author), class: "btn btn-default btn-xs", role:"button", data: {:confirm => 'Are you sure?'}, method: :DELETE %>
                 <% end %>
-            </h4>
+                </h5>
 
                 <% if author.biography %>
-                    <%= tag.p( author.biography ) %>
+                    <%= tag.p( author.biography, class: "card-text" ) %>
                 <% end %>
                 <hr>
                 <small><ul>
                 <% author.biographys.each do |biography| %>
                     <li>
-                        <%= link_to biography.title, biography_path(biography.slug) %>
+                        <%= link_to biography.title, biography_path(biography.slug), class: "card-link" %>
                         <% if not biography.has_single_author %>
                             <ul>
-                                <i><li>with
+                                <li>with
                                     <%= tag.span biography.other_author(author).name,
-                                        class: "author-link",
+                                        class: "card-link font-italic",
                                         data:  { "hash": biography.other_author(author).simple_slug  } %>
-                                </li></i>
+                                </li>
                             </ul>
                         <% end %>
                     </li>
