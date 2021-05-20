@@ -1,8 +1,8 @@
 <footer class="page-footer font-small bg-secondary">
-    <div class="footer-copyright text-center py-3">
+    <div class="footer-copyright text-center py-3 text-light">
         &copy; 2012-21 David Tatham. All rights reserved.<br>
         <% if not user_signed_in? %>
-            <%= link_to "Login", new_user_session_path, :class => 'small'  %>
+            <%= link_to "Login", new_user_session_path, :class => 'small text-success'  %>
         <% end %>
     </div>
 </footer>
