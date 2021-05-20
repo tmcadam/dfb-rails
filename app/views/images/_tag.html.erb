@@ -1,17 +1,14 @@
-<%=
-    tag.div(
-        tag.div(
-            link_to(
-                image_tag( @img.image.url("medium"), class:"img-rounded" ),
-                @img.image.url("original"),
-                data:{  footer: tag.span(@img.caption.html_safe, class:"img-footer-caption text-left") +
-                                tag.br +
-                                tag.span(tag.strong(@img.id), class:"img-footer-id") +
-                                tag.span(@img.attribution, class: "small"),
-                        toggle:'lightbox',
-                        gallery:'multiimages'
-                }) +
-                tag.div( truncate_html(tag.strong(@img.id) + " " + @img.caption.html_safe,  :length => 40) , class:"caption small") , class:"#{@class}") ,
-    class:"img-container block-center")
-
-%>
+<div class="figure <%=@class%>" >
+        <a  href=<%= @img.image.url("original") %>
+            data-toggle="lightbox"
+            data-gallery="multiimages"
+            data-footer='<div class="container-fluid">
+                            <row> </row>
+                            
+                            asfasdasd</div>' >
+            <img src=<%= @img.image.url("medium") %> class="figure-img img-fluid rounded" >
+        </a>
+        <figcaption class="figcaption">
+            <%= truncate_html(@img.caption.html_safe,  :length => 40) %>
+        </figcaption>
+</div>

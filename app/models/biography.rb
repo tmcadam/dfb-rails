@@ -88,8 +88,10 @@ private
     def generate_image_tags
         tags = []
         after_para = 1
+        class_left = "float-left mr-3"
+        class_right = "float-right ml-3"
         self.images.order(:id).each do |image|
-            pos_class = ApplicationController.helpers.cycle("biography-img-right", "biography-img-left", name: "pos_class" )
+            pos_class = ApplicationController.helpers.cycle(class_right, class_left, name: "pos_class" )
             tag = ApplicationController.render(partial: 'images/tag', assigns: {img: image, class: pos_class})
             tags.push({"tag"=>tag, "after_para"=>after_para})
             after_para += 2
