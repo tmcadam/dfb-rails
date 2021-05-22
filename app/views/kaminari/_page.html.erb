@@ -1,9 +1,9 @@
 <% if page.current? %>
-  <li class='active hide-mobile page-item'>
+  <li class='active d-none d-sm-inline page-item'>
     <%= content_tag :a, page, remote: remote, :class => "page-link", rel: (page.next? ? 'next' : (page.prev? ? 'prev' : nil)) %>
   </li>
 <% else %>
-  <li class='hide-mobile page-item'>
+  <li class=' d-none d-sm-inline page-item'>
     <%= link_to page, url, remote: remote, :class => "page-link", rel: (page.next? ? 'next' : (page.prev? ? 'prev' : nil)) %>
   </li>
 <% end %>
