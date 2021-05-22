@@ -2,7 +2,7 @@
   <strong>Biographies</strong>
   <%= render partial: 'biographies/search' %>
   <% if user_signed_in? %>
-      <%= link_to "New", new_biography_path, class: "btn btn-default btn-xs", role:"button" %>
+      <%= link_to "New", new_biography_path, class: "btn btn-success btn-sm float-right", role:"button" %>
   <% end %>
 </h3>
 <table id="index" class="table">
@@ -12,13 +12,14 @@
             <%= link_to biography.title, biography_path(biography.slug) %>
             <%= biography.lifespan %>
             <% if user_signed_in? %>
-                <%= link_to "Edit", edit_biography_path(biography.slug), class: "btn btn-default btn-xs", role:"button" %>
-                <%= link_to "Delete", biography_path(biography.slug),
-                                        class: "btn btn-default btn-xs",
-                                        role:"button",
-                                        data: {:confirm => 'Are you sure?'},
-                                        method: :DELETE %>
-
+                <div class="btn-group float-right">
+                    <%= link_to "Edit", edit_biography_path(biography.slug), class: "btn btn-outline-dark btn-sm", role:"button" %>
+                    <%= link_to "Delete", biography_path(biography.slug),
+                                            class: "btn btn-danger btn-sm",
+                                            role:"button",
+                                            data: {:confirm => 'Are you sure?'},
+                                            method: :DELETE %>
+                </div>
             <% end %>
 
             <br>

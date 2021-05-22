@@ -1,7 +1,7 @@
 <h3>
   <strong>Authors</strong>
   <% if user_signed_in? %>
-      <%= link_to "New", new_author_path, class: "btn btn-default btn-xs", role:"button" %>
+      <%= link_to "New", new_author_path, class: "btn btn-success btn-sm float-right", role:"button" %>
   <% end %>
 </h3>
 <div class="card-columns custom-columns">
@@ -12,8 +12,8 @@
                 <h5 class="card-title">
                 <%= author.name %>
                 <% if user_signed_in? %>
-                    <%= link_to "Edit", edit_author_path(author), class: "btn btn-default btn-xs", role:"button" %>
-                    <%= link_to "Delete", author_path(author), class: "btn btn-default btn-xs", role:"button", data: {:confirm => 'Are you sure?'}, method: :DELETE %>
+                    <%= link_to "Edit", edit_author_path(author), class: "btn btn-outline-dark btn-sm", role:"button" %>
+                    <%= link_to "Delete", author_path(author), class: "btn btn-danger btn-sm", role:"button", data: {:confirm => 'Are you sure?'}, method: :DELETE %>
                 <% end %>
                 </h5>
 

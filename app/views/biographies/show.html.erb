@@ -36,7 +36,7 @@
         <hr>
         <h4><%= tag.strong("Authors") %></h4>
         <%= tag.div class:"biography_authors" do %>
-            <%= @biography.authors %><%= '<button type="button" class="btn btn-dark btn-sm" data-toggle="modal" data-target="#authors-info">Author Info</button>'.html_safe %>
+            <%= @biography.authors %><%= '<button type="button" class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target="#authors-info">Author Info</button>'.html_safe %>
         <% end %>
     <% end %>
 <% end %>
@@ -58,7 +58,7 @@
     <% end.empty? %>
     <% end %>
 <% end %>
-<button id="comment_button" type="button" class="btn btn-dark" data-toggle="modal" data-target="#myModal">Add comment</button>
+<button id="comment_button" type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#myModal">Add comment</button>
 
 <% if @biography.revisions.present? %>
     <h4><%= tag.strong("Revisions") %></h4>
