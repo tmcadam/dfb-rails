@@ -20,10 +20,12 @@
                     <%= link_to biography.title, biography_path(biography.slug) %>
                     <% if not biography.has_single_author %>
                         <ul>
-                            <li>with <strong>
+                            <li>with
                                 <%= link_to biography.other_author(biography_author.author).name,
-                                    "#{authors_path}##{biography.other_author(biography_author.author).simple_slug}" %>
-                            </strong></li>
+                                    "#{authors_path}##{biography.other_author(biography_author.author).simple_slug}",
+                                    class: "font-italic"  
+                                %>
+                            </li>
                         </ul>
                     <% end %>
                 </li>

@@ -16,7 +16,6 @@
 #= require bootstrap-sprockets
 #= require lightbox-bootstrap
 #= require summernote
-#= require isotope
 #= require scrollTo
 #= require cocoon
 
