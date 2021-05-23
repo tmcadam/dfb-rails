@@ -30,7 +30,7 @@ gem "paperclip", "~> 5.2.1"
 gem 'simple_form'
 gem 'lightbox-bootstrap-rails', '5.1.0.1'
 gem 'pg'
-gem 'summernote-rails', :git => 'https://github.com/summernote/summernote-rails.git'
+gem 'summernote-rails', '~> 0.8.17.0', :git => 'https://github.com/summernote/summernote-rails.git'
 gem 'scrollto-rails'
 gem "devise", ">= 4.7.1"
 gem 'rufus-scheduler'

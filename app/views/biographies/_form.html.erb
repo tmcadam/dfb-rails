@@ -76,16 +76,17 @@
             class:'small pull-right',
             data:{"association-insertion-method": 'after',
                   "association-insertion-node": '#nested-authors'} %>
-    <hr>
+
     <%= f.input :body, as: :summernote,
-            required: false %>
-            <hr>
+            required: false %> 
+
     <%= f.input :external_links, as: :summernote,
             required: false %>
-    <hr>
+
     <%= f.input :references, as: :summernote,
             required: false %>
-    <hr>
+    
+    
     <%= f.input :revisions %>
     <div class="form-actions">
         <%= link_to "Back", biographies_path, class: "btn btn-outline-dark", role:"button" %>

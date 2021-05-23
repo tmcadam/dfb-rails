@@ -350,7 +350,7 @@ DEPENDENCIES
   simple_form
   spring
   spring-watcher-listen (~> 2.0.0)
-  summernote-rails!
+  summernote-rails (~> 0.8.17.0)!
   truncate_html
   turbolinks (~> 5)
   typhoeus

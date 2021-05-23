@@ -7,7 +7,7 @@
     <p>
         <%= link_to "Back", biographies_path, class: "btn btn-outline-dark btn-sm", role:"button" %>
         <%= link_to "Edit", edit_biography_path(@biography.slug), class: "btn btn-outline-dark btn-sm", role:"button" %>
-        <%= link_to "Delete", biography_path(@biography.slug), class: "btn btn-red btn-sm", role:"button" , data: {:confirm => 'Are you sure?'}, method: :DELETE %>
+        <%= link_to "Delete", biography_path(@biography.slug), class: "btn btn-danger btn-sm", role:"button" , data: {:confirm => 'Are you sure?'}, method: :DELETE %>
     </p>
 <% end %>
 
@@ -35,20 +35,20 @@
     <%= tag.div class:"biography_authors_wrapper row-fluid", style:"clear:both;" do%>
         <hr>
         <h4><%= tag.strong("Authors") %></h4>
-        <%= tag.div class:"biography_authors" do %>
-            <%= @biography.authors %><%= '<button type="button" class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target="#authors-info">Author Info</button>'.html_safe %>
+        <%= tag.div class:"biography_authors ml-3 mb-2" do %>
+            <%= @biography.authors %><%= '<button type="button" class="btn btn-outline-dark btn-sm ml-3" data-toggle="modal" data-target="#authors-info">Author Info</button>'.html_safe %>
         <% end %>
     <% end %>
 <% end %>
 
 <% if @biography.external_links.present? %>
     <h4><%= tag.strong("External links") %></h4>
-    <%= tag.div @biography.external_links.html_safe, class:"biography_external_links" %>
+    <%= tag.div @biography.external_links.html_safe, class:"biography_external_links ml-3 mb-2" %>
 <% end %>
 
 <% if @biography.references.present? %>
     <h4><%= tag.strong("References") %></h4>
-    <%= tag.div @biography.references.html_safe, class:"biography_references" %>
+    <%= tag.div @biography.references.html_safe, class:"biography_references ml-3 mb-2" %>
 <% end %>
 
 <h4><%= tag.strong("Comments") %></h4>
@@ -58,11 +58,11 @@
     <% end.empty? %>
     <% end %>
 <% end %>
-<button id="comment_button" type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#myModal">Add comment</button>
+<button id="comment_button" type="button" class="btn btn-outline-dark ml-3 mb-2" data-toggle="modal" data-target="#myModal">Add comment</button>
 
 <% if @biography.revisions.present? %>
     <h4><%= tag.strong("Revisions") %></h4>
-    <%= tag.div class:"biography_revsions" do %>
+    <%= tag.div class:"biography_revsions ml-3" do %>
         <%= simple_format @biography.revisions, class: "small" %>
     <% end %>
 <% end %>
