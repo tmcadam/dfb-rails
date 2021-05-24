@@ -85,13 +85,13 @@ class BiographyTest < ActiveSupport::TestCase
         assert_equal "p", tags[0].name
         assert tags[1].at_css('img')
         assert tags[1].at_css('figcaption')
-        assert_equal "1", tags[1].at_css('figcaption').text.strip
+        assert_equal "1 1", tags[1].at_css('figcaption').text.strip
         assert tags[6].at_css('img')
         assert tags[6].at_css('figcaption')
-        assert_equal "2", tags[6].at_css('figcaption').text.strip
+        assert_equal "2 2", tags[6].at_css('figcaption').text.strip
         assert tags[9].at_css('img')
         assert tags[9].at_css('figcaption')
-        assert_equal "3", tags[9].at_css('figcaption').text.strip
+        assert_equal "3 3", tags[9].at_css('figcaption').text.strip
     end
 
     test "body_with_images makes no changes to body if no images present" do

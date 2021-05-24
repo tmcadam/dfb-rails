@@ -1,14 +1,19 @@
-<div class="figure <%=@class%>" >
-        <a  href=<%= @img.image.url("original") %>
-            data-toggle="lightbox"
-            data-gallery="multiimages"
-            data-footer='<div class="container-fluid">
-                            <row> </row>
-                            
-                            asfasdasd</div>' >
-            <img src=<%= @img.image.url("medium") %> class="figure-img img-fluid rounded" >
-        </a>
-        <figcaption class="figcaption">
-            <%= truncate_html(@img.caption.html_safe,  :length => 40) %>
+<div class="figure <%=@class%> my-2" >
+        <%=
+            link_to(
+                image_tag( @img.image.url("medium"), class:"figure-img img-fluid rounded" ),
+                @img.image.url("original"),
+                data:{  footer: @img.caption.html_safe +
+                                tag.div(
+                                    tag.p(tag.strong(@img.id), class:"float-left mb-0") +
+                                    tag.p(@img.attribution, class: "small float-right mb-0"),
+                                    class:"w-100 mb-0 clearfix"
+                                ),
+                        toggle:'lightbox',
+                        gallery:'multiimages'
+                }) 
+        %>
+        <figcaption class="figcaption small">
+            <%= content_tag(:b, @img.id) + " " + truncate_html(@img.caption.html_safe, :length => 40) %>
         </figcaption>
 </div>
