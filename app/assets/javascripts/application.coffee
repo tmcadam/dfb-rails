@@ -15,8 +15,9 @@
 #= require turbolinks
 #= require bootstrap-sprockets
 #= require lightbox-bootstrap
-#= require summernote
-#= require isotope
+#= require popper
+#= require bootstrap
+#= require summernote/summernote-bs4.min
 #= require scrollTo
 #= require cocoon
 

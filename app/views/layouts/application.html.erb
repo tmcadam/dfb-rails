@@ -1,50 +1,49 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>DFB</title>
-    <%= render 'application/favicon' %>
-    <%= csrf_meta_tags %>
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-     <!--[if lt IE 9]>
-       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-     <![endif]-->
-     <% if not user_signed_in? %>
-       <%= render 'application/analytics' %>
-     <% end %>
-  </head>
-  <body>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DFB</title>
+<%= render 'application/favicon' %>
+<%= csrf_meta_tags %>
+<%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <% if not user_signed_in? %>
+    <%= render 'application/analytics' %>
+    <% end %>
+</head>
+<body>
 
-    <%= render 'layouts/navbar' %>
+<%= render 'layouts/navbar' %>
 
-    <!-- Begin page content -->
-    <div class="container">
+<!-- Begin page content -->
+<div class="container-flex" style="margin-top:72px">
 
-        <div class="page-header">
-            <h1>Dictionary of Falklands Biography
-            <small><br>including South Georgia</small></h1>
+    <% unless alert.nil? %>
+        <div class="alert alert-info alert-dismissable"><%= alert %>
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         </div>
+    <% end %>
+    <% unless notice.nil? %>
+        <div class="alert alert-warning alert-dismissable"><%= notice %>
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        </div>
+    <% end %>
 
-        <% unless alert.nil? %>
-            <div class="alert alert-info alert-dismissable"><%= alert %>
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            </div>
-        <% end %>
-        <% unless notice.nil? %>
-            <div class="alert alert-warning alert-dismissable"><%= notice %>
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            </div>
-        <% end %>
+</div>
 
-        <%= yield %>
-    </div>
+<%= yield :home %>
+<div class="container py-3">
+    <%= yield %>
+</div>
 
-    <%= render 'layouts/footer' %>
+<%= render 'layouts/footer' %>
 
-  </body>
-  </html>
+</body>
+</html>

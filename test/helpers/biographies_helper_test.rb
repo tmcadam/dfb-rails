@@ -1,3 +1,5 @@
+require 'test_helper'
+
 class BiographiesHelperTest < ActionView::TestCase
 
     test "clear featured, clears all featured" do
@@ -36,15 +38,39 @@ class BiographiesHelperTest < ActionView::TestCase
         for x in 1..10 do
             @b = Biography.create(title: x, slug: x, body: x, featured: true)
         end
-        first = get_random_ids(Biography.all)
-        second = get_random_ids(Biography.all)
-        third = get_random_ids(Biography.all)
+        first = get_random_ids(Biography.all.pluck(:id), 3)
+        second = get_random_ids(Biography.all.pluck(:id), 3)
+        third = get_random_ids(Biography.all.pluck(:id), 3)
         assert_equal 3, first.length
         assert_equal 3, second.length
         assert_equal 3, third.length
         assert_not_equal first, second
         assert_not_equal second, third
         assert_not_equal first, third
+    end
+
+    test "with_first_image_orientated returns an array of biography ids with specific orientation" do
+        #Biography.destroy_all
+        image2 = fixture_file_upload 'test_image_2.tif', 'image/tif'
+        image4 = fixture_file_upload 'test_image_4.jpg', 'image/jpg'
+
+        @b1 = biographies(:one)
+        @b2 = biographies(:two)
+        @b3 = biographies(:three)
+        Image.create(biography: @b1, title:"Landscape1", caption:"Brian at work", image: image2)
+        Image.create(biography: @b2, title:"Portrait1", caption:"Brian at work", image: image4)
+        Image.create(biography: @b3, title:"Portrait2", caption:"Brian at work", image: image4)
+
+        assert_equal 3, Biography.all.count
+        assert_equal 3, Image.all.count
+        # puts with_first_image_orientated(Biography.all, "portrait")
+        # puts with_first_image_orientated(Biography.all, "landscape")
+        assert_equal 2, with_first_image_orientated(Biography.all, "portrait").length
+        assert with_first_image_orientated(Biography.all, "portrait").include? @b2.id
+        assert with_first_image_orientated(Biography.all, "portrait").include? @b3.id 
+
+        assert_equal 1, with_first_image_orientated(Biography.all, "landscape").length
+        assert with_first_image_orientated(Biography.all, "landscape").include? @b1.id
     end
 
     test "get_features, selects from bios by id" do

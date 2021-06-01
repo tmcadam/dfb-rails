@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :authors, except: [:show]
   get 'comments/approve/(:approve_key)' => "comments#approve", :as => 'approve_comment'
   resources :comments
+  get 'home' => "static_content#home"
   resources :static_content, except: [:index], path: "/", param: :slug
   root :to => redirect('/home')
 end

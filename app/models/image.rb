@@ -15,11 +15,45 @@ class Image < ApplicationRecord
     validates :title, presence: true
     validates :caption, presence: true
     before_save :clean_image_urls
+    before_save :populate_dims
+
+    def orientation
+        if self.dim_x.nil? or self.dim_y.nil? 
+            "missing"
+        else 
+            ratio = self.dim_x.to_f / self.dim_y.to_f
+            if ratio > 0.65 and ratio <= 0.85
+                "portrait"
+            elsif ratio >= 1.15
+                "landscape" 
+            elsif ratio > 0.85 and ratio < 1.15   
+                "square"
+            else
+                "other"
+            end
+        end
+    end
 
 private
 
     def clean_image_urls
       clean_urls(self.caption)
+    end
+
+    def populate_dims
+        if self.image.queued_for_write[:original] != nil
+            path = self.image.queued_for_write[:original].path
+        else
+            path = self.image.path(:original)
+        end
+        
+        if File.file?(path)
+            dimensions = Paperclip::Geometry.from_file(path)
+            self.dim_x = dimensions.width
+            self.dim_y = dimensions.height
+        else
+            puts "MISSING: %s" % path
+        end 
     end
 
 end

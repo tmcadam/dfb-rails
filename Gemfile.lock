@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/kaminari/kaminari
-  revision: e89a0ea22e6df5558d63c85915abe064372ad648
+  revision: 7090e604e590b883d7b11ec53a627ece660b574a
   specs:
     kaminari (1.2.1)
       activesupport (>= 4.1.0)
@@ -93,13 +93,14 @@ GEM
       zeitwerk (~> 2.3)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
-    autoprefixer-rails (10.2.4.0)
-      execjs
+    autoprefixer-rails (10.2.5.0)
+      execjs (< 2.8.0)
     bcrypt (3.1.16)
     bindex (0.8.1)
-    bootstrap-sass (3.4.1)
-      autoprefixer-rails (>= 5.2.1)
-      sassc (>= 2.0.0)
+    bootstrap (4.6.0)
+      autoprefixer-rails (>= 9.1.0)
+      popper_js (>= 1.14.3, < 2)
+      sassc-rails (>= 2.0.0)
     builder (3.2.4)
     byebug (11.1.3)
     capybara (2.18.0)
@@ -125,11 +126,11 @@ GEM
     crass (1.0.6)
     database_cleaner (2.0.1)
       database_cleaner-active_record (~> 2.0.0)
-    database_cleaner-active_record (2.0.0)
+    database_cleaner-active_record (2.0.1)
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
-    devise (4.7.3)
+    devise (4.8.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 4.1.0)
@@ -141,7 +142,9 @@ GEM
     ethon (0.14.0)
       ffi (>= 1.15.0)
     execjs (2.7.0)
-    ffi (1.15.0)
+    ffi (1.15.1)
+    font-awesome-rails (4.7.0.7)
+      railties (>= 3.2, < 7)
     fugit (1.4.5)
       et-orbi (~> 1.1, >= 1.1.8)
       raabro (~> 1.4)
@@ -149,9 +152,6 @@ GEM
       activesupport (>= 4.2.0)
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
-    isotope-rails (2.2.2)
-      jquery-rails
-      rails (>= 4.0)
     jbuilder (2.11.2)
       activesupport (>= 5.0.0)
     jquery-rails (4.4.0)
@@ -181,7 +181,7 @@ GEM
       minitest (~> 5.10)
       railties (~> 6.1.0)
     nio4r (2.5.7)
-    nokogiri (1.11.3)
+    nokogiri (1.11.5)
       mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
     orm_adapter (0.5.0)
@@ -192,6 +192,7 @@ GEM
       mime-types
       mimemagic (~> 0.3.0)
     pg (1.2.3)
+    popper_js (1.16.0)
     public_suffix (4.0.6)
     puma (3.12.6)
     raabro (1.4.0)
@@ -234,7 +235,7 @@ GEM
       rake (>= 0.8.7)
       thor (~> 1.0)
     rake (13.0.3)
-    rb-fsevent (0.10.4)
+    rb-fsevent (0.11.0)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     responders (3.0.1)
@@ -257,6 +258,12 @@ GEM
       tilt (>= 1.1, < 3)
     sassc (2.1.0)
       ffi (~> 1.9)
+    sassc-rails (2.1.2)
+      railties (>= 4.0.0)
+      sassc (>= 2.0)
+      sprockets (> 3.0)
+      sprockets-rails
+      tilt
     scrollto-rails (1.2.0)
       railties (> 5.0)
     selenium-webdriver (3.142.7)
@@ -312,14 +319,14 @@ PLATFORMS
 
 DEPENDENCIES
   autoprefixer-rails
-  bootstrap-sass (>= 3.4.1)
+  bootstrap (>= 4.6, < 5.0.0)
   byebug
   capybara (~> 2.13)
   cocoon
   coffee-rails (~> 4.2)
   database_cleaner
   devise (>= 4.7.1)
-  isotope-rails (~> 2.2, >= 2.2.2)
+  font-awesome-rails
   jbuilder (~> 2.5)
   jquery-rails
   json
@@ -343,7 +350,7 @@ DEPENDENCIES
   simple_form
   spring
   spring-watcher-listen (~> 2.0.0)
-  summernote-rails!
+  summernote-rails (~> 0.8.17.0)!
   truncate_html
   turbolinks (~> 5)
   typhoeus
@@ -354,4 +361,4 @@ DEPENDENCIES
   yui-compressor
 
 BUNDLED WITH
-   1.17.3
+   1.17.2

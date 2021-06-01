@@ -56,9 +56,9 @@ class BiographyTest < ActiveSupport::TestCase
     test "generate image tags can create tags with alternating classes" do
         tags = @b.instance_eval{ generate_image_tags }
         assert 3, tags.length
-        assert tags[0]["tag"].include? "biography-img-right"
-        assert tags[1]["tag"].include? "biography-img-left"
-        assert tags[2]["tag"].include? "biography-img-right"
+        assert tags[0]["tag"].include? "float-right"
+        assert tags[1]["tag"].include? "float-left"
+        assert tags[2]["tag"].include? "float-right"
         assert_equal tags[0]["after_para"], 1
         assert_equal tags[1]["after_para"], 3
         assert_equal tags[2]["after_para"], 5
@@ -67,11 +67,11 @@ class BiographyTest < ActiveSupport::TestCase
     test "insert_image returns an image tag at correct paragraphs" do
         images = @b.instance_eval{ generate_image_tags }
         tag = @b.instance_eval{ insert_image(1, images) }
-        assert tag.include? "biography-img"
+        assert tag.include? "figure-img"
         tag = @b.instance_eval{ insert_image(3, images) }
-        assert tag.include? "biography-img"
+        assert tag.include? "figure-img"
         tag = @b.instance_eval{ insert_image(5, images) }
-        assert tag.include? "biography-img"
+        assert tag.include? "figure-img"
         tag = @b.instance_eval{ insert_image(2, images) }
         assert_equal "", tag
         tag = @b.instance_eval{ insert_image(4, images) }
@@ -84,11 +84,14 @@ class BiographyTest < ActiveSupport::TestCase
         assert_equal 11, tags.length
         assert_equal "p", tags[0].name
         assert tags[1].at_css('img')
-        assert_equal "1", tags[1].css('strong').first.text
+        assert tags[1].at_css('figcaption')
+        assert_equal "1 1", tags[1].at_css('figcaption').text.strip
         assert tags[6].at_css('img')
-        assert_equal "2", tags[6].css('strong').first.text
+        assert tags[6].at_css('figcaption')
+        assert_equal "2 2", tags[6].at_css('figcaption').text.strip
         assert tags[9].at_css('img')
-        assert_equal "3", tags[9].css('strong').first.text
+        assert tags[9].at_css('figcaption')
+        assert_equal "3 3", tags[9].at_css('figcaption').text.strip
     end
 
     test "body_with_images makes no changes to body if no images present" do

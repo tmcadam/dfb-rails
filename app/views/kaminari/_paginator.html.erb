@@ -1,18 +1,22 @@
 <%= paginator.render do -%>
-<div class="text-center">
-  <ul class="pagination">
-    <%= first_page_tag unless current_page.first? %>
-    <%= prev_page_tag unless current_page.first? %>
-    <li class='disabled show-mobile'><%= content_tag :a, "#{current_page} of #{total_pages}" %></li>
-    <% each_page do |page| -%>
-      <% if page.left_outer? || page.right_outer? || page.inside_window? -%>
-        <%= page_tag page %>
-      <% elsif !page.was_truncated? -%>
-        <%= gap_tag %>
-      <% end -%>
-    <% end -%>
-    <%= next_page_tag unless current_page.last? %>
-    <%= last_page_tag unless current_page.last? %>
-  </ul>
+  <div class="row">
+    <div class="mx-auto">
+      <div class="text-center mx-auto">
+        <ul class="pagination">
+          <%= first_page_tag unless current_page.first? %>
+          <%= prev_page_tag unless current_page.first? %>
+          <li class='disabled d-xs-inline d-sm-none page-item'><%= content_tag :a, "#{current_page} of #{total_pages}", class:"page-link" %></li>
+          <% each_page do |page| -%>
+            <% if page.left_outer? || page.right_outer? || page.inside_window? -%>
+              <%= page_tag page %>
+            <% elsif !page.was_truncated? -%>
+              <%= gap_tag %>
+            <% end -%>
+          <% end -%>
+          <%= next_page_tag unless current_page.last? %>
+          <%= last_page_tag unless current_page.last? %>
+        </ul>
+      </div>
+    </div>
   </div>
 <% end -%>

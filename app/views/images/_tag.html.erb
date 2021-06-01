@@ -1,17 +1,19 @@
-<%=
-    tag.div(
-        tag.div(
+<div class="figure <%=@class%> my-2 text-center float-xs-none mx-xs-auto d-block" >
+        <%=
             link_to(
-                image_tag( @img.image.url("medium"), class:"img-rounded" ),
+                image_tag( @img.image.url("medium"), class:"figure-img img-fluid rounded" ),
                 @img.image.url("original"),
-                data:{  footer: tag.span(@img.caption.html_safe, class:"img-footer-caption text-left") +
-                                tag.br +
-                                tag.span(tag.strong(@img.id), class:"img-footer-id") +
-                                tag.span(@img.attribution, class: "small"),
+                data:{  footer: @img.caption.html_safe +
+                                tag.div(
+                                    tag.p(tag.strong(@img.id), class:"float-left mb-0") +
+                                    tag.p(@img.attribution, class: "small float-right mb-0"),
+                                    class:"w-100 mb-0 clearfix"
+                                ),
                         toggle:'lightbox',
                         gallery:'multiimages'
-                }) +
-                tag.div( truncate_html(tag.strong(@img.id) + " " + @img.caption.html_safe,  :length => 40) , class:"caption small") , class:"#{@class}") ,
-    class:"img-container block-center")
-
-%>
+                }) 
+        %>
+        <figcaption class="figcaption small text-sm-left">
+            <%= content_tag(:b, @img.id) + " " + truncate_html(@img.caption.html_safe, :length => 40) %>
+        </figcaption>
+</div>

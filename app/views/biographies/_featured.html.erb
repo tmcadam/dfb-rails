@@ -1,9 +1,11 @@
 <a href="<%= biography_path(biography.slug) %>">
-<h5 class="text-center"><strong><%= biography.title %></strong></h5>
-<% if biography.images.present? %>
-    <img src="<%= biography.images.order(:id).first.image.url(:medium) %>" alt="..." class="img-rounded img-responsive center-block" >
-<% end %>
+    <% if biography.images.present? %>
+        <img src="<%= biography.images.order(:id).first.image.url(:medium) %>" alt="..." class="card-img-top">
+    <% end %>
+    <div class="card-body">
+        <h5 class="card-title"><strong><%= biography.title %></strong></h5>
+        <p class="card-text">
+            <%= truncate_html(biography.body, :length => 100 ) %>
+        </p>
+    </div>
 </a>
-<p class="small">
-    <%= truncate_html(biography.body, :length => 100 ) %>
-</p>

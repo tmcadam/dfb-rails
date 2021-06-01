@@ -1,0 +1,26 @@
+ahoyapi: v2
+commands:
+
+  shell:
+    cmd: docker-compose -f docker/docker-compose.local.yml exec --rm app /bin/bash
+    usage: Start a development server for the DFB rails web app.
+
+  install:
+    cmd: docker-compose -f docker/docker-compose.local.yml run --rm app bin/bundle install && bin/rails db:create && bin/rails db:migrate
+    usage: Start a development server for the DFB rails web app.
+
+  migrate:
+    cmd: docker-compose -f docker/docker-compose.local.yml run --rm app bundle exec rails db:migrate
+    usage: Start a development server for the DFB rails web app.
+
+  test:
+    cmd: docker-compose -f docker/docker-compose.local.yml run --rm --service-ports app bundle exec rails test $1
+    usage: Start a development server for the DFB rails web app.
+
+  clean:
+    cmd: docker-compose -f docker/docker-compose.local.yml run --rm --service-ports app rm -f tmp/pids/server.pid
+    usage: Clean a pid file stopping rails server from starting
+
+  server:
+    cmd: docker-compose -f docker/docker-compose.local.yml run --rm --service-ports app bundle exec rails server -b 0.0.0.0
+    usage: Start a development server for the DFB rails web app.

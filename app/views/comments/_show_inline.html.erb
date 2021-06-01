@@ -1,7 +1,7 @@
-<div class="well well-sm comment-well">
-    <h5>
-        <b><%= comment.name %></b>
-        <span class="small"> (<%= comment.created_at %>)</span>
-    </h5>
-    <%= simple_format comment.comment %>
+<div class="card ml-3 mb-3">
+    <div class="card-body bg-light">
+        <h5 class="card-title"><%= comment.name %></h5>
+        <h6 class="card-subtitle mb-2 text-muted"><%= comment.created_at %></h6>
+        <p class="card-text"> <%= simple_format comment.comment %> </p>
+    </div>
 </div>

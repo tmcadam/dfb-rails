@@ -1,120 +1,102 @@
 # The Dictionary of Falklands Biographies ![Build Status](https://travis-ci.org/tmcadam/dfb-rails.svg?branch=master "Build Status")
 
 ### Versions
-  - Ruby 2.5.5
-  - Rails 5.2.3
+  - Ruby 2.6.6
+  - Rails 6.1.3.1
 
-### Dev/local environment configuration
+## Dev/local environment
+  - Install docker
   - Clone the project
-  - Install RVM system wide
-    - Follow instructions on Github https://github.com/rvm/ubuntu_rvm
-    - Add user to the rvm group `sudo usermod -a -G rvm [USERNAME]`
-    - Reboot after install
-    - Add a .ruby-version and .ruby-gemset file to project folder
-      - Install the current Ruby version `rvm install "ruby-2.5.5"`
-      - Generate the version file `rvm --ruby-version use 2.5.5`
-      - Generate the gemset file `rvm --ruby-version use 2.5.5@dfb-rails`
-  - `gem install bundler`
-  - `bundle install`
-  - `rails server`
-  - NB. To send real emails in dev set `SMTP_USER`, `SMTP_PASSWORD` and `DFB_COMMENTS_EMAIL_DEV` environment variables, and comment out the email test settings in config/environments/development.rb.
-
-### Dev/local database Configuration
-  - Install Postgres 9.4
-    -  `sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'`
-    - `wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -`
-    - `sudo apt-get update`
-    - `sudo apt-get install postgresql-9.4 pgadmin3 libpq-dev`
-  -  Configure permissive local access
-    - Open  `/etc/postgresql/[VERSION]/main/pg_hba.conf`
-    - Change local access to `trust`
-    - `sudo /etc/init.d/postgresql reload`
-    - Add a role `sudo -u postgres createuser --interactive`
-      - role name -> system user name
-      - superuser -> y
+  - Checkout staging branch
+  - Install Ruby Gems 
+    - `docker-compose -f docker/docker-compose.local.yml run --rm app bin/bundle install`
   - Create databases
-    - `createdb dfb_development`
-    - `createdb dfb_test`
+    - `docker-compose -f docker/docker-compose.local.yml run --rm app bin/rails -e test db:create`
+    - `docker-compose -f docker/docker-compose.local.yml run --rm app bin/rails -e development db:create`
+  - Run migrations
+    - `docker-compose -f docker/docker-compose.local.yml run --rm  app bin/rails -e test db:migrate`
+    - `docker-compose -f docker/docker-compose.local.yml run --rm  app bin/rails -e development db:migrate`
 
-### Running tests
-`rails test`
+### Environment Variables
+  - create a `.env` file in the docker folder
+    - DFB_DB_PASS => Password for the PostgreSQL user (set to anything, this variable creates and uses)
+    - BACKUP_EMAIL => Email for backup script success
+    - SMTP_USER => SMTP username
+    - SMTP_PASS => SMTP password
+    - DFB_COMMENTS_EMAIL_DEV => emails that comments and reports go to
 
-### Deployment instructions
+### Run tests
+  - `docker-compose -f docker/docker-compose.local.yml run --rm app rails test`
 
-#### Travis
-Set the following variables in Travis UI (allows deployment into Webfaction)
+### Run development server
+  - Populate development database with recent backup
+  - Copy image foldes from the same backup into `public/system/`
+  - Start the server
+    - `docker-compose -f docker/docker-compose.local.yml run --rm --service-ports app bin/rails server -b 0.0.0.0`
+  - Navigate to `http://localhost:3000` 
 
- - DEPLOY_BRANCH -> origin/master
- - DEPLOY_BRANCH_STAGING -> origin/staging
- - DEPLOY_REPO -> tmcadam/dfb-rails
- - DEPLOY_HOST -> webfaction host name
- - DEPLOY_USER -> webfaction user name
- - DEPLOY_HOME -> path to webfaction home folder
- - DEPLOY_PASS -> webfaction password
- - DEPLOY_PATH -> /home/username/webapps/dfb-staging/app
- - DEPLOY_PATH_STAGING -> /home/username/webapps/dfb-staging/app
+## Production Environment
 
-#### Webfaction Configuration
+### Configure Github Actions
+Set the following secrets in Github Actions
 
-- Setup two Rails apps in the Webfaction UI e.g.
-  - dfb
-  - dfb-staging
-- Copy the git_deploy script
-  - Copy the git_deploy.sh script from https://github.com/tmcadam/webfaction-tools, to home folder in Webfaction shell
-- Add the following variables. In Webfaction shell set these in `.bashrc`. Used by rails and the backup scripts.
-```shell
-    export BACKUP_EMAIL="<email address to send backups to>"
-    export SMTP_USER="<email server smtp username>"
-    export SMTP_PASSWORD="<email server smtp password>"
-    export DFB_COMMENTS_EMAIL_PRODUCTION="email to send comment approval emails"
-    export DFB_COMMENTS_EMAIL_STAGING="email to send comment approval emails for testing"
+  - DEPLOY_CONT_PROD - Caontainer name
+  - DEPLOY_CONT_STAGING - Container name
+  - DEPLOY_HOME - Home fold of the deployment host user
+  - DEPLOY_HOST - Address of host deployment machine 
+  - DEPLOY_KEY - SSH key
+  - DEPLOY_PORT - SSH Port
+  - DEPLOY_USER - User on the host machine
+  - DEPLOY_PATH_PROD - Path to the volume
+  - DEPLOY_PATH_STAGING - Path to the volume
 
-    export DFB_DB_PASS_PRODUCTION="<production db password>"
-    export DFB_DB_USER_PRODUCTION="<production database user name>"
-    export DFB_DB_PRODUCTION=<production db name>
-    export DFB_SECRET_KEY_BASE_PRODUCTION="<rails generated secret key>"
+### Build production docker image locally
 
-    export DFB_DB_PASS_STAGING="<staging db password>"
-    export DFB_DB_USER_STAGING="<staging db user name>"
-    export DFB_DB_STAGING="<staging db name>"
-    export DFB_SECRET_KEY_BASE_STAGING="<rails generated secret key>"
-```
+  - `docker build -f docker/Dockerfile.prod -t rails:1.4 ./docker`
+  - `docker save rails:1.4 -o docker/rails_1.4.tar`
+  - Upload to portainer through UI for use
 
-### Using rails commands in Webfaction
-  - Use these commands from `~/webapps/<application-name>/` folder to run Rails related commands in Webfaction shell.
+### Create conatainers
+
+  - A Postgres instance will be required
+  - Create containers using the latest base image(currently `rails:1.5`)
+  - Set the following environment variables for container:
+    - DFB_DB_PASS
+    - DFB_DB_USER
+    - DFB_DB_NAME
+    - DFB_DB_HOST
+    - DFB_DB_PORT
+    - DFB_SECRET_KEY_BASE -> checkout rails docs for instructions how to generate
+    - PASSENGER_APP_ENV -> production or staging
+    - RAILS_ENV -> production or staging
+      - Probably don't need both of these
+    - SMTP_USER
+    - SMTP_PASS
+    - DFB_COMMENTS_EMAIL_PRODUCTION -> Can be multiple
+
+## Admin Console Tasks
+
+### Open a Rails console
+
+Local
   ```shell
-    export PATH=$PWD/bin:$PATH
-    export GEM_HOME=$PWD/gems
-    export RUBYLIB=$PWD/lib
+  docker-compose -f docker/docker-compose.local.yml exec app /bin/bash
+  bin/rails console
+  ```
+Production
+  ```shell
+  sudo docker exec -it <CONTAINER_NAME> /bin/bash
+  bin/rails console
   ```
 
-### Creating a user
-  - Use these commands from `~/webapps/<application-name>/app`.
-  ```shell
-     rails console production
-     User.create!(email: "guy@gmail.com", password: "111111", password_confirmation: "111111")
-  ```
+### Creating a new user  
+  - `User.create!(email: "guy@gmail.com", password: "111111", password_confirmation: "111111")`
 
 ### Adding a biography to an author
-  - Use these commands from `~/webapps/<application-name>/app`.
-  ```shell
-     rails console production
-     BiographyAuthor.create!( biography_id: 496, author_id: 148, author_position: 1 )
-  ```
-
-### Configuring SSL
-  - built in tools in Webfaction UI
-
-### Updating Ruby version in Webfaction
-  - Navigate to the webapp bin directory
-  - Replace links to the required Ruby version
-  - export the environment variables (as above)
-  - in the webapp root directory `gem install bundler`
-  - in the webapp app directory `bundle install`
-  - `restart`
+  
+  - `BiographyAuthor.create!( biography_id: 496, author_id: 148, author_position: 1 )`
 
 ### Updating Rails
   - Update the version in Gemfile
-  - export the environment variables (as above)
-  - in the webapp app directory `bundle update rails`
+  - in the local docker container run `bundle update rails`
   - commit and push the changes to Gemfile and Gemfile.lock

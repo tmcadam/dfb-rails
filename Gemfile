@@ -18,7 +18,8 @@ gem 'tzinfo-data'
 gem 'mimemagic', github: 'mimemagicrb/mimemagic', ref: '01f92d86d15d85cfd0f20dabd025dcbd36a8a60f'
 
 # app specific gems
-gem "bootstrap-sass", ">= 3.4.1"
+gem 'bootstrap', '>=4.6', '<5.0.0'
+gem "font-awesome-rails"
 gem 'autoprefixer-rails'
 gem 'jquery-rails'
 gem 'yui-compressor'
@@ -29,8 +30,7 @@ gem "paperclip", "~> 5.2.1"
 gem 'simple_form'
 gem 'lightbox-bootstrap-rails', '5.1.0.1'
 gem 'pg'
-gem 'summernote-rails', :git => 'https://github.com/summernote/summernote-rails.git'
-gem 'isotope-rails', '~> 2.2', '>= 2.2.2'
+gem 'summernote-rails', '~> 0.8.17.0', :git => 'https://github.com/summernote/summernote-rails.git'
 gem 'scrollto-rails'
 gem "devise", ">= 4.7.1"
 gem 'rufus-scheduler'
