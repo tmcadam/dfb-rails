@@ -4,11 +4,30 @@
   - Ruby 2.6.6
   - Rails 6.1.3.1
 
+
+## New Deployment Steps - 2026
+
+This is quick stop-gap until replacement by DFB Django.
+
+**Staging**
+
+`git checkout staging`
+
+`docker build -t ghcr.io/tmcadam/dfb-rails:staging -f ./docker/Dockerfile . && docker push ghcr.io/tmcadam/dfb-rails:staging`
+
+
+**Production**
+
+`git checkout master`
+
+`docker build -t ghcr.io/tmcadam/dfb-rails:production -f ./docker/Dockerfile . && docker push ghcr.io/tmcadam/dfb-rails:production`
+
+
 ## Dev/local environment
   - Install docker
   - Clone the project
   - Checkout staging branch
-  - Install Ruby Gems 
+  - Install Ruby Gems
     - `docker-compose -f docker/docker-compose.local.yml run --rm app bin/bundle install`
   - Create databases
     - `docker-compose -f docker/docker-compose.local.yml run --rm app bin/rails -e test db:create`
@@ -33,7 +52,7 @@
   - Copy image foldes from the same backup into `public/system/`
   - Start the server
     - `docker-compose -f docker/docker-compose.local.yml run --rm --service-ports app bin/rails server -b 0.0.0.0`
-  - Navigate to `http://localhost:3000` 
+  - Navigate to `http://localhost:3000`
 
 ## Production Environment
 
@@ -43,7 +62,7 @@ Set the following secrets in Github Actions
   - DEPLOY_CONT_PROD - Caontainer name
   - DEPLOY_CONT_STAGING - Container name
   - DEPLOY_HOME - Home fold of the deployment host user
-  - DEPLOY_HOST - Address of host deployment machine 
+  - DEPLOY_HOST - Address of host deployment machine
   - DEPLOY_KEY - SSH key
   - DEPLOY_PORT - SSH Port
   - DEPLOY_USER - User on the host machine
@@ -89,11 +108,11 @@ Production
   bin/rails console
   ```
 
-### Creating a new user  
+### Creating a new user
   - `User.create!(email: "guy@gmail.com", password: "111111", password_confirmation: "111111")`
 
 ### Adding a biography to an author
-  
+
   - `BiographyAuthor.create!( biography_id: 496, author_id: 148, author_position: 1 )`
 
 ### Updating Rails
