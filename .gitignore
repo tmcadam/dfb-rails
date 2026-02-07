@@ -34,6 +34,5 @@ db/data-cleanup/*.json
 db/data-cleanup/*.csv
 db/data-cleanup/*.xml
 
-*.tar
-secrets.txt
+secrets/
 .env
